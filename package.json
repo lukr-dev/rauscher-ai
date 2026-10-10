@@ -1,0 +1,47 @@
+{
+	"name": "rauscher-ai",
+	"version": "0.0.3",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "wrangler dev",
+		"deploy": "astro build && wrangler deploy",
+		"typecheck": "astro check",
+		"lint": "oxlint --deny-warnings .",
+		"lint:fix": "oxlint --fix .",
+		"format": "oxfmt --write . && prettier --write \"src/**/*.astro\"",
+		"format:check": "oxfmt --check . && prettier --check \"src/**/*.astro\"",
+		"check": "npm run format:check && npm run lint && npm run typecheck",
+		"cf:types": "wrangler types --include-runtime false"
+	},
+	"dependencies": {
+		"@astrojs/cloudflare": "^14.3.1",
+		"@astrojs/react": "^6.0.5",
+		"@emdash-cms/cloudflare": "^1.2.0",
+		"astro": "^7.3.2",
+		"emdash": "^1.2.0",
+		"react": "19.2.4",
+		"react-dom": "19.2.4"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
+		"@cloudflare/workers-types": "^5.20260820.1",
+		"@types/node": "^24.19.2",
+		"oxfmt": "^0.72.0",
+		"oxlint": "^1.87.0",
+		"prettier": "^3.9.10",
+		"prettier-plugin-astro": "^1.1.1",
+		"typescript": "^6.0.3",
+		"wrangler": "^4.125.0"
+	},
+	"allowScripts": {
+		"workerd": true,
+		"esbuild": true
+	},
+	"emdash": {
+		"label": "Starter",
+		"seed": "seed/seed.json"
+	}
+}
