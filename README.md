@@ -46,7 +46,7 @@ Discover the current hostname and occupied routes using `tailscale status` and `
 
 ```bash
 npm run build
-npm run preview -- --ip 127.0.0.1 --port <local-port>
+X_LOCAL_EXPLORER=false npm run preview -- --ip 127.0.0.1 --port <local-port>
 tailscale serve --bg --https=<unused-https-port> http://127.0.0.1:<local-port>
 ```
 
