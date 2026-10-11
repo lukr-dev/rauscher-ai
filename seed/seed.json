@@ -3086,6 +3086,1968 @@
 				},
 				"locale": "fr",
 				"translationOf": "posts"
+			},
+			{
+				"id": "impressum",
+				"slug": "impressum",
+				"locale": "de",
+				"status": "published",
+				"data": {
+					"title": "Impressum",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "impressum-0",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Verantwortliche Instanz:",
+									"marks": ["strong"]
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Lukas Rauscher",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "General-Dufour-Strasse 69",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "2502 Biel/Bienne",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Schweiz",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "E-Mail",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": ": ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "lukas@rauscher.ai",
+									"marks": ["link0"]
+								}
+							],
+							"markDefs": [
+								{
+									"_type": "link",
+									"_key": "link0",
+									"href": "mailto:lukas@rauscher.ai"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Haftungsausschluss",
+									"marks": ["strong"]
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch Missbrauch der Verbindung oder durch technische Störungen entstanden sind, werden ausgeschlossen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-9",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Alle Angebote sind freibleibend. Der Autor behält es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-10",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Haftungsausschluss für Inhalte und Links",
+									"marks": ["strong"]
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-11",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Verweise und Links auf Webseiten Dritter liegen ausserhalb unseres Verantwortungsbereichs. Es wird jegliche Verantwortung für solche Webseiten abgelehnt. Der Zugriff und die Nutzung solcher Webseiten erfolgen auf eigene Gefahr des jeweiligen Nutzers.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-12",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Urheberrechtserklärung",
+									"marks": ["strong"]
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-13",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Website, gehören ausschliesslich Lukas Rauscher oder den speziell genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung des Urheberrechtsträgers im Voraus einzuholen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "impressum-14",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Quelle",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": ": ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "BrainBox Solutions",
+									"marks": ["link0"]
+								}
+							],
+							"markDefs": [
+								{
+									"_type": "link",
+									"_key": "link0",
+									"href": "https://brainbox.swiss/"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "datenschutz",
+				"slug": "datenschutz",
+				"locale": "de",
+				"status": "published",
+				"data": {
+					"title": "Datenschutzerklärung",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "datenschutz-0",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Zuletzt aktualisiert am: 08.09.2025",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir legen grossen Wert darauf, dass der Umgang mit Personendaten transparent ist. Diese Datenschutzerklärung gibt Auskunft darüber, welche personenbezogenen Daten wir sammeln, zu welchem Zweck und an wen wir sie weitergeben. Um eine hohe Transparenz zu gewährleisten, wird diese Datenschutzerklärung regelmässig überprüft und aktualisiert. ",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-2",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "1. Welche Dienste wir nutzen",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Cloudflare Browser Insights",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Google Analytics",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Google Tag Manager",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Amazon SES",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Cloudflare CDN",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Google Fonts API",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-9",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Cloudflare Turnstile",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-10",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "2. Kontaktinformationen",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-11",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Bei Fragen oder Anliegen zum Schutz Ihrer Daten durch uns erreichen Sie uns jederzeit per E-Mail unter . Verantwortlich für die Datenbearbeitungen, die über diese Website erfolgen, ist:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-12",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Lukas Rauscher",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-13",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "General-Dufour-Strasse 69",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-14",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "2502 Biel/Bienne",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-15",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Schweiz",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-16",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3. Allgemeine Grundsätze",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-17",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.1 Welche Daten sammeln wir von Ihnen und von wem erhalten wir diese Daten",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-18",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "In erster Linie bearbeiten wir Personendaten, die Sie uns übermitteln oder die wir beim Betrieb unserer Website sammeln. Unter Umständen erhalten wir Personendaten über Sie auch von Dritten. Das können folgende Kategorien sein:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-19",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Personenstammdaten (Name, Adresse, Geburtsdaten, etc.);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-20",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Kontaktdaten (Handynummer, E-Mailadresse, etc.);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-21",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Finanzdaten (bspw. Kontoangaben);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-22",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Onlinekennungen (bspw. Cookie-Kennung, IP-Adressen);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-23",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Standort- und Verkehrsdaten;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-24",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Ton- und Bildaufnahmen;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-25",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "besonders schützenswerte Daten (bspw. biometrische Daten oder Angaben über Ihre Gesundheit).",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-26",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.2 Unter welchen Voraussetzungen bearbeiten wir Ihre Daten?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-27",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir behandeln Ihre Daten vertraulich und gemäss den in dieser Datenschutzerklärung festgelegten Zwecken. Wir achten dabei auf eine transparente und verhältnismässige Bearbeitung.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-28",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Falls wir ausnahmsweise nicht in der Lage sind, diese Grundsätze zu befolgen, kann die Datenbearbeitung trotzdem rechtmässig sein, weil ein Rechtfertigungsgrund vorliegt. Als Rechtfertigungsgrund kommt namentlich in Frage:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-29",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Ihre Einwilligung;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-30",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "die Durchführung eines Vertrages oder vorvertraglicher Massnahmen;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-31",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "unsere berechtigten Interessen, sofern Ihre Interessen nicht überwiegen.",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-32",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.3 Wie können Sie Ihre Einwilligung widerrufen?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-33",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Haben Sie uns eine Einwilligung zur Bearbeitung Ihrer personenbezogenen Daten für bestimmte Zwecke erteilt, bearbeiten wir Ihre Daten im Rahmen dieser Einwilligung, soweit wir keinen anderen Rechtfertigungsgrund haben.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-34",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie haben jederzeit die Möglichkeit, Ihre Einwilligung zu widerrufen indem Sie eine E-Mail an die im Impressum genannte Adresse schicken. Bereits erfolgte Datenverarbeitungen sind davon nicht betroffen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-35",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.4 In welchen Fällen können wir Ihre Daten an Dritte weitergeben?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-36",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "a. Grundsatz",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-37",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir sind unter Umständen darauf angewiesen, die Dienste Dritter oder von verbundenen Unternehmen in Anspruch zu nehmen und diese mit der Verarbeitung Ihrer Daten zu beauftragen (sog. Auftragsverarbeiter). Kategorien der Empfänger sind namentlich:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-38",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Buchhaltung, Treuhand und Revisionsunternehmen;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-39",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Beratungsunternehmen (Rechtsberatung, Steuern, etc.);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-40",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "IT-Dienstleister (Webhosting, Support, Clouddienste, Webseitengestaltung, etc.);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-41",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Zahlungsdienstleister;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-42",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Anbieter von Tracking-, Conversion- und Werbedienstleistungen.",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-43",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir stellen sicher, dass diese Dritten und unsere verbundenen Unternehmen die Voraussetzungen des Datenschutzes einhalten und Ihre personenbezogenen Daten vertraulich behandeln.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-44",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unter Umständen sind wir auch verpflichtet, Ihre personenbezogenen Daten an Behörden bekanntzugeben.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-45",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "b. Besuch unserer Social-Media-Kanäle",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-46",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir haben eventuell auf unserer Website Links zu unseren Social-Media-Kanälen eingebettet. Das ist für Sie jeweils ersichtlich (typischerweise über entsprechende Symbole). Klicken Sie auf die Symbole, werden Sie auf unsere Social-Media-Kanäle weitergeleitet.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-47",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Die Social Media Anbieter erfahren in diesem Fall, dass Sie von unserer Website auf deren Plattform zugreifen. Die Social Media Anbieter können die so erhobenen Daten für eigene Zwecke nutzen. Wir weisen darauf hin, dass wir keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch die Betreiber erhalten.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-48",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "c. Weitergabe ins Ausland",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-49",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unter Umständen kann es im Rahmen der Auftragsbearbeitung zu Übermittlung Ihrer personenbezogenen Daten an Unternehmen im Ausland kommen. Diese Unternehmen sind im gleichen Umfang zum Datenschutz verpflichtet, wie wir selbst. Die Übermittlung kann weltweit stattfinden.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-50",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Entspricht das Datenschutzniveau nicht demjenigen des der Schweiz, so nehmen wir eine vorgängige Risikoeinschätzung vor und stellen vertraglich sicher, dass der gleiche Schutz wie in der Schweiz garantiert wird (bspw. mittels der neuen Standardvertragsklauseln der EU-Kommission oder anderen, gesetzlich vorgegebenen Massnahmen). Sollte unsere Risikoeinschätzung negativ ausfallen, ergreifen wir zusätzliche technische Massnahmen zum Schutz Ihrer Daten. Sie können die Standardvertragsklauseln der EU-Kommission abrufen unter folgendem Link. https://commission.europa.eu/publications/standard-contractual-clauses-controllers-and-processors-eueea_de",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-51",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.5 Wie lange bewahren wir Ihre Daten auf?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-52",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir speichern personenbezogene Daten nur so lange, wie dies erforderlich ist, um die einzelnen Zwecke, zu denen die Daten erhoben wurden, zu erfüllen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-53",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Daten, die wir bei Ihrem Besuch auf unserer Website speichern, werden während zwölf Monaten aufbewahrt. Eine Ausnahme gilt für Analyse- und Trackingdaten, die länger aufbewahrt werden können.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-54",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Vertragsdaten speichern wir länger, da wir dazu durch gesetzliche Vorschriften verpflichtet sind. Wir müssen insbesondere geschäftliche Kommunikation, geschlossene Verträge und Buchungsbelege bis zu 10 Jahren aufbewahren. Soweit wir solche Daten von Ihnen nicht mehr zur Durchführung der Dienstleistungen benötigen, werden die Daten gesperrt und wir verwenden sie nur noch für Zwecke der Rechnungslegung und für Steuerzwecke.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-55",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.6 Wie schützen wir Ihre Daten?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-56",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir werden Ihre Daten sicher aufbewahren und alle angemessenen Massnahmen ergreifen, um Ihre Daten vor Verlust, Zugriff, Missbrauch oder Änderungen zu schützen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-57",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unsere Vertragspartner und Mitarbeitende, die Zugang zu Ihren Daten haben, sind zur Einhaltung der datenschutzrechtlichen Bestimmungen verpflichtet. In manchen Fällen wird es erforderlich sein, dass wir Ihre Anfragen an mit uns verbundene Unternehmen weiterreichen. Auch in diesen Fällen werden Ihre Daten vertraulich behandelt.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-58",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Innerhalb unserer Webseite verwenden wir das SSL-Verfahren (Secure Socket Layer) in Verbindung mit der jeweils höchsten Verschlüsselungsstufe, die von Ihrem Browser unterstützt wird.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-59",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.7 Welche Rechte haben Sie?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-60",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "a. Auskunftsrecht",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-61",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie können jederzeit eine Auskunft über die von uns über Sie gespeicherten Daten verlangen. Wir bitten Sie, Ihr Auskunftsgesuch zusammen mit einem Identitätsnachweis an ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "lukas@rauscher.ai",
+									"marks": ["link0"]
+								},
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": " zu senden.",
+									"marks": []
+								}
+							],
+							"markDefs": [
+								{
+									"_type": "link",
+									"_key": "link0",
+									"href": "mailto:lukas@rauscher.ai"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-62",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie haben ausserdem das Recht, Ihre Daten in einem gängigen Dateiformat zu erhalten, wenn wir Ihre Daten automatisiert bearbeiten, und wenn:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-63",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie Ihre Einwilligung für die Bearbeitung dieser Daten erteilt haben; oder",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-64",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie Daten im Zusammenhang mit dem Abschluss oder der Abwicklung eines Vertrags bekannt gegeben haben.",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-65",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir können die Auskunft bzw. Datenherausgabe einschränken oder verweigern, wenn dies unseren gesetzlichen Verpflichtungen, berechtigten eigenen oder öffentlichen Interessen oder Interessen einer Drittperson entgegensteht.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-66",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Die Bearbeitung Ihres Gesuchs unterliegt der gesetzlichen Bearbeitungsfrist von 30 Tagen. Diese Frist dürfen wir jedoch aufgrund von hohem Anfragevolumen, aus rechtlichen oder technischen Gründen oder weil wir nähere Angaben von Ihnen benötigen, verlängern. Sie werden über die Fristverlängerung rechtzeitig mindestens in Textform informiert.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-67",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "b. Löschung und Berichtigung",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-68",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie haben jederzeit die Möglichkeit, die Löschung oder Berichtigung Ihrer Daten zu verlangen. Wir können das Gesuch abweisen, wenn gesetzliche Vorschriften uns zur längeren bzw. unveränderten Aufbewahrung verpflichten oder ein Erlaubnistatbestand Ihrem Gesuch entgegensteht.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-69",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Bitte beachten Sie, dass die Ausübung Ihrer Rechte unter Umständen im Konflikt mit vertraglichen Abmachungen stehen und entsprechende Auswirkungen auf die Vertragsdurchführung haben kann (z.B. vorzeitige Vertragsauflösung oder Kostenfolgen).",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-70",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "c. Rechtsweg",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-71",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sind Sie von der Bearbeitung personenbezogener Daten betroffen, haben Sie das Recht, Ihre Rechte gerichtlich durchzusetzen oder bei der zuständigen Aufsichtsbehörde eine Meldung einzureichen. Die zuständige Aufsichtsbehörde in der Schweiz ist der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte: https://www.edoeb.admin.ch",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-72",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "3.8 Änderungen an der Datenschutzerklärung",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-73",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir können diese Datenschutzerklärung jederzeit ändern. Die Änderungen werden auf https://rauscher.ai veröffentlicht, Sie werden nicht gesondert darüber informiert.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-74",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4. Einzelne Datenverarbeitungsvorgänge",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-75",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.1 Bereitstellen der Webseite und Erstellung von Logfiles",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-76",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Welche Informationen erhalten wir und wie nutzen wir sie?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-77",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Indem Sie https://rauscher.ai besuchen, werden auf unseren Servern oder auf Servern von Dienstleistungen und Produkten, die wir beziehen und / oder installiert haben, bestimmte Daten automatisch zu Zwecken der Systemadministration, für statistische oder für Sicherungszwecke oder für Trackingzwecke gespeichert. Es handelt sich dabei um:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-78",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "den Namen Ihres Internetserviceproviders;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-79",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Ihre IP-Adresse (unter Umständen);",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-80",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "die Version Ihrer Browser-Software;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-81",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "das Betriebssystem des Rechners mit dem auf die URL zugegriffen wird;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-82",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "das Datum und die Uhrzeit des Zugriffs;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-83",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "die Webseite, von der aus Sie URL besuchen;",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-84",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "die Suchwörter die Sie benutzt haben, um die URL finden.",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-85",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Weshalb dürfen wir diese Daten bearbeiten?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-86",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Diese Daten können keiner bestimmten Person zugeordnet werden und es findet keine Zusammenführung dieser Daten mit anderen Datenquellen statt. Die Speicherung der Logfiles erfolgt, um die Funktionsfähigkeit der Webseite zu garantieren und zur Sicherstellung der Sicherheit unserer informationstechnischen Systeme. Hierin besteht unser berechtigtes Interesse.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-87",
+							"style": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wie können Sie die Datenerfassung verhindern?",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-88",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Die Daten werden nur solange gespeichert, wie dies zur Erreichung des Zweckes Ihrer Erhebung notwendig ist. Dementsprechend werden die Daten nach Beendigung jeder Sitzung gelöscht. Die Speicherung der Logfiles ist für den Betrieb der Webseite zwingend notwendig, Sie haben daher keine Möglichkeit dagegen Widerspruch zu erheben.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-89",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.2 Cloudflare Browser Insights",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-90",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unsere Website verwendet den Dienst \"Cloudflare Browser Insights\" von Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA (\"Cloudflare\"). Dieser Dienst sammelt und analysiert Daten über die Performance und Nutzung unserer Website aus der Perspektive des Endbenutzers.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-91",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Bei Ihrem Besuch auf unserer Website werden verschiedene Daten, einschliesslich Ihrer IP-Adresse, Informationen über den von Ihnen genutzten Browser, Ladezeiten der Webseite, Interaktionen auf der Seite und andere technische Informationen, an Cloudflare übermittelt. Diese Daten werden von Cloudflare genutzt, um uns detaillierte Berichte über die Performance unserer Website und das Nutzerverhalten zur Verfügung zu stellen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-92",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.3 Google Analytics",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-93",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wir verwenden auf unserer Website Google Analytics, einen Webanalysedienst der Google LLC (1600 Amphitheatre Parkway, Mountain View, CA 94043, USA; \"Google\"). Google Analytics verwendet sogenannte \"Cookies\", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-94",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Die durch das Cookie erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert. Im Falle der Aktivierung der IP-Anonymisierung auf dieser Website wird Ihre IP-Adresse von Google jedoch innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum zuvor gekürzt. Nur in Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort gekürzt.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-95",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Im Auftrag des Betreibers dieser Website wird Google diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports über die Websiteaktivitäten zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen gegenüber dem Websitebetreiber zu erbringen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-96",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Die im Rahmen von Google Analytics von Ihrem Browser übermittelte IP-Adresse wird nicht mit anderen Daten von Google zusammengeführt.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-97",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich werden nutzen können. Sie können darüber hinaus die Erfassung der durch das Cookie erzeugten und auf Ihre Nutzung der Website bezogenen Daten (inkl. Ihrer IP-Adresse) an Google sowie die Verarbeitung dieser Daten durch Google verhindern, indem Sie das unter dem folgenden Link verfügbare Browser-Plugin herunterladen und installieren: https://tools.google.com/dlpage/gaoptout.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-98",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.4 Google Tag Manager",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-99",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Für die Verwaltung von Website-Tags über eine Oberfläche nutzen wir den Google Tag Manager, einen Dienst der Google LLC (1600 Amphitheatre Parkway, Mountain View, CA 94043, USA; \"Google\"). Der Google Tag Manager selbst (welcher die Tags implementiert) ist eine cookie-lose Domain und verarbeitet keine personenbezogenen Daten. Der Dienst sorgt für die Auslösung anderer Tags, die ihrerseits unter Umständen Daten erfassen. Google Tag Manager greift nicht auf diese Daten zu. Wenn auf Domain- oder Cookie-Ebene eine Deaktivierung vorgenommen wurde, bleibt diese für alle Tracking-Tags bestehen, die mit Google Tag Manager implementiert werden.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-100",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Durch die Nutzung des Google Tag Managers können automatisiert Skripte (sogenannte Tags) auf unserer Website aktiviert und Daten von Ihrem Browser an Google übermittelt werden. Diese Daten können Informationen über Ihre IP-Adresse, den von Ihnen genutzten Browser, die besuchten Unterseiten unserer Website und weitere Interaktionen während Ihres Website-Besuchs beinhalten.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-101",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.5 Amazon SES",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-102",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unsere Website verwendet Amazon SES, einen E-Mail-Sendedienst von Amazon Web Services, Inc. Dieser Dienst ermöglicht es uns, E-Mails zu versenden und zu empfangen, um mit unseren Nutzern zu kommunizieren und ihnen Benachrichtigungen, Newsletter oder andere relevante Informationen zukommen zu lassen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-103",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wenn Sie bestimmte Funktionen unserer Website nutzen, die eine E-Mail-Kommunikation erfordern, werden Ihre E-Mail-Adresse und möglicherweise andere persönliche Daten an Amazon SES übermittelt, um die Kommunikation zu ermöglichen. Dies kann beinhalten, aber nicht beschränkt sein auf, Anmeldebestätigungen, Passwortzurücksetzungen oder Newsletter-Anmeldungen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-104",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Amazon verarbeitet Ihre Daten gemäss den Amazon Datenschutzbestimmungen. Es wird empfohlen, diese Richtlinien zu konsultieren, um weitere Informationen über die Verwendung Ihrer Daten durch Amazon zu erhalten.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-105",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.6 Cloudflare CDN",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-106",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unsere Website nutzt den Content Delivery Network (CDN) Dienst von Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA (\"Cloudflare\"). Ein CDN hilft, Inhalte unserer Website schneller zu liefern, indem es Kopien der Inhalte an ein Netzwerk von schnellen Lade-Servern verteilt.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-107",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wenn Sie unsere Website besuchen, wird Ihre IP-Adresse an Cloudflare übermittelt und es können Cookies in Ihrem Browser gesetzt werden, die für die Optimierung und Sicherheit des Dienstes erforderlich sind. Cloudflare verwendet diese Daten, um den Datenverkehr zwischen unserem Webserver und Ihrem Endgerät zu beschleunigen und um unsere Website vor Angriffen zu schützen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-108",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "4.7 Cloudflare Turnstile",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-109",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Unsere Website verwendet \"Cloudflare Turnstile\", einen Dienst von Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA (\"Cloudflare\"). Cloudflare Turnstile ist ein Sicherheitsdienst, der uns hilft, menschlichen von automatisiertem Datenverkehr zu unterscheiden und so unsere Website vor Missbrauch zu schützen.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-110",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wenn Sie versuchen, auf durch Cloudflare Turnstile geschützte Inhalte zuzugreifen, werden Sie aufgefordert, bestimmte Informationen, in der Regel Ihre E-Mail-Adresse, bereitzustellen. Diese Daten werden an Cloudflare übermittelt und dort gespeichert, um den Zugriff auf den geschützten Inhalt zu ermöglichen und uns eine Übersicht über die Anfragen zu geben.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-111",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "Wenn Sie Formulare auf unserer Website ausfüllen oder bestimmte Aktionen durchführen, die eine Überprüfung erfordern, kann Cloudflare Turnstile verwendet werden, um sicherzustellen, dass Sie ein Mensch und kein Bot sind. Dabei werden verschiedene Daten, einschliesslich Ihrer IP-Adresse und Informationen über Ihre Interaktion mit dem Cloudflare Turnstile -Widget, an Cloudflare übermittelt und dort verarbeitet.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-112",
+							"style": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": "BrainBox Generatoren",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "datenschutz-113",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s0",
+									"text": " BrainBox Generatoren ist ein Dienst der ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "BrainBox Solutions GmbH",
+									"marks": ["link0"]
+								},
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": ", um alle datenschutzrelevanten Dienste auf einer Website zu erkennen und unter anderem damit bei der Erstellung der Datenschutzerklärung zu helfen. Dabei werden keine personenbezogenen Daten erfasst oder verarbeitet. ",
+									"marks": []
+								}
+							],
+							"markDefs": [
+								{
+									"_type": "link",
+									"_key": "link0",
+									"href": "https://brainbox.swiss/"
+								}
+							]
+						}
+					]
+				}
 			}
 		],
 		"posts": [

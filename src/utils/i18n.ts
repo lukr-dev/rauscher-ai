@@ -45,6 +45,9 @@ export function translationHref(
 }
 const ui = {
 	de: {
+		legal: "Rechtliche Informationen",
+		imprint: "Impressum",
+		privacy: "Datenschutz",
 		navigation: "Hauptnavigation",
 		language: "Sprache",
 		home: "Start",
@@ -103,6 +106,9 @@ const ui = {
 		missingPage: "Die gesuchte Seite existiert nicht.",
 	},
 	en: {
+		legal: "Legal information",
+		imprint: "Legal notice",
+		privacy: "Data protection",
 		navigation: "Main navigation",
 		language: "Language",
 		home: "Home",
@@ -160,6 +166,9 @@ const ui = {
 		missingPage: "The page you're looking for doesn't exist.",
 	},
 	fr: {
+		legal: "Informations légales",
+		imprint: "Mentions légales",
+		privacy: "Protection des données",
 		navigation: "Navigation principale",
 		language: "Langue",
 		home: "Accueil",

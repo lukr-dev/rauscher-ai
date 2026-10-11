@@ -176,6 +176,10 @@ const pageCtx = createPublicPageContext({
 						© {new Date().getFullYear()} {siteTitle}
 					</small>
 				</div>
+				<nav class="footer-legal" aria-label={copy.legal}>
+					<a href={localizedHref("/impressum", locale)}>{copy.imprint}</a>
+					<a href={localizedHref("/datenschutz", locale)}>{copy.privacy}</a>
+				</nav>
 			</div>
 		</footer>
 

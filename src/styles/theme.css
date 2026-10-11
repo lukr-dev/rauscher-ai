@@ -171,6 +171,7 @@ a {
 }
 .content-page {
 	max-width: 880px;
+	overflow-wrap: anywhere;
 	margin: 64px auto;
 	padding-inline: 24px;
 	line-height: 1.6;
@@ -205,6 +206,21 @@ a {
 }
 .footer-links small {
 	margin-left: auto;
+}
+.footer-legal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 24px;
+	margin-top: 28px;
+	color: #b1aa9d;
+	font-size: 13px;
+}
+.footer-legal a {
+	text-decoration: none;
+}
+.footer-legal a:hover {
+	color: var(--paper);
+	text-decoration: underline;
 }
 @media (max-width: 600px) {
 	.wrap {

@@ -99,8 +99,10 @@ Use the HTTPS URL for both the site and CMS setup; passkeys require a secure ori
 
 ## Cloudflare deployment (later)
 
-The Worker entry point, D1 `DB` binding, R2 `MEDIA` binding, and scheduled maintenance handler are configured in `wrangler.jsonc` and `src/worker.ts`. No remote resources or deployment automation have been created.
+The Worker entry point, D1 `DB` binding, R2 `MEDIA` binding, and scheduled maintenance handler are configured in `wrangler.jsonc` and `src/worker.ts`. The deployment targets the **Lukas Rauscher** Cloudflare account and `https://rauscher-ai.lueku-rauscher.workers.dev`. No custom domain is configured. GitHub Actions checks and builds changes; deployment remains manual.
 
 When ready to release, merge `dev` into `main`, use a clean `main` checkout, authenticate Wrangler, configure the production `EMDASH_SITE_URL` variable and `EMDASH_ENCRYPTION_KEY` secret, and run `npm run deploy`. Keep the encryption key stable: changing it prevents existing encrypted values from being read. Wrangler can provision the named D1/R2 resources on first deployment. Complete CMS setup on the production origin.
 
 Future Cloudflare previews must use separate D1/R2 resources and their own site URL and secrets. See the [official Cloudflare deployment guide](https://docs.emdashcms.com/deployment/cloudflare/) for provisioning and preview configuration. Sandboxed plugins can be enabled later if needed on a Workers paid plan.
+
+The footer includes muted links to the `impressum` and `datenschutz` CMS pages. Their German content was copied from the existing public website without rewriting; other locales use the normal German fallback until translated.
