@@ -1,0 +1,161 @@
+---
+import { siteUi } from "../../../../src/utils/i18n";
+import { fetchActivity } from "../activity";
+interface Props {
+	node: { username?: string; heading?: string; description?: string };
+}
+const { node } = Astro.props;
+const activity = await fetchActivity(node.username ?? "");
+const offset = activity
+	? new Date(`${activity.days[0].date}T00:00:00Z`).getUTCDay()
+	: 0;
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="commits dark-section">
+	<div class="wrap">
+		<div class="commit-panel">
+			<div class="commit-heading">
+				<div>
+					<div class="title-row">
+						<h2>{node.heading}</h2>
+						{activity && <span class="source">● live · @{node.username}</span>}
+					</div>
+					<p class="description">{node.description}</p>
+				</div>
+				{activity && (
+					<div class="totals">
+						<div>
+							<strong>{activity.total.toLocaleString(locale)}</strong>
+							<span>{copy.yearContributions}</span>
+						</div>
+						<div>
+							<strong>{activity.longestStreak}</strong>
+							<span>{copy.longestStreak}</span>
+						</div>
+					</div>
+				)}
+			</div>
+			{activity ? (
+				<div
+					class="graph-scroll"
+					tabindex="0"
+					role="region"
+					aria-label={copy.graph}
+				>
+					<div
+						class="graph"
+						style={`--weeks:${Math.ceil((offset + activity.days.length) / 7)}`}
+					>
+						{activity.days.map((day, index) => (
+							<span
+								class={`day level-${day.level}`}
+								style={`grid-column:${Math.floor((index + offset) / 7) + 1};grid-row:${((index + offset) % 7) + 1}`}
+								title={`${day.date} · ${day.count} ${copy.contributions}`}
+							/>
+						))}
+					</div>
+				</div>
+			) : (
+				<p role="status">{copy.githubUnavailable}</p>
+			)}
+		</div>
+	</div>
+</section>
+
+<style>
+	.commits {
+		padding: 12px 0 100px;
+	}
+	.commit-panel {
+		border: 2px solid #3a352d;
+		border-radius: 28px;
+		padding: 32px;
+	}
+	.commit-heading {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 24px 40px;
+		flex-wrap: wrap;
+		margin-bottom: 24px;
+	}
+	.title-row {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		flex-wrap: wrap;
+	}
+	h2 {
+		font: 900 64px/0.85 var(--font-display);
+		margin: 0;
+	}
+	.source {
+		color: var(--ink);
+		background: var(--yellow);
+		padding: 4px 10px;
+		border-radius: 99px;
+		font-size: 12px;
+		font-weight: 700;
+	}
+	.description {
+		color: #d9d3c4;
+		max-width: 34em;
+		font-size: 16px;
+		line-height: 1.5;
+		margin-bottom: 0;
+	}
+	.totals {
+		display: flex;
+		gap: 36px;
+		flex-wrap: wrap;
+	}
+	.totals div {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.totals strong {
+		font: 900 56px/0.85 var(--font-display);
+		color: var(--yellow);
+	}
+	.totals span {
+		color: #d9d3c4;
+		font-size: 13px;
+	}
+	.graph-scroll {
+		overflow-x: auto;
+	}
+	.graph {
+		display: grid;
+		grid-template-columns: repeat(var(--weeks), 1fr);
+		grid-template-rows: repeat(7, 12px);
+		gap: 4px;
+		min-width: 760px;
+	}
+	.day {
+		background: #302b23;
+		border-radius: 3px;
+	}
+	.level-1 {
+		background: #645b28;
+	}
+	.level-2 {
+		background: #9c8c32;
+	}
+	.level-3 {
+		background: #cdb33b;
+	}
+	.level-4 {
+		background: var(--yellow);
+	}
+	@media (max-width: 600px) {
+		.commit-panel {
+			padding: 24px 18px;
+		}
+		.commits {
+			padding-bottom: 64px;
+		}
+	}
+</style>

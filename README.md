@@ -1,6 +1,51 @@
 # rauscher.ai
 
-Personal website built from the official [EmDash Cloudflare starter](https://github.com/emdash-cms/templates/tree/main/starter-cloudflare): Astro, EmDash CMS, Cloudflare Workers, D1, and R2. The starter includes posts, pages, categories, tags, search, and the CMS admin. Visual design and personal content come next.
+Personal website built from the official [EmDash Cloudflare starter](https://github.com/emdash-cms/templates/tree/main/starter-cloudflare): Astro, EmDash CMS, Cloudflare Workers, D1, and R2.
+
+## Homepage blocks
+
+The homepage renders the published `pages/home` entry. Its rich-text editor offers five separately installed native plugins under **Rauscher.ai**: Hero, Level Up, Commits, Blog Preview, and Active Quests. Add, edit, remove, and reorder these blocks in the page content.
+
+- Hero keeps the greeting/name fixed. Intro and card backs use rich text. Cards can be added/removed; title and photo are required, rarity and special ability are optional. Completion copy and link are editable.
+- Level Up has its own heading, rich-text intro, highlights, and button.
+- Commits takes a GitHub username, heading, and description. It retrieves contribution activity through the public `github-contributions-api.jogruber.de` proxy; outages display an unavailable message. Contributions include more than commits.
+- Blog Preview shows the latest three published posts, their CMS publication dates, and reading time calculated at 200 words/minute. The existing post `excerpt` field is labeled **Preview intro**. Without one, the first two sentences of content are used; CSS limits previews to three lines.
+- Active Quests has editable category, title, description, status, since text, external link/label, and an optional published post selected from the CMS.
+
+`seed/seed.json` contains the design's homepage content and three short example posts. Load sample content during initial CMS setup; changing this file does not overwrite an existing site's content. Photos from the design are in `public/media/hero/`.
+
+EmDash 1.2.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.2.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
+
+## About blocks
+
+The published `pages/about` entry uses four separate plugins: About Hero, Skill Deck, Career, and Inventory. Each has an editable heading and rich-text introduction.
+
+- About Hero has role/location badges, contact links, photo and card name. Its back is rich text with optional special ability copy. There is no rarity or front counter.
+- Skill Deck has reorderable groups and skills, optional proficiency text and optional six-segment levels.
+- Career has reorderable roles/qualifications, organisation, date range, job/education type, current marker, and repeatable bullet points.
+- Inventory has tool names, categories and optional uploaded logos. Filters come from the tools' category text, merging differences in case and whitespace.
+
+The seed includes the About design content and `public/media/about/p01.jpg`. Existing CMS content must be updated through the editor/API separately.
+
+`public/styles/rich-text.css` is shared by the site and nested block editors. It applies the section's colours and typography inside the editor; H2 is 60px and yellow on dark sections. The versioned admin patch also initializes nested lists correctly. Review this patch before upgrading EmDash admin from 1.2.0.
+
+## Blog views
+
+The published `pages/posts` entry contains the separate **Blog Overview** plugin, with an editable heading, rich-text introduction and optional highlighted-post picker. Without a selection, the newest published post is featured. Category filters come from published posts; a highlighted post only appears within filters it matches. Lists use CMS publication dates and calculated reading time, with pagination after 20 posts.
+
+Posts use **Preview intro** (`excerpt`) for card introductions, falling back to the first two sentences of their content. The optional **Project status** field offers _In Arbeit_ and _Abgeschlossen_. Categories group posts, and tags appear as technology badges.
+
+Article pages render the existing post body with the same typography as the editor, generate a contents list from H2/H3 headings, show reading progress, and link to two recent posts. Author details use the CMS byline when supplied. The seed also includes four projects from the design; the CRM example includes the full article. Changing the seed does not migrate an existing CMS: add `project_status`, set the content field's `options.previewClass` to `on-paper copy-article`, and add a Blog Overview block to `pages/posts` through the editor/API.
+
+## Languages
+
+The shared header offers **DE / EN / FR**. German stays at the existing URLs; English uses `/en/` and French `/fr/`. All routes render the same templates, and navigation, controls and internal links follow the selected language. Language links use published translations and their localized slugs; unpublished translations stay hidden. If an article has neither the requested translation nor a German fallback, the switcher returns to the localized blog overview. English/French pages without a published translation show the German content with a notice. A fallback blog page also shows its German post list.
+
+The seed includes English and French translations of the homepage, About page, blog overview and all six existing posts, plus navigation and taxonomy labels. These translations are also published in the local review CMS, linked to their German originals and keeping their publication dates.
+
+Edit each language in the CMS editor's **Translations** panel, and create and publish translations there for new content. Translate the `home` and `posts` pages using those same reserved slugs; other pages and articles can have localized slugs. Translated pages query posts in their own language. Menus, categories and tags can also be translated in EmDash. Later editorial changes are not automatically copied or translated into the other languages.
+
+New installations use `seed/seed.json`'s `defaultLocale: "de"`. The original German-only starter stored German rows with locale `en`; after backing up that original database, run `scripts/migrations/001-german-locale.sql` **before** creating actual English translations. This correction has been applied to the local review preview only; do not run it on a database that already contains English content.
 
 ## Branches
 

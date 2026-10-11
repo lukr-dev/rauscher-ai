@@ -1,0 +1,158 @@
+--- a/node_modules/@emdash-cms/admin/dist/index.js
++++ b/node_modules/@emdash-cms/admin/dist/index.js
+@@ -10403,7 +10403,7 @@
+ 	const { _: _t } = useLingui();
+ 	const [pickerOpen, setPickerOpen] = React$1.useState(false);
+ 	const [imageBroken, setImageBroken] = React$1.useState(false);
+-	const url = typeof value === "string" && value.length > 0 ? value : "";
++	const url = typeof value === "string" ? value : value && typeof value === "object" ? value.previewUrl || value.src || (value.meta?.storageKey ? `/_emdash/api/media/file/${value.meta.storageKey}` : value.id ? `/_emdash/api/media/file/${value.id}` : "") : "";
+ 	React$1.useEffect(() => {
+ 		setImageBroken(false);
+ 	}, [url]);
+@@ -10414,7 +10414,17 @@
+ 		const localKey = item.storageKey || item.id;
+ 		const nextUrl = isLocalMedia && localKey ? `/_emdash/api/media/file/${localKey}` : item.url;
+ 		if (!nextUrl) return;
+-		onChange(actionId, nextUrl);
++		onChange(actionId, {
++			id: item.id,
++			provider: item.provider || "local",
++			src: nextUrl,
++			alt: item.alt || "",
++			width: item.width,
++			height: item.height,
++			focalX: item.focalX,
++			focalY: item.focalY,
++			meta: { ...item.meta, ...(item.storageKey ? { storageKey: item.storageKey } : {}) }
++		});
+ 	};
+ 	return /* @__PURE__ */ jsxs("div", { children: [
+ 		/* @__PURE__ */ jsx("label", {
+@@ -25969,7 +25979,7 @@
+ 	const registry = getRegistry(editor);
+ 	const { Icon, label, color, placeholder, placeholderFallback } = getEmbedMeta(blockType, registry);
+ 	const blockDef = registry.get(blockType);
+-	const hasFields = blockDef?.fields && blockDef.fields.length > 0;
++	const hasFields = Array.isArray(blockDef?.fields);
+ 	const [isEditing, setIsEditing] = React$1.useState(false);
+ 	const [editValue, setEditValue] = React$1.useState(id || "");
+ 	const inputRef = React$1.useRef(null);
+@@ -30057,20 +30067,32 @@
+ * When the block has `fields`, renders Block Kit elements.
+ * Otherwise falls back to a simple URL input.
+ */
++function hasRequiredPluginFields(fields, values) {
++	return (fields ?? []).every((field) => {
++		const value = values?.[field.action_id];
++		if (field.type === "repeater") return Array.isArray(value) && value.every((row) => hasRequiredPluginFields(field.fields, row));
++		if (!field.required) return true;
++		if (field.type === "media_picker") return !!value && typeof value === "object" && !!(value.id || value.src);
++		return typeof value === "string" ? value.trim().length > 0 : value != null;
++	});
++}
+ function PluginBlockModal({ block, initialValues, onClose, onInsert }) {
+ 	const [formValues, setFormValues] = React$1.useState({});
++	const [formVersion, setFormVersion] = React$1.useState(0);
+ 	const inputRef = React$1.useRef(null);
+ 	const { _: _t2 } = useLingui();
+ 	React$1.useEffect(() => {
+ 		if (block) {
+ 			setFormValues(buildPluginBlockFormValues(block, initialValues));
++			setFormVersion((version) => version + 1);
+ 			if (!block.fields || block.fields.length === 0) setTimeout(() => inputRef.current?.focus(), 0);
+ 		}
+ 	}, [block, initialValues]);
+ 	const handleSubmit = (e) => {
+ 		e.preventDefault();
+ 		e.stopPropagation();
+-		if (block?.fields && block.fields.length > 0) onInsert(formValues);
++		if (!hasRequiredPluginFields(block?.fields, formValues)) return;
++		if (Array.isArray(block?.fields)) onInsert(formValues);
+ 		else {
+ 			const url = typeof formValues.id === "string" ? formValues.id.trim() : "";
+ 			if (url) onInsert({ id: url });
+@@ -30083,8 +30105,8 @@
+ 		}));
+ 	};
+ 	const isEditing = !!initialValues;
+-	const hasFields = block?.fields && block.fields.length > 0;
+-	const canSubmit = hasFields ? hasPluginBlockFormData(formValues) : typeof formValues.id === "string" && formValues.id.trim().length > 0;
++	const hasFields = Array.isArray(block?.fields);
++	const canSubmit = hasFields ? (block.fields.length === 0 || hasPluginBlockFormData(formValues)) && hasRequiredPluginFields(block.fields, formValues) : typeof formValues.id === "string" && formValues.id.trim().length > 0;
+ 	const dialogSize = hasFields ? "xl" : "sm";
+ 	return /* @__PURE__ */ jsx(Dialog.Root, {
+ 		open: !!block,
+@@ -30137,7 +30159,7 @@
+ 						pluginId: block.pluginId,
+ 						value: formValues[field.action_id],
+ 						onChange: handleFieldChange
+-					}, field.action_id)) : /* @__PURE__ */ jsx(Input, {
++					}, `${field.action_id}-${formVersion}`)) : /* @__PURE__ */ jsx(Input, {
+ 						ref: inputRef,
+ 						type: "url",
+ 						className: "w-full",
+@@ -30168,6 +30190,16 @@
+ */
+ function BlockKitField({ field, pluginId, value, onChange }) {
+ 	switch (field.type) {
++		// Rauscher: styled nested rich text in plugin block forms.
++		case "portable_text": return jsxs("div", {
++			className: "min-w-0 space-y-2",
++			children: [jsx("label", { className: "block text-sm font-medium", children: field.label }), jsx("link", {rel: "stylesheet", href: "/styles/rich-text.css"}), jsx("div", { className: `rauscher-rich-text editor-preview ${field.preview_class || "on-yellow copy-lead"}`, children: jsx(PortableTextEditor, {
++				value: Array.isArray(value) ? value : [],
++				onChange: (next) => onChange(field.action_id, next),
++				pluginBlocks: [],
++				minimal: false
++			}) })]
++		});
+ 		case "text_input": {
+ 			const multiline = !!field.multiline;
+ 			const placeholder = typeof field.placeholder === "string" ? field.placeholder : void 0;
+@@ -30297,6 +30329,10 @@
+ 		for (const sf of field.fields) switch (sf.type) {
+ 			case "toggle":
+ 				newItem[sf.action_id] = false;
++				break;
++			case "repeater":
++			case "portable_text":
++				newItem[sf.action_id] = [];
+ 				break;
+ 			case "number_input":
+ 				newItem[sf.action_id] = void 0;
+@@ -35119,11 +35155,13 @@
+ 			onCheckedChange: handleChange
+ 		});
+ 		case "portableText": {
++			// Rauscher: styled article fields use the same CSS as the public page.
+ 			const labelId = `${id}-label`;
++			const previewClass = typeof field.options?.previewClass === "string" ? field.options.previewClass : undefined;
+ 			return /* @__PURE__ */ jsxs("div", {
+ 				id,
+-				className: cn(!minimal && "grid gap-2"),
+-				children: [!minimal && /* @__PURE__ */ jsx(Label, { children: /* @__PURE__ */ jsx("span", {
++				className: cn(!minimal && "grid gap-2", previewClass && `rauscher-rich-text ${previewClass}`),
++				children: [previewClass && jsx("link", {rel: "stylesheet", href: "/styles/rich-text.css"}), !minimal && /* @__PURE__ */ jsx(Label, { children: /* @__PURE__ */ jsx("span", {
+ 					id: labelId,
+ 					children: label
+ 				}) }), /* @__PURE__ */ jsx(PortableTextEditor, {
+@@ -35172,14 +35210,18 @@
+ 			});
+ 		}
+ 		case "select": {
+-			const selectOptions = Array.isArray(field.options) ? field.options : [];
++			// Rauscher: optional status fields must be clearable.
++			const selectOptions = [
++				...(!field.required ? [{ value: "", label: "None" }] : []),
++				...(Array.isArray(field.options) ? field.options : [])
++			];
+ 			const selectItems = {};
+ 			for (const opt of selectOptions) selectItems[opt.value] = opt.label;
+ 			return /* @__PURE__ */ jsx(Select, {
+ 				id,
+ 				label,
+ 				value: typeof value === "string" ? value : "",
+-				onValueChange: (v) => handleChange(v ?? ""),
++				onValueChange: (v) => handleChange(!field.required && !v ? null : v ?? ""),
+ 				items: selectItems,
+ 				children: selectOptions.map((opt) => /* @__PURE__ */ jsx(Select.Option, {
+ 					value: opt.value,

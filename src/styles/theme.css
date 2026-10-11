@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@500;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap");
+
+:root {
+	--yellow: oklch(0.9 0.17 95);
+	--ink: #16130f;
+	--paper: #fffdf6;
+	--blue: oklch(0.48 0.2 264);
+	--lavender: oklch(0.86 0.08 264);
+	--green: oklch(0.72 0.18 150);
+	--font-display: "Darker Grotesque", sans-serif;
+	--font-body: "DM Sans", system-ui, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+html {
+	scroll-behavior: smooth;
+}
+body {
+	margin: 0;
+	background: var(--yellow);
+	color: var(--ink);
+	font-family: var(--font-body);
+	-webkit-font-smoothing: antialiased;
+}
+a {
+	color: inherit;
+}
+button,
+a {
+	-webkit-tap-highlight-color: transparent;
+}
+:focus-visible {
+	outline: 3px solid var(--blue);
+	outline-offset: 4px;
+}
+.wrap {
+	width: min(100%, 1320px);
+	margin-inline: auto;
+	padding-inline: 40px;
+}
+.dark-section {
+	background: var(--ink);
+	color: var(--paper);
+}
+.dark-section :focus-visible {
+	outline-color: var(--yellow);
+}
+.section-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+.section-heading h2 {
+	font: 900 clamp(64px, 10vw, 150px)/0.85 var(--font-display);
+	letter-spacing: -0.03em;
+	margin: 0;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+}
+.dark-section .section-heading h2 {
+	color: var(--yellow);
+}
+.lead {
+	font-size: 19px;
+	line-height: 1.45;
+	max-width: 22em;
+}
+.rich-text p {
+	margin: 0 0 0.75em;
+}
+.rich-text p:last-child {
+	margin-bottom: 0;
+}
+.rich-text a {
+	text-underline-offset: 3px;
+}
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid var(--ink);
+	border-radius: 99px;
+	padding: 12px 20px;
+	background: var(--yellow);
+	color: var(--ink);
+	font: 700 15px var(--font-body);
+	text-decoration: none;
+	cursor: pointer;
+}
+.button.dark {
+	background: var(--ink);
+	color: var(--paper);
+}
+.site-header {
+	padding-block: 22px;
+}
+.site-nav {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+.site-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	font: 900 32px/1 var(--font-display);
+	letter-spacing: -0.02em;
+	text-decoration: none;
+}
+.brand-card {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 40px;
+	border: 2px solid var(--ink);
+	border-radius: 6px;
+	background: var(--paper);
+	transform: rotate(-8deg);
+	box-shadow: 2px 2px 0 var(--ink);
+	font-size: 24px;
+}
+.header-controls {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-left: auto;
+}
+.menu-links,
+.language-switcher {
+	display: flex;
+	gap: 4px;
+	flex-wrap: wrap;
+	background: var(--paper);
+	border: 2px solid var(--ink);
+	border-radius: 99px;
+	padding: 4px;
+}
+.menu-links a,
+.language-switcher a {
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 99px;
+	font-size: 15px;
+}
+.menu-links a[aria-current="page"],
+.language-switcher a[aria-current="page"] {
+	background: var(--ink);
+	color: var(--paper);
+}
+.menu-links a:hover,
+.language-switcher a:hover {
+	background: var(--yellow);
+	color: var(--ink);
+}
+.language-switcher a {
+	font-size: 13px;
+	font-weight: 700;
+	padding-inline: 10px;
+}
+.translation-note {
+	font-size: 14px;
+	line-height: 1.5;
+	margin-block: 0 16px;
+}
+.content-page {
+	max-width: 880px;
+	margin: 64px auto;
+	padding-inline: 24px;
+	line-height: 1.6;
+}
+.content-page h1 {
+	font: 900 clamp(48px, 8vw, 80px)/1 var(--font-display);
+}
+.site-footer {
+	background: var(--ink);
+	color: var(--paper);
+	padding: 80px 0 36px;
+}
+.footer-cta {
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	display: inline-block;
+	font: 900 clamp(64px, 13vw, 180px)/0.9 var(--font-display);
+	color: var(--yellow);
+	letter-spacing: -0.03em;
+	text-decoration: none;
+	margin-bottom: 48px;
+}
+.footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px 32px;
+	align-items: center;
+	font-size: 15px;
+}
+.footer-links a {
+	text-decoration: none;
+}
+.footer-links small {
+	margin-left: auto;
+}
+@media (max-width: 600px) {
+	.wrap {
+		padding-inline: 20px;
+	}
+	.site-nav {
+		gap: 20px;
+	}
+	.header-controls {
+		margin-left: 0;
+	}
+	.site-footer {
+		padding-top: 56px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

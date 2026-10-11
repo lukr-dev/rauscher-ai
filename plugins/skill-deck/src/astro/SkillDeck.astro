@@ -1,0 +1,136 @@
+---
+import type { PortableTextBlock } from "emdash";
+import { PortableText } from "emdash/ui";
+import { skillLevel } from "../content";
+interface Props {
+	node: {
+		heading?: string;
+		intro?: PortableTextBlock[];
+		groups?: {
+			title: string;
+			skills?: { title: string; proficiency?: string; level?: number }[];
+		}[];
+	};
+}
+const { node } = Astro.props;
+---
+
+<section class="skill-deck dark-section">
+	<div class="wrap">
+		<div class="section-heading">
+			<h2>{node.heading}</h2>
+			<div class="lead rauscher-rich-text on-dark copy-lead">
+				<PortableText value={node.intro ?? []} />
+			</div>
+		</div>
+		<div class="packs">
+			{(node.groups ?? []).map((group, index) => (
+				<article
+					class:list={["pack", { blue: index % 3 === 2 }]}
+					style={`--pack-colour:${["var(--yellow)", "var(--paper)", "var(--blue)"][index % 3]}`}
+				>
+					<h3>{group.title}</h3>
+					<ul>
+						{(group.skills ?? []).map((skill) => {
+							const level = skillLevel(skill.level);
+							return (
+								<li>
+									<div class="skill-name">{skill.title}</div>
+									{skill.proficiency && (
+										<div class="proficiency">{skill.proficiency}</div>
+									)}
+									{level !== undefined && (
+										<div
+											class="level"
+											role="img"
+											aria-label={`${skill.title}: ${level}/6`}
+										>
+											{Array.from({ length: 6 }, (_, i) => (
+												<span class:list={{ filled: i < level }} />
+											))}
+										</div>
+									)}
+								</li>
+							);
+						})}
+					</ul>
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+<style>
+	.skill-deck {
+		padding: 110px 0 120px;
+	}
+	.packs {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+		gap: 28px;
+		margin-top: 56px;
+	}
+	.pack {
+		background: var(--pack-colour);
+		color: var(--ink);
+		border: 2px solid var(--paper);
+		border-radius: 24px;
+		padding: 20px;
+		transform: rotate(-2deg);
+		transition: transform 0.3s;
+		align-self: stretch;
+	}
+	.pack:nth-child(3n + 2) {
+		transform: rotate(1.5deg);
+	}
+	.pack:nth-child(3n) {
+		transform: rotate(-1deg);
+	}
+	.pack:hover,
+	.pack:focus-within {
+		transform: rotate(0) translateY(-8px);
+	}
+	.pack.blue {
+		color: var(--paper);
+	}
+	h3 {
+		font: 900 44px/0.9 var(--font-display);
+		margin: 4px 0 20px;
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	li {
+		border: 2px solid var(--ink);
+		border-radius: 12px;
+		background: var(--paper);
+		color: var(--ink);
+		padding: 10px 12px;
+	}
+	.skill-name {
+		font-size: 16px;
+		font-weight: 700;
+	}
+	.proficiency {
+		font-size: 13px;
+		margin-top: 5px;
+	}
+	.level {
+		display: flex;
+		gap: 5px;
+		margin-top: 10px;
+	}
+	.level span {
+		height: 6px;
+		flex: 1;
+		background: #16130f1f;
+		border-radius: 3px;
+	}
+	.level .filled {
+		background: var(--blue);
+	}
+</style>

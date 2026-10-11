@@ -1,0 +1,373 @@
+---
+import { siteUi, localizedHref } from "../../../../src/utils/i18n";
+import { Image, PortableText } from "emdash/ui";
+import { isSafeLink } from "../content";
+import type { HeroNode } from "../content";
+
+interface Props {
+	node: HeroNode;
+}
+const { node } = Astro.props;
+const cards = node.cards ?? [];
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="hero" data-hero>
+	<div class="wrap">
+		<p class="greeting">{copy.greeting}</p>
+		<h1>LUKAS</h1>
+		<div class="cards" data-cards>
+			{cards.map((card, index) => (
+				<article
+					class="card"
+					data-card
+					style={`--angle:${cards.length > 1 ? (index / (cards.length - 1) - 0.5) * 24 : 0}deg;--color:${["var(--paper)", "var(--blue)", "var(--yellow)"][index % 3]}`}
+				>
+					<button
+						type="button"
+						class="front"
+						data-flip
+						aria-expanded="false"
+						aria-label={`${card.title}: ${copy.flip}`}
+					>
+						<span class="card-labels">
+							<span>
+								{String(index + 1).padStart(2, "0")}/
+								{String(cards.length).padStart(2, "0")}
+							</span>
+							{card.rarity?.trim() && <span class="rarity">{card.rarity}</span>}
+						</span>
+						<Image
+							image={card.photo}
+							alt={card.photo.alt || `Lukas — ${card.title}`}
+							class="photo"
+							priority={index < 5}
+						/>
+						<span class="card-title">{card.title}</span>
+					</button>
+					<div class="back" data-back inert aria-hidden="true">
+						<h2>{card.title}</h2>
+						<div class="card-copy rauscher-rich-text on-dark copy-card">
+							<PortableText value={card.back ?? []} />
+						</div>
+						{(card.abilityLabel?.trim() || card.abilityText?.trim()) && (
+							<div class="ability">
+								{card.abilityLabel?.trim() && (
+									<p class="ability-label">{card.abilityLabel}</p>
+								)}
+								{card.abilityText?.trim() && <p>{card.abilityText}</p>}
+							</div>
+						)}
+						<button
+							type="button"
+							class="close-card"
+							data-close
+							aria-label={`${card.title}: ${copy.front}`}
+						>
+							↶ {copy.back}
+						</button>
+					</div>
+				</article>
+			))}
+		</div>
+		<div class="hero-bottom">
+			<div class="intro rich-text rauscher-rich-text on-yellow copy-intro">
+				<PortableText value={node.intro ?? []} />
+			</div>
+			{cards.length > 0 && (
+				<div class="card-controls">
+					<span class="counter" role="status" aria-live="polite">
+						<span data-found>0</span>/{cards.length} {copy.discovered}
+					</span>
+					<button type="button" class="button dark" data-shuffle>
+						↻ {copy.shuffle}
+					</button>
+				</div>
+			)}
+		</div>
+		<div class="completion" data-completion hidden role="status">
+			{node.completionMessage && <p>{node.completionMessage}</p>}
+			{node.completionLink &&
+				isSafeLink(node.completionLink) &&
+				node.completionLinkLabel && (
+					<a class="button" href={localizedHref(node.completionLink, locale)}>
+						{node.completionLinkLabel} →
+					</a>
+				)}
+		</div>
+	</div>
+</section>
+
+<script>
+	for (const hero of document.querySelectorAll<HTMLElement>("[data-hero]")) {
+		const board = hero.querySelector<HTMLElement>("[data-cards]")!;
+		const cards = [...board.querySelectorAll<HTMLElement>("[data-card]")];
+		const discovered = new Set<HTMLElement>();
+		const completion = hero.querySelector<HTMLElement>("[data-completion]")!;
+		const setFlipped = (card: HTMLElement, flipped: boolean) => {
+			const front = card.querySelector<HTMLButtonElement>("[data-flip]")!;
+			const back = card.querySelector<HTMLElement>("[data-back]")!;
+			card.classList.toggle("is-flipped", flipped);
+			front.setAttribute("aria-expanded", String(flipped));
+			front.inert = flipped;
+			back.inert = !flipped;
+			back.setAttribute("aria-hidden", String(!flipped));
+			if (flipped) {
+				discovered.add(card);
+				hero.querySelector<HTMLElement>("[data-found]")!.textContent = String(
+					discovered.size,
+				);
+				completion.hidden = discovered.size !== cards.length;
+				card
+					.querySelector<HTMLButtonElement>("[data-close]")!
+					.focus({ preventScroll: true });
+			} else {
+				front.focus({ preventScroll: true });
+			}
+		};
+		for (const card of cards) {
+			card
+				.querySelector("[data-flip]")!
+				.addEventListener("click", () => setFlipped(card, true));
+			card
+				.querySelector("[data-close]")!
+				.addEventListener("click", () => setFlipped(card, false));
+		}
+		hero.querySelector("[data-shuffle]")?.addEventListener("click", () => {
+			const shuffled = [...cards];
+			for (let i = shuffled.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+			}
+			for (const card of shuffled) board.appendChild(card);
+			for (const [index, card] of shuffled.entries()) {
+				card.style.setProperty(
+					"--angle",
+					`${cards.length > 1 ? (index / (cards.length - 1) - 0.5) * 24 : 0}deg`,
+				);
+			}
+		});
+	}
+</script>
+
+<style>
+	.hero {
+		padding: 24px 0 64px;
+		overflow: clip;
+	}
+	.greeting {
+		font: 700 40px/1 var(--font-display);
+		margin: 0 0 -8px 8px;
+	}
+	h1 {
+		font: 900 clamp(100px, 26vw, 360px)/0.75 var(--font-display);
+		letter-spacing: -0.04em;
+		margin: 0;
+		padding: 30px 0 34px;
+	}
+	.cards {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 40px 0;
+		margin: -45px 0 44px;
+		padding: 35px 24px;
+	}
+	.card {
+		position: relative;
+		flex: 0 0 clamp(180px, 22vw, 248px);
+		height: 355px;
+		margin: 0 -16px;
+		perspective: 1000px;
+		transform: rotate(var(--angle));
+		transition: transform 0.3s;
+	}
+	.card:hover,
+	.card:focus-within {
+		transform: rotate(0deg) translateY(-16px);
+		z-index: 2;
+	}
+	.front,
+	.back {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		border: 2px solid var(--ink);
+		border-radius: 20px;
+		padding: 14px;
+		box-shadow: 6px 6px 0 var(--ink);
+		backface-visibility: hidden;
+		transition: transform 0.55s;
+		box-sizing: border-box;
+	}
+	.front {
+		font: inherit;
+		text-align: left;
+		color: var(--ink);
+		background: var(--color);
+		cursor: pointer;
+	}
+	.front:focus-visible {
+		outline: 4px solid var(--blue);
+		outline-offset: 5px;
+	}
+	.card-labels {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 8px;
+		font-size: 11px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	.rarity {
+		background: var(--ink);
+		color: var(--paper);
+		border-radius: 99px;
+		padding: 4px 8px;
+		max-width: 70%;
+		overflow-wrap: anywhere;
+	}
+	.card :global(.photo) {
+		width: 100%;
+		min-height: 0;
+		flex: 1;
+		object-fit: cover;
+		object-position: 50% 20%;
+		border: 2px solid var(--ink);
+		border-radius: 12px;
+	}
+	.card-title,
+	.back h2 {
+		font: 900 29px/0.95 var(--font-display);
+		margin: 0;
+	}
+	.back {
+		background: var(--ink);
+		color: var(--paper);
+		transform: rotateY(180deg);
+		visibility: hidden;
+		overflow-y: auto;
+	}
+	.back h2 {
+		color: var(--yellow);
+	}
+	.card-copy {
+		font-size: 15px;
+		line-height: 1.5;
+	}
+	.card-copy :global(p) {
+		margin: 0 0 0.75em;
+	}
+	.card-copy :global(a) {
+		color: var(--yellow);
+	}
+	.ability {
+		margin-top: auto;
+		border-top: 1px dashed #fffdf64d;
+		padding-top: 12px;
+		font-size: 14px;
+	}
+	.ability p {
+		margin: 0 0 6px;
+	}
+	.ability-label {
+		color: var(--yellow);
+		font-size: 11px;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+	}
+	.close-card {
+		align-self: flex-start;
+		background: none;
+		border: 0;
+		color: var(--yellow);
+		font: 700 13px var(--font-body);
+		cursor: pointer;
+		padding: 6px 0;
+	}
+	.is-flipped .front {
+		transform: rotateY(-180deg);
+		visibility: hidden;
+	}
+	.is-flipped .back {
+		transform: rotateY(0deg);
+		visibility: visible;
+	}
+	.hero-bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 24px 40px;
+		flex-wrap: wrap;
+	}
+	.intro {
+		font-size: 21px;
+		max-width: 30em;
+	}
+	.card-controls {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	.counter {
+		font-weight: 700;
+		background: var(--paper);
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 12px 18px;
+	}
+	.completion {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 20px;
+		background: var(--blue);
+		color: var(--paper);
+		border: 2px solid var(--ink);
+		border-radius: 20px;
+		padding: 20px 24px;
+		margin-top: 28px;
+		box-shadow: 6px 6px 0 var(--ink);
+	}
+	.completion[hidden] {
+		display: none;
+	}
+	.completion p {
+		font: 900 34px/1 var(--font-display);
+		margin: 0;
+	}
+	@media (max-width: 600px) {
+		.hero {
+			padding-top: 16px;
+		}
+		.greeting {
+			font-size: 30px;
+		}
+		.cards {
+			margin: -20px -12px 24px;
+			padding: 24px 16px;
+			gap: 28px 12px;
+		}
+		.card {
+			flex-basis: min(240px, 80vw);
+			margin: 0;
+			height: 340px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.card,
+		.front,
+		.back {
+			transition: none;
+		}
+	}
+</style>

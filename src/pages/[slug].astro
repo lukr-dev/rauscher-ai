@@ -3,26 +3,40 @@ import {
 	getEmDashEntry,
 	getSeoMeta,
 	decodeSlug,
-	getSiteSettings,
+	getSiteSettingsWithCacheHint,
 } from "emdash";
 import { PortableText } from "emdash/ui";
+import { localizedHref } from "../utils/i18n";
 import Base from "../layouts/Base.astro";
 import { resolveStarterSiteIdentity } from "../utils/site-identity";
 
 const slug = decodeSlug(Astro.params.slug);
 
 if (!slug) {
-	return Astro.redirect("/404");
+	return Astro.rewrite(localizedHref("/404", Astro.currentLocale));
 }
 
-const { entry: page, cacheHint } = await getEmDashEntry("pages", slug);
+const {
+	entry: page,
+	cacheHint,
+	fallbackLocale,
+} = await getEmDashEntry("pages", slug, {
+	locale: Astro.currentLocale,
+});
 
 if (!page) {
-	return Astro.redirect("/404");
+	return Astro.rewrite(localizedHref("/404", Astro.currentLocale));
 }
 
+Astro.locals.contentLocale = fallbackLocale ?? Astro.currentLocale ?? "de";
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
-const { siteTitle } = resolveStarterSiteIdentity(await getSiteSettings());
+const settings = await getSiteSettingsWithCacheHint();
+if (Astro.cache?.enabled) Astro.cache.set(settings.cacheHint);
+const { siteTitle } = resolveStarterSiteIdentity(settings.data);
+
+const hasLayoutBlocks = page.data.content?.some((node) =>
+	node._type.startsWith("rauscher-"),
+);
 
 const seo = getSeoMeta(page, {
 	siteTitle,
@@ -36,11 +50,18 @@ const seo = getSeoMeta(page, {
 	pageTitle={seo.ogTitle}
 	description={seo.description}
 	canonical={seo.canonical}
-	content={{ collection: "pages", id: page.data.id, slug }}
+	content={{
+		collection: "pages",
+		id: page.data.id,
+		slug: page.id,
+		locale: fallbackLocale ?? Astro.currentLocale ?? "de",
+	}}
 >
-	<article>
-		<h1 {...page.edit.title}>{page.data.title}</h1>
+	<article class:list={{ "content-page": !hasLayoutBlocks }}>
+		{!hasLayoutBlocks && <h1 {...page.edit.title}>{page.data.title}</h1>}
 
-		<PortableText value={page.data.content} />
+		<div {...page.edit.content}>
+			<PortableText value={page.data.content} />
+		</div>
 	</article>
 </Base>

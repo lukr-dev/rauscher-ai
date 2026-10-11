@@ -1,0 +1,82 @@
+---
+import { localizedHref } from "../../../../src/utils/i18n";
+import { PortableText } from "emdash/ui";
+import type { PortableTextBlock } from "emdash";
+import { isSafeHref } from "emdash";
+
+interface Props {
+	node: {
+		heading?: string;
+		intro?: PortableTextBlock[];
+		highlights?: { value: string; description: string }[];
+		buttonLabel?: string;
+		buttonLink?: string;
+	};
+}
+const { node } = Astro.props;
+const link =
+	node.buttonLink && isSafeHref(node.buttonLink) ? node.buttonLink : undefined;
+---
+
+<section class="level-up dark-section">
+	<div class="wrap">
+		<div class="section-heading">
+			<h2>{node.heading}</h2>
+			<div class="lead rich-text rauscher-rich-text on-dark copy-lead">
+				<PortableText value={node.intro ?? []} />
+			</div>
+		</div>
+		<div class="highlights">
+			{(node.highlights ?? []).map((highlight) => (
+				<div class="highlight">
+					<span class="value">{highlight.value}</span>
+					<p>{highlight.description}</p>
+				</div>
+			))}
+		</div>
+		{link && node.buttonLabel && (
+			<a class="button" href={localizedHref(link, Astro.currentLocale)}>
+				{node.buttonLabel} ↓
+			</a>
+		)}
+	</div>
+</section>
+
+<style>
+	.level-up {
+		padding: 100px 0 60px;
+	}
+	.highlights {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+		gap: 16px;
+		margin: 48px 0 28px;
+	}
+	.highlight {
+		border: 2px solid var(--paper);
+		border-radius: 22px;
+		padding: 22px;
+		transition: transform 0.2s;
+	}
+	.highlight:hover {
+		transform: rotate(-2deg) translateY(-4px);
+	}
+	.value {
+		font: 900 68px/0.85 var(--font-display);
+	}
+	.highlight p {
+		font-size: 15px;
+		line-height: 1.4;
+		margin: 8px 0 0;
+	}
+	@media (max-width: 600px) {
+		.level-up {
+			padding-top: 64px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.highlight {
+			transition: none;
+		}
+	}
+</style>

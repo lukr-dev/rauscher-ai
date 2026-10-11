@@ -1,0 +1,153 @@
+---
+import { siteUi, localizedHref } from "../../../../src/utils/i18n";
+import { getEmDashCollection } from "emdash";
+import { postPreview } from "../preview";
+
+const { entries, cacheHint } = await getEmDashCollection("posts", {
+	status: "published",
+	locale: Astro.locals.contentLocale ?? Astro.currentLocale,
+	orderBy: { published_at: "desc" },
+	limit: 3,
+});
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+const posts = entries.map((entry) => ({
+	entry,
+	...postPreview(entry.data.content, entry.data.excerpt),
+	category: entry.data.terms?.category?.[0]?.label,
+}));
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="blog-preview">
+	<div class="wrap">
+		<div class="blog-panel">
+			<div class="blog-heading">
+				<h2>Blog</h2>
+				<a href={localizedHref("/posts", locale)}>{copy.allPosts} →</a>
+			</div>
+			<div class="posts">
+				{posts.map(({ entry, intro, readingMinutes, category }, index) => (
+					<a
+						class="post-card"
+						href={localizedHref(`/posts/${entry.id}`, locale)}
+						style={`--rotation:${[-1.5, 1, -0.5][index]}deg;--card-color:${["var(--yellow)", "var(--paper)", "var(--lavender)"][index]}`}
+					>
+						<div class="post-meta">
+							{category && <span class="category">{category}</span>}
+							<span>
+								{entry.data.publishedAt && (
+									<time datetime={entry.data.publishedAt.toISOString()}>
+										{entry.data.publishedAt.toLocaleDateString(locale, {
+											month: "2-digit",
+											year: "numeric",
+										})}
+									</time>
+								)}{" "}
+								· {readingMinutes} min
+							</span>
+						</div>
+						<h3 {...entry.edit.title}>{entry.data.title}</h3>
+						<p {...entry.edit.excerpt}>{intro}</p>
+					</a>
+				))}
+			</div>
+			{posts.length === 0 && <p>{copy.noPosts}</p>}
+		</div>
+	</div>
+</section>
+
+<style>
+	.blog-preview {
+		padding: 96px 0 64px;
+	}
+	.blog-panel {
+		background: var(--paper);
+		border: 2px solid var(--ink);
+		border-radius: 28px;
+		padding: 30px;
+		box-shadow: 6px 6px 0 var(--ink);
+	}
+	.blog-heading {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 16px;
+		margin-bottom: 24px;
+	}
+	h2 {
+		font: 900 64px/0.85 var(--font-display);
+		margin: 0;
+	}
+	.blog-heading a {
+		font-weight: 700;
+		border-bottom: 2px solid currentColor;
+		text-decoration: none;
+	}
+	.posts {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+		gap: 16px;
+	}
+	.post-card {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		padding: 22px;
+		border: 2px solid var(--ink);
+		border-radius: 20px;
+		background: var(--card-color);
+		transform: rotate(var(--rotation));
+		box-shadow: 4px 4px 0 var(--ink);
+		text-decoration: none;
+		transition: transform 0.25s;
+	}
+	.post-card:hover {
+		transform: rotate(0deg) translateY(-6px);
+	}
+	.post-meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px;
+		font-size: 13px;
+	}
+	.category {
+		background: var(--ink);
+		color: var(--paper);
+		border-radius: 99px;
+		padding: 4px 10px;
+		text-transform: uppercase;
+		font-size: 12px;
+		font-weight: 700;
+	}
+	h3 {
+		font: 900 38px/0.95 var(--font-display);
+		margin: 0;
+	}
+	.post-card p {
+		margin: 0;
+		font-size: 16px;
+		line-height: 1.45;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
+		overflow: hidden;
+	}
+	@media (max-width: 600px) {
+		.blog-preview {
+			padding-top: 64px;
+		}
+		.blog-panel {
+			padding: 24px 18px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.post-card {
+			transition: none;
+		}
+	}
+</style>

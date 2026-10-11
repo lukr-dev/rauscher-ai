@@ -1,0 +1,208 @@
+---
+import { siteUi } from "../../../../src/utils/i18n";
+import type { PortableTextBlock } from "emdash";
+import { PortableText } from "emdash/ui";
+interface Props {
+	node: {
+		heading?: string;
+		intro?: PortableTextBlock[];
+		entries?: {
+			title: string;
+			organisation?: string;
+			dateRange?: string;
+			kind?: string;
+			current?: boolean;
+			points?: { text: string }[];
+		}[];
+	};
+}
+const { node } = Astro.props;
+const entries = node.entries ?? [];
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="career">
+	<div class="wrap">
+		<div class="section-heading">
+			<h2>{node.heading}</h2>
+			<div class="lead rauscher-rich-text on-yellow copy-lead">
+				<PortableText value={node.intro ?? []} />
+			</div>
+		</div>
+		<ol class="timeline">
+			{entries.map((entry, index) => (
+				<li>
+					<span class="marker" aria-hidden="true">
+						{String(entries.length - index).padStart(2, "0")}
+					</span>
+					<article class:list={{ education: entry.kind === "education" }}>
+						<div class="entry-heading">
+							<div class="meta">
+								<span class="level-label">
+									LVL {String(entries.length - index).padStart(2, "0")}
+								</span>
+								<span>
+									{entry.kind === "education" ? copy.education : copy.job}
+								</span>
+								<span>{entry.dateRange}</span>
+								{entry.current && <span class="current">{copy.current}</span>}
+							</div>
+							<h3>{entry.title}</h3>
+							<p class="organisation">{entry.organisation}</p>
+						</div>
+						{entry.points?.length && (
+							<ul>
+								{entry.points.map((point) => (
+									<li>{point.text}</li>
+								))}
+							</ul>
+						)}
+					</article>
+				</li>
+			))}
+		</ol>
+	</div>
+</section>
+<style>
+	.career {
+		padding: 110px 0 120px;
+	}
+	.timeline {
+		list-style: none;
+		padding: 0;
+		margin: 56px 0 0;
+		position: relative;
+	}
+	.timeline::before {
+		content: "";
+		position: absolute;
+		left: 47px;
+		top: 24px;
+		bottom: 24px;
+		width: 4px;
+		background: var(--ink);
+	}
+	.timeline > li {
+		position: relative;
+		display: grid;
+		grid-template-columns: 96px minmax(0, 1fr);
+		gap: 20px;
+		margin-bottom: 28px;
+	}
+	.marker {
+		position: relative;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		background: var(--ink);
+		color: var(--yellow);
+		width: 38px;
+		height: 38px;
+		display: grid;
+		place-items: center;
+		font: 700 13px/1 var(--font-body);
+		justify-self: center;
+		outline: 2px solid var(--ink);
+		border: 3px solid var(--yellow);
+		margin-top: 24px;
+	}
+	article {
+		border: 2px solid var(--ink);
+		border-radius: 24px;
+		background: var(--paper);
+		padding: 24px 26px;
+		box-shadow: 6px 6px 0 var(--ink);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+		gap: 14px 32px;
+	}
+	article.education .meta > :nth-child(2) {
+		background: var(--blue);
+		color: var(--paper);
+	}
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px 20px;
+		font-size: 12px;
+		font-weight: 700;
+	}
+	.meta > :is(:first-child, :nth-child(2)) {
+		padding: 4px 10px;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		background: var(--yellow);
+
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.meta .level-label {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.current {
+		background: var(--yellow);
+		color: var(--ink);
+		border-radius: 99px;
+		padding: 5px 10px;
+		margin-left: auto;
+	}
+	.entry-heading {
+		min-width: 0;
+	}
+	h3 {
+		hyphens: auto;
+		overflow-wrap: anywhere;
+		font: 900 clamp(28px, 4vw, 44px)/0.95 var(--font-display);
+		margin: 18px 0 8px;
+	}
+	.organisation {
+		font-size: 16px;
+		margin: 0;
+	}
+	article ul {
+		padding-left: 0;
+		list-style: none;
+		margin: 0;
+		font-size: 16px;
+		line-height: 1.4;
+	}
+	article ul li {
+		display: grid;
+		grid-template-columns: 10px minmax(0, 1fr);
+		gap: 14px;
+	}
+	article ul li::before {
+		content: "";
+		width: 10px;
+		height: 10px;
+		border: 2px solid var(--ink);
+		background: var(--yellow);
+		border-radius: 3px;
+		transform: rotate(45deg);
+		margin-top: 6px;
+	}
+	article li + li {
+		margin-top: 6px;
+	}
+	@media (max-width: 600px) {
+		article {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.timeline > li {
+			grid-template-columns: 40px minmax(0, 1fr);
+			gap: 12px;
+		}
+		.marker {
+			width: 40px;
+			height: 40px;
+		}
+		.timeline::before {
+			left: 19px;
+		}
+		article {
+			padding: 22px 18px;
+		}
+	}
+</style>

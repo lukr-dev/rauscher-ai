@@ -1,0 +1,167 @@
+---
+import { siteUi } from "../../../../src/utils/i18n";
+import type { ImageValue, PortableTextBlock } from "emdash";
+import { Image, PortableText } from "emdash/ui";
+import { categoryKey, inventoryCategories } from "../content";
+interface Props {
+	node: {
+		heading?: string;
+		intro?: PortableTextBlock[];
+		tools?: { title: string; category?: string; logo?: ImageValue }[];
+	};
+}
+const { node } = Astro.props;
+const tools = node.tools ?? [];
+const categories = inventoryCategories(tools);
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="inventory dark-section" data-inventory>
+	<div class="wrap">
+		<div class="section-heading">
+			<h2>{node.heading}</h2>
+			<div class="lead rauscher-rich-text on-dark copy-lead">
+				<PortableText value={node.intro ?? []} />
+			</div>
+		</div>
+		<div class="filters" role="group" aria-label={copy.toolFilter}>
+			<button type="button" data-filter="" aria-pressed="true">
+				{copy.all}
+			</button>
+			{categories.map((category) => (
+				<button type="button" data-filter={category.key} aria-pressed="false">
+					{category.label}
+				</button>
+			))}
+		</div>
+		<p class="count" role="status" aria-live="polite">
+			<span data-tool-count>{tools.length}</span> {copy.items}
+		</p>
+		<div class="tools">
+			{tools.map((tool) => (
+				<article class="tool" data-tool-category={categoryKey(tool.category)}>
+					<h3>{tool.title}</h3>
+					<span class="tool-category">{tool.category}</span>
+					{tool.logo && <Image image={tool.logo} class="tool-logo" />}
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+<script>
+	for (const inventory of document.querySelectorAll<HTMLElement>(
+		"[data-inventory]",
+	)) {
+		const buttons = [
+			...inventory.querySelectorAll<HTMLButtonElement>("[data-filter]"),
+		];
+		const tools = [
+			...inventory.querySelectorAll<HTMLElement>("[data-tool-category]"),
+		];
+		for (const button of buttons)
+			button.addEventListener("click", () => {
+				for (const filter of buttons)
+					filter.setAttribute("aria-pressed", String(filter === button));
+				for (const tool of tools)
+					tool.hidden =
+						!!button.dataset.filter &&
+						tool.dataset.toolCategory !== button.dataset.filter;
+				inventory.querySelector<HTMLElement>("[data-tool-count]")!.textContent =
+					String(tools.filter((tool) => !tool.hidden).length);
+			});
+	}
+</script>
+<style>
+	.inventory {
+		padding: 110px 0;
+	}
+	.filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 36px;
+	}
+	.filters button {
+		border: 1px solid #fffdf640;
+		border-radius: 99px;
+		background: transparent;
+		color: var(--paper);
+		padding: 10px 16px;
+		font: 700 13px var(--font-body);
+		cursor: pointer;
+	}
+	.filters button[aria-pressed="true"] {
+		background: var(--yellow);
+		border-color: var(--yellow);
+		color: var(--ink);
+	}
+	.count {
+		font-size: 12px;
+		color: #d6d0c2;
+		margin: 22px 0;
+	}
+	.tools {
+		display: grid;
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax(min(100%, max(150px, calc((100% - 48px) / 5))), 1fr)
+		);
+		gap: 12px;
+	}
+	.tool {
+		position: relative;
+		background: #1f1b15;
+		border: 2px solid #3a352d;
+		border-radius: 14px;
+		padding: 12px;
+		overflow: hidden;
+		min-height: 104px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		transition:
+			transform 0.3s,
+			border-color 0.2s;
+	}
+	.tool[hidden] {
+		display: none;
+	}
+	.tool-category {
+		align-self: flex-start;
+		background: #1f1b15;
+		border: 1.5px solid #3a352d;
+		border-radius: 99px;
+		padding: 3px 8px;
+		position: relative;
+		z-index: 1;
+
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		color: #d6d0c2;
+		font-size: 10px;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	h3 {
+		font: 900 24px/0.95 var(--font-display);
+		margin: 0 0 16px;
+		position: relative;
+		z-index: 1;
+	}
+	.tool :global(.tool-logo) {
+		position: absolute;
+		width: 60px;
+		height: 60px;
+		object-fit: contain;
+		right: 14px;
+		top: 36px;
+		opacity: 0.22;
+		transform: rotate(-10deg);
+	}
+	.tool:hover {
+		transform: translateY(-6px) rotate(-2deg);
+		border-color: var(--yellow);
+	}
+</style>

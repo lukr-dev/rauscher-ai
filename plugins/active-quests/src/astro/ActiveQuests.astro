@@ -1,0 +1,262 @@
+---
+import { siteUi, localizedHref } from "../../../../src/utils/i18n";
+import { getEmDashEntry, isSafeHref } from "emdash";
+interface Quest {
+	title?: string;
+	category?: string;
+	description?: string;
+	status?: string;
+	since?: string;
+	link?: string;
+	linkLabel?: string;
+	relatedPost?: string;
+}
+interface Props {
+	node: { quests?: Quest[] };
+}
+const { node } = Astro.props;
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+const statuses = [
+	{ value: "running", label: copy.running },
+	{ value: "in-progress", label: copy.inProgress },
+	{ value: "paused", label: copy.paused },
+];
+const relatedSlugs = [
+	...new Set(
+		(node.quests ?? [])
+			.map((quest) => quest.relatedPost)
+			.filter((slug): slug is string => !!slug),
+	),
+];
+const relatedPosts = new Map(
+	await Promise.all(
+		relatedSlugs.map(async (slug) => {
+			const { entry, cacheHint } = await getEmDashEntry("posts", slug, {
+				locale: Astro.currentLocale,
+			});
+			if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+			return [slug, entry] as const;
+		}),
+	),
+);
+---
+
+<section class="quests" id="quests">
+	<div class="wrap">
+		<div class="section-heading">
+			<h2>{copy.activeQuests}</h2>
+			<div class="legend">
+				{statuses.map((status) => (
+					<span class="status-count">
+						<span class={`dot ${status.value}`} />
+						{status.label} ·{" "}
+						{
+							(node.quests ?? []).filter(
+								(quest) => quest.status === status.value,
+							).length
+						}
+					</span>
+				))}
+			</div>
+		</div>
+		<div class="quest-list">
+			{(node.quests ?? []).map((quest) => {
+				const status = statuses.find((item) => item.value === quest.status);
+				const post = quest.relatedPost
+					? relatedPosts.get(quest.relatedPost)
+					: undefined;
+				const link =
+					quest.link &&
+					/^https?:\/\//iu.test(quest.link) &&
+					isSafeHref(quest.link)
+						? quest.link
+						: undefined;
+				return (
+					<article
+						class:list={["quest", { paused: quest.status === "paused" }]}
+					>
+						<div class="quest-type">
+							<span class={`dot ${status?.value ?? "paused"}`} />
+							<span>{quest.category}</span>
+						</div>
+						<div class="quest-content">
+							<h3>{quest.title}</h3>
+							<p>{quest.description}</p>
+							{post && (
+								<a
+									class="related-post"
+									href={localizedHref(`/posts/${post.id}`, locale)}
+								>
+									<span>Blog</span>
+									{post.data.title} →
+								</a>
+							)}
+						</div>
+						<div class="quest-status">
+							{status && (
+								<span class={`status-pill ${status.value}`}>
+									{status.label}
+								</span>
+							)}
+							<span>{quest.since}</span>
+							{link && quest.linkLabel && (
+								<a href={link}>{quest.linkLabel} ↗</a>
+							)}
+						</div>
+					</article>
+				);
+			})}
+		</div>
+	</div>
+</section>
+
+<style>
+	.quests {
+		padding: 40px 0 120px;
+	}
+	.legend {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+	.status-count {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: var(--paper);
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 6px 12px;
+		font-size: 14px;
+		font-weight: 700;
+	}
+	.dot {
+		flex: none;
+		width: 12px;
+		height: 12px;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		background: #b8b0a0;
+	}
+	.dot.running {
+		background: var(--green);
+	}
+	.dot.in-progress {
+		background: var(--yellow);
+	}
+	.quest-list {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		margin-top: 40px;
+	}
+	.quest {
+		display: grid;
+		grid-template-columns: minmax(120px, 160px) minmax(0, 1fr) auto;
+		gap: 12px 28px;
+		align-items: center;
+		padding: 22px 26px;
+		border: 2px solid var(--ink);
+		border-radius: 22px;
+		background: var(--paper);
+		box-shadow: 5px 5px 0 var(--ink);
+		transition: transform 0.25s;
+	}
+	.quest:hover {
+		transform: translateX(6px) rotate(-0.4deg);
+	}
+	.quest.paused {
+		background: transparent;
+		border-style: dashed;
+		box-shadow: none;
+	}
+	.quest-type {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	h3 {
+		font: 900 36px/0.95 var(--font-display);
+		margin: 0;
+	}
+	.quest-content p {
+		font-size: 16px;
+		line-height: 1.45;
+		margin: 6px 0 0;
+		white-space: pre-line;
+	}
+	.quest-status {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 8px;
+		font-size: 14px;
+	}
+	.quest-status a {
+		font-weight: 700;
+		text-decoration: none;
+		border-bottom: 2px solid currentColor;
+	}
+	.status-pill {
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 4px 10px;
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+	.status-pill.running {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.status-pill.in-progress {
+		background: var(--yellow);
+	}
+	.related-post {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		max-width: 100%;
+		margin-top: 12px;
+		background: #f3eedf;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 4px 14px 4px 4px;
+		font-size: 14px;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.related-post span {
+		color: var(--yellow);
+		background: var(--ink);
+		border-radius: 99px;
+		padding: 4px 9px;
+		font-size: 11px;
+		text-transform: uppercase;
+	}
+	@media (max-width: 700px) {
+		.quest {
+			grid-template-columns: 1fr;
+			padding: 22px;
+		}
+		.quest-status {
+			align-items: flex-start;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.quests {
+			padding-bottom: 64px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.quest {
+			transition: none;
+		}
+	}
+</style>

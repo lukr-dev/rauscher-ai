@@ -1,39 +1,63 @@
 ---
+import { siteUi, localizedHref, projectStatusLabel } from "../../utils/i18n";
 import {
 	getEmDashEntry,
+	getEmDashCollection,
 	getSeoMeta,
 	decodeSlug,
-	getSiteSettings,
+	getSiteSettingsWithCacheHint,
 } from "emdash";
-import { Image, PortableText, WidgetArea } from "emdash/ui";
+import { Image, PortableText } from "emdash/ui";
+import PostCard from "@rauscher-ai/emdash-blog-overview/card";
+import { postPreview } from "@rauscher-ai/emdash-blog-preview/preview";
 import Base from "../../layouts/Base.astro";
 import { resolveStarterSiteIdentity } from "../../utils/site-identity";
-
 const slug = decodeSlug(Astro.params.slug);
-
-if (!slug) {
-	return Astro.redirect("/404");
+if (!slug) return Astro.rewrite(localizedHref("/404", Astro.currentLocale));
+const {
+	entry: post,
+	cacheHint,
+	fallbackLocale,
+} = await getEmDashEntry("posts", slug, {
+	locale: Astro.currentLocale,
+});
+if (!post) return Astro.rewrite(localizedHref("/404", Astro.currentLocale));
+const [settings, relatedResult] = await Promise.all([
+	getSiteSettingsWithCacheHint(),
+	getEmDashCollection("posts", {
+		status: "published",
+		locale: fallbackLocale ?? Astro.currentLocale,
+		orderBy: { published_at: "desc" },
+		limit: 3,
+	}),
+]);
+if (Astro.cache?.enabled) {
+	Astro.cache.set(cacheHint);
+	Astro.cache.set(settings.cacheHint);
+	Astro.cache.set(relatedResult.cacheHint);
 }
-
-const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
-
-if (!post) {
-	return Astro.redirect("/404");
-}
-
-if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
-const { siteTitle } = resolveStarterSiteIdentity(await getSiteSettings());
-
-// SEO meta from content fields
+const { siteTitle } = resolveStarterSiteIdentity(settings.data);
 const seo = getSeoMeta(post, {
 	siteTitle,
 	siteUrl: Astro.url.origin,
 	path: Astro.url.pathname.replace(/\/$/, ""),
 });
-
-// Taxonomy terms are already hydrated onto the entry by getEmDashEntry.
-const tags = post.data.terms?.tag ?? [];
+const { intro, readingMinutes } = postPreview(
+	post.data.content,
+	post.data.excerpt,
+);
 const categories = post.data.terms?.category ?? [];
+const tags = post.data.terms?.tag ?? [];
+const related = relatedResult.entries
+	.filter((entry) => entry.data.id !== post.data.id)
+	.slice(0, 2);
+const projectStatus = (post.data as { project_status?: string }).project_status;
+const author = post.data.byline;
+const avatar = author?.avatarMediaId
+	? { id: author.avatarMediaId, alt: author.displayName }
+	: { id: "", src: "/media/blog/p15.jpg", alt: siteTitle };
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
 ---
 
 <Base
@@ -42,47 +66,444 @@ const categories = post.data.terms?.category ?? [];
 	description={seo.description}
 	canonical={seo.canonical}
 	image={seo.ogImage}
-	content={{ collection: "posts", id: post.data.id, slug }}
+	content={{
+		collection: "posts",
+		id: post.data.id,
+		slug: post.id,
+		locale: fallbackLocale ?? Astro.currentLocale ?? "de",
+	}}
 >
-	<article>
-		{post.data.featured_image && (
-			<div {...post.edit.featured_image}>
-				<Image image={post.data.featured_image} />
-			</div>
-		)}
-
+	<div class="reading-progress" aria-hidden="true">
+		<div data-reading-progress />
+	</div>
+	<header class="article-header wrap">
+		<a class="back-link" href={localizedHref("/posts", locale)}>
+			← {copy.allPosts}
+		</a>
+		<div class="article-meta">
+			{categories.map((category) => (
+				<a
+					class="category"
+					href={localizedHref(
+						`/posts?category=${encodeURIComponent(category.slug)}`,
+						locale,
+					)}
+				>
+					{category.label}
+				</a>
+			))}
+			{projectStatus && (
+				<span
+					class:list={[
+						"project-status",
+						{ completed: projectStatus === "Abgeschlossen" },
+					]}
+					{...post.edit.project_status}
+				>
+					{projectStatusLabel(projectStatus, locale)}
+				</span>
+			)}
+			<span>
+				{post.data.publishedAt && (
+					<time datetime={post.data.publishedAt.toISOString()}>
+						{post.data.publishedAt.toLocaleDateString(locale, {
+							month: "2-digit",
+							year: "numeric",
+						})}
+					</time>
+				)}{" "}
+				· {readingMinutes} min
+			</span>
+		</div>
 		<h1 {...post.edit.title}>{post.data.title}</h1>
-
-		{post.data.publishedAt && (
-			<time datetime={post.data.publishedAt.toISOString()}>
-				{post.data.publishedAt.toLocaleDateString("en-US", {
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				})}
-			</time>
-		)}
-
-		{categories.length > 0 && (
-			<div>
-				{categories.map((c) => (
-					<a href={`/category/${c.slug}`}>{c.label}</a>
-				))}
+		<div class="article-intro">
+			<p {...post.edit.excerpt}>{intro}</p>
+			<div class="author">
+				<Image image={avatar} class="author-photo" />
+				<div>
+					<strong>{author?.displayName ?? siteTitle}</strong>
+					{author?.bio && <span>{author.bio}</span>}
+				</div>
 			</div>
-		)}
-
-		<PortableText value={post.data.content} />
-
+		</div>
 		{tags.length > 0 && (
-			<div>
-				{tags.map((t) => (
-					<a href={`/tag/${t.slug}`}>{t.label}</a>
+			<div class="technologies">
+				{tags.map((tag) => (
+					<a
+						href={localizedHref(
+							`/posts?tag=${encodeURIComponent(tag.slug)}`,
+							locale,
+						)}
+					>
+						{tag.label}
+					</a>
 				))}
 			</div>
 		)}
-	</article>
-
-	<aside>
-		<WidgetArea name="sidebar" />
-	</aside>
+		{post.data.featured_image && (
+			<div class="featured-image" {...post.edit.featured_image}>
+				<Image image={post.data.featured_image} priority />
+			</div>
+		)}
+	</header>
+	<section class="article-section">
+		<div class="wrap reading-layout">
+			<article
+				class="article-body rauscher-rich-text on-paper copy-article"
+				data-article-body
+				{...post.edit.content}
+			>
+				<PortableText value={post.data.content} />
+			</article>
+			<aside class="article-sidebar" data-article-sidebar hidden>
+				<div class="contents-panel">
+					<div class="contents-heading">
+						<h2>{copy.contents}</h2>
+						<span data-reading-percent>0%</span>
+					</div>
+					<nav aria-label={copy.articleContents} data-article-toc />
+				</div>
+				<a href="mailto:lukas@rauscher.ai" class="question-link">
+					<Image
+						image={{ id: "", src: "/media/blog/p15.jpg", alt: "" }}
+						class="question-photo"
+					/>
+					<span>
+						<strong>{copy.questions}</strong>
+						<span>{copy.writeLukas} →</span>
+					</span>
+				</a>
+			</aside>
+		</div>
+	</section>
+	{related.length > 0 && (
+		<section class="related-posts wrap">
+			<h2>{copy.related}</h2>
+			<div>
+				{related.map((entry, index) => (
+					<PostCard entry={entry} index={index} />
+				))}
+			</div>
+		</section>
+	)}
 </Base>
+<script>
+	const article = document.querySelector<HTMLElement>("[data-article-body]");
+	if (article) {
+		const headings = [
+			...article.querySelectorAll<HTMLHeadingElement>("h2,h3"),
+		].filter((heading) => heading.textContent?.trim());
+		const toc = document.querySelector<HTMLElement>("[data-article-toc]")!;
+		const links = headings.map((heading, index) => {
+			heading.id = `article-section-${index + 1}`;
+			const link = document.createElement("a");
+			link.href = `#${heading.id}`;
+			link.textContent = heading.textContent;
+			link.classList.toggle("subheading", heading.tagName === "H3");
+			toc.appendChild(link);
+			return link;
+		});
+		document.querySelector<HTMLElement>("[data-article-sidebar]")!.hidden =
+			headings.length === 0;
+		const update = () => {
+			const bounds = article.getBoundingClientRect();
+			const progress = Math.round(
+				Math.max(
+					0,
+					Math.min(
+						100,
+						((innerHeight * 0.4 - bounds.top) / Math.max(1, bounds.height)) *
+							100,
+					),
+				),
+			);
+			document.querySelector<HTMLElement>(
+				"[data-reading-progress]",
+			)!.style.width = `${progress}%`;
+			document.querySelector<HTMLElement>(
+				"[data-reading-percent]",
+			)!.textContent = `${progress}%`;
+			let active = 0;
+			headings.forEach((heading, index) => {
+				if (heading.getBoundingClientRect().top < innerHeight * 0.35)
+					active = index;
+			});
+			links.forEach((link, index) => {
+				if (index === active) link.setAttribute("aria-current", "location");
+				else link.removeAttribute("aria-current");
+			});
+		};
+		addEventListener("scroll", update, { passive: true });
+		addEventListener("resize", update);
+		update();
+	}
+</script>
+<style>
+	.reading-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 6px;
+		z-index: 100;
+		background: #16130f1a;
+		pointer-events: none;
+	}
+	.reading-progress div {
+		height: 100%;
+		width: 0;
+		background: var(--blue);
+	}
+	.article-header {
+		padding-top: 32px;
+		padding-bottom: 64px;
+		display: flex;
+		flex-direction: column;
+		gap: 28px;
+	}
+	.back-link {
+		align-self: flex-start;
+		font-weight: 700;
+		font-size: 15px;
+		text-decoration: none;
+	}
+	.article-meta {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	.category,
+	.project-status {
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 4px 10px;
+		text-decoration: none;
+	}
+	.category {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.project-status {
+		background: var(--paper);
+	}
+	.project-status.completed {
+		background: var(--blue);
+		color: var(--paper);
+	}
+	h1 {
+		font: 900 clamp(72px, 10vw, 160px)/0.8 var(--font-display);
+		letter-spacing: -0.03em;
+		margin: 0;
+		max-width: 11em;
+		text-wrap: balance;
+		overflow-wrap: anywhere;
+	}
+	.article-intro {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		gap: 24px 48px;
+	}
+	.article-intro > p {
+		font-size: 24px;
+		line-height: 1.4;
+		max-width: 26em;
+		margin: 0;
+		text-wrap: pretty;
+	}
+	.author {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		max-width: 28em;
+		font-size: 15px;
+	}
+	.author > div {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.author span {
+		font-size: 14px;
+	}
+	.author :global(.author-photo) {
+		width: 48px;
+		height: 48px;
+		flex: none;
+		border-radius: 50%;
+		border: 2px solid var(--ink);
+		object-fit: cover;
+		object-position: 50% 15%;
+	}
+	.technologies {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		padding-top: 20px;
+		border-top: 2px solid var(--ink);
+	}
+	.technologies a {
+		font-size: 14px;
+		background: var(--paper);
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 5px 12px;
+		text-decoration: none;
+	}
+	.featured-image :global(img) {
+		width: 100%;
+		height: auto;
+		max-height: 600px;
+		object-fit: cover;
+		border: 2px solid var(--ink);
+		border-radius: 24px;
+	}
+	.article-section {
+		background: var(--paper);
+		border-block: 2px solid var(--ink);
+	}
+	.reading-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 80px;
+		align-items: start;
+		padding-block: 80px 110px;
+	}
+	.article-body {
+		min-width: 0;
+		max-width: 740px;
+	}
+	.article-body :global(:is(h2, h3)) {
+		scroll-margin-top: 32px;
+	}
+	.article-sidebar {
+		position: sticky;
+		top: 32px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+	.article-sidebar[hidden] {
+		display: none;
+	}
+	.contents-panel {
+		background: var(--ink);
+		color: var(--paper);
+		border-radius: 22px;
+		padding: 22px;
+	}
+	.contents-heading {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 10px;
+		margin-bottom: 10px;
+		color: var(--yellow);
+	}
+	.contents-heading h2 {
+		font: 700 11px/1 var(--font-body);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		margin: 0;
+	}
+	.contents-heading span {
+		font: 900 28px/1 var(--font-display);
+	}
+	.contents-panel nav {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.contents-panel nav :global(a) {
+		display: block;
+		font-size: 15px;
+		padding: 8px 10px;
+		border-radius: 10px;
+		color: #d6d0c2;
+		text-decoration: none;
+	}
+	.contents-panel nav :global(a[aria-current]) {
+		font-weight: 700;
+		color: var(--yellow);
+		background: #fffdf614;
+	}
+	.contents-panel nav :global(.subheading) {
+		padding-left: 24px;
+		font-size: 14px;
+	}
+	.contents-panel :global(:focus-visible) {
+		outline-color: var(--yellow);
+	}
+	.question-link {
+		background: var(--yellow);
+		border: 2px solid var(--ink);
+		border-radius: 22px;
+		padding: 18px 20px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		box-shadow: 4px 4px 0 var(--ink);
+		text-decoration: none;
+	}
+	.question-link > span {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		font-size: 15px;
+	}
+	.question-link > span > span {
+		font-size: 14px;
+	}
+	.question-link :global(.question-photo) {
+		width: 40px;
+		height: 40px;
+		flex: none;
+		border-radius: 50%;
+		border: 2px solid var(--ink);
+		object-fit: cover;
+		object-position: 50% 15%;
+	}
+	.related-posts {
+		padding-block: 96px 120px;
+	}
+	.related-posts > h2 {
+		font: 900 clamp(48px, 5vw, 64px)/0.85 var(--font-display);
+		margin: 0 0 28px;
+		overflow-wrap: anywhere;
+	}
+	.related-posts > div {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+		gap: 24px;
+	}
+	@media (max-width: 1000px) {
+		.reading-layout {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 40px;
+		}
+		.article-sidebar {
+			order: -1;
+			position: static;
+		}
+		.article-body {
+			max-width: none;
+		}
+	}
+	@media (max-width: 600px) {
+		h1 {
+			font-size: clamp(48px, 13vw, 72px);
+		}
+		.reading-layout {
+			padding-block: 48px 64px;
+		}
+		.article-intro > p {
+			font-size: 21px;
+		}
+	}
+</style>

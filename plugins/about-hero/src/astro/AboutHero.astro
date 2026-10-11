@@ -1,0 +1,258 @@
+---
+import { siteUi, localizedHref } from "../../../../src/utils/i18n";
+import { isSafeHref } from "emdash";
+import type { ImageValue, PortableTextBlock } from "emdash";
+import { Image, PortableText } from "emdash/ui";
+interface Props {
+	node: {
+		heading?: string;
+		badges?: { title: string }[];
+		intro?: PortableTextBlock[];
+		links?: { title: string; url: string }[];
+		photo?: ImageValue;
+		cardName?: string;
+		back?: PortableTextBlock[];
+		abilityLabel?: string;
+		abilityText?: string;
+	};
+}
+const { node } = Astro.props;
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="about-hero">
+	<div class="wrap about-grid">
+		<div>
+			<h1>{node.heading}</h1>
+			<div class="badges">
+				{(node.badges ?? []).map((badge) => (
+					<span>{badge.title}</span>
+				))}
+			</div>
+			<div class="rauscher-rich-text on-yellow copy-intro">
+				<PortableText value={node.intro ?? []} />
+			</div>
+			<div class="contacts">
+				{(node.links ?? [])
+					.filter((link) => isSafeHref(link.url))
+					.map((link, index) => (
+						<a
+							class:list={["button", { dark: index === 0 }]}
+							href={localizedHref(link.url, locale)}
+						>
+							{link.title} ↗
+						</a>
+					))}
+			</div>
+		</div>
+		<div class="portrait-wrap">
+			<article class="portrait" data-about-card>
+				<button
+					class="front"
+					type="button"
+					data-about-flip
+					aria-expanded="false"
+					aria-label={`${node.cardName ?? copy.profile}: ${copy.flip}`}
+				>
+					{node.photo && (
+						<Image image={node.photo} class="portrait-photo" priority />
+					)}
+					<span class="card-name">{node.cardName}</span>
+				</button>
+				<div class="back" data-about-back inert aria-hidden="true">
+					<div class="rauscher-rich-text on-dark copy-card">
+						<PortableText value={node.back ?? []} />
+					</div>
+					{(node.abilityLabel?.trim() || node.abilityText?.trim()) && (
+						<div class="ability">
+							{node.abilityLabel?.trim() && (
+								<strong>{node.abilityLabel}</strong>
+							)}
+							{node.abilityText?.trim() && <p>{node.abilityText}</p>}
+						</div>
+					)}
+					<button type="button" data-about-close class="close">
+						↶ {copy.back}
+					</button>
+				</div>
+			</article>
+			<p class="hint">{copy.clickCard} ↻</p>
+		</div>
+	</div>
+</section>
+<script>
+	for (const card of document.querySelectorAll<HTMLElement>(
+		"[data-about-card]",
+	)) {
+		const front = card.querySelector<HTMLButtonElement>("[data-about-flip]")!;
+		const back = card.querySelector<HTMLElement>("[data-about-back]")!;
+		const close = card.querySelector<HTMLButtonElement>("[data-about-close]")!;
+		const flip = (flipped: boolean) => {
+			card.classList.toggle("flipped", flipped);
+			front.setAttribute("aria-expanded", String(flipped));
+			front.inert = flipped;
+			back.inert = !flipped;
+			back.setAttribute("aria-hidden", String(!flipped));
+			(flipped ? close : front).focus({ preventScroll: true });
+		};
+		front.addEventListener("click", () => flip(true));
+		close.addEventListener("click", () => flip(false));
+		card.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") flip(false);
+		});
+	}
+</script>
+<style>
+	.about-hero {
+		padding: 40px 0 110px;
+		overflow: clip;
+	}
+	.about-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 380px;
+		gap: 72px;
+		align-items: center;
+	}
+	h1 {
+		font: 900 clamp(96px, 13vw, 200px)/0.78 var(--font-display);
+		letter-spacing: -0.03em;
+		margin: 0 0 30px;
+	}
+	.badges,
+	.contacts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin: 24px 0;
+	}
+	.badges span {
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		padding: 8px 14px;
+		font-size: 13px;
+		font-weight: 700;
+	}
+	.badges span:first-child {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.badges span:nth-child(3n + 2) {
+		background: var(--blue);
+		color: var(--paper);
+	}
+	.badges span:last-child {
+		background: var(--paper);
+	}
+	.contacts .button {
+		background: var(--paper);
+	}
+	.contacts .dark {
+		background: var(--ink);
+	}
+	.contacts {
+		margin-top: 30px;
+	}
+	.portrait-wrap {
+		justify-self: center;
+		width: min(100%, 320px);
+	}
+	.portrait {
+		position: relative;
+		height: 460px;
+		perspective: 1200px;
+		transform: rotate(4deg);
+	}
+	.front,
+	.back {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 12px;
+		border: 2px solid var(--ink);
+		border-radius: 22px;
+		box-shadow: 8px 8px 0 var(--ink);
+		backface-visibility: hidden;
+		transition: transform 0.55s;
+	}
+	.front {
+		background: var(--paper);
+		color: var(--ink);
+		text-align: left;
+		font: inherit;
+		cursor: pointer;
+	}
+	.front :global(.portrait-photo) {
+		width: 100%;
+		flex: 1;
+		min-height: 0;
+		object-fit: cover;
+		object-position: 50% 20%;
+		border: 2px solid var(--ink);
+		border-radius: 14px;
+	}
+	.card-name {
+		font: 900 34px/0.95 var(--font-display);
+	}
+	.back {
+		background: var(--ink);
+		color: var(--paper);
+		transform: rotateY(180deg);
+		visibility: hidden;
+		overflow-y: auto;
+	}
+	.flipped .front {
+		transform: rotateY(-180deg);
+		visibility: hidden;
+	}
+	.flipped .back {
+		transform: rotateY(0deg);
+		visibility: visible;
+	}
+	.ability {
+		margin-top: auto;
+		padding-top: 14px;
+		border-top: 1px dashed #fffdf64d;
+		font-size: 14px;
+	}
+	.ability strong {
+		color: var(--yellow);
+		text-transform: uppercase;
+		font-size: 11px;
+		letter-spacing: 0.08em;
+	}
+	.ability p {
+		margin: 8px 0;
+	}
+	.close {
+		background: none;
+		border: 0;
+		color: var(--yellow);
+		padding: 6px 0;
+		text-align: left;
+		cursor: pointer;
+		font: 700 13px var(--font-body);
+	}
+	.hint {
+		text-align: center;
+		font-size: 13px;
+		margin-top: 30px;
+	}
+	@media (max-width: 900px) {
+		.about-grid {
+			grid-template-columns: 1fr;
+			gap: 44px;
+		}
+		.about-hero {
+			padding-top: 30px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.front,
+		.back {
+			transition: none;
+		}
+	}
+</style>

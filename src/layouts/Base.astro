@@ -1,9 +1,20 @@
 ---
-import { getMenuWithCacheHint, getSiteSettingsWithCacheHint } from "emdash";
+import {
+	getMenuWithCacheHint,
+	getSiteSettingsWithCacheHint,
+	getTranslations,
+} from "emdash";
 import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
-import LiveSearch from "emdash/ui/search";
 import { resolveStarterSiteIdentity } from "../utils/site-identity";
+import {
+	languages,
+	siteLocale,
+	siteUi,
+	localizedHref,
+	translationHref,
+} from "../utils/i18n";
+import "../styles/theme.css";
 
 interface Props {
 	title: string;
@@ -12,14 +23,21 @@ interface Props {
 	image?: string | null;
 	canonical?: string | null;
 	/** Pass content reference for plugin page contributions on content pages */
-	content?: { collection: string; id: string; slug?: string | null };
+	content?: {
+		collection: string;
+		id: string;
+		slug?: string | null;
+		locale?: string;
+	};
 }
 
 const { title, pageTitle, description, image, canonical, content } =
 	Astro.props;
+const locale = siteLocale(Astro.currentLocale);
+const copy = siteUi(locale);
 const [settingsResult, menuResult] = await Promise.all([
 	getSiteSettingsWithCacheHint(),
-	getMenuWithCacheHint("primary"),
+	getMenuWithCacheHint("primary", { locale }),
 ]);
 if (Astro.cache?.enabled) {
 	Astro.cache.set(settingsResult.cacheHint);
@@ -36,6 +54,15 @@ const titleIncludesSiteName =
 const fullTitle = titleIncludesSiteName ? title : `${title} — ${siteTitle}`;
 const pageDescription = description ?? siteTagline;
 const menu = menuResult.data;
+const { translations } = content
+	? await getTranslations(content.collection, content.id)
+	: { translations: [] };
+const fallback = content?.locale && content.locale !== locale;
+const menuLabel = (label: string, href: string) => {
+	if (menu?.locale === locale) return label;
+	const path = localizedHref(href, "de");
+	return path === "/" ? copy.home : path === "/about" ? copy.about : label;
+};
 
 const pageCtx = createPublicPageContext({
 	Astro,
@@ -52,19 +79,20 @@ const pageCtx = createPublicPageContext({
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{fullTitle}</title>
+		<link rel="stylesheet" href="/styles/rich-text.css" />
 		<EmDashHead page={pageCtx} />
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
 
-		<header>
-			<nav>
-				<a href="/">
+		<header class="site-header wrap">
+			<div class="site-nav">
+				<a href={localizedHref("/", locale)} class="site-brand">
 					{siteLogo ? (
 						<img
 							src={siteLogo.url}
@@ -72,25 +100,84 @@ const pageCtx = createPublicPageContext({
 							style="height:48px;width:auto;margin:-8px 0;display:block;"
 						/>
 					) : (
-						siteTitle
+						<>
+							<span class="brand-card" aria-hidden="true">
+								L
+							</span>
+							{siteTitle}
+						</>
 					)}
 				</a>
-				{menu?.items.map((item) => (
-					<a
-						href={item.url}
-						target={item.target}
-						rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
-					>
-						{item.label}
-					</a>
-				))}
-				<LiveSearch placeholder="Search..." collections={["posts", "pages"]} />
-			</nav>
+				<div class="header-controls">
+					<nav class="menu-links" aria-label={copy.navigation}>
+						{menu?.items.map((item) => (
+							<a
+								href={localizedHref(item.url, locale)}
+								aria-current={
+									localizedHref(item.url, "de") ===
+										localizedHref(Astro.url.pathname, "de") ||
+									(localizedHref(item.url, "de") !== "/" &&
+										localizedHref(Astro.url.pathname, "de").startsWith(
+											`${localizedHref(item.url, "de")}/`,
+										))
+										? "page"
+										: undefined
+								}
+								target={item.target}
+								rel={
+									item.target === "_blank" ? "noopener noreferrer" : undefined
+								}
+							>
+								{menuLabel(item.label, item.url)}
+							</a>
+						))}
+					</nav>
+					<nav class="language-switcher" aria-label={copy.language}>
+						{languages.map((language) => (
+							<a
+								href={translationHref(
+									Astro.url.pathname,
+									language.code,
+									content,
+									translations,
+								)}
+								lang={language.code}
+								title={language.name}
+								aria-label={language.name}
+								aria-current={language.code === locale ? "page" : undefined}
+							>
+								{language.code.toUpperCase()}
+							</a>
+						))}
+					</nav>
+				</div>
+			</div>
 		</header>
 
-		<main>
+		{fallback && (
+			<p class="translation-note wrap" role="status">
+				{copy.fallback}
+			</p>
+		)}
+		<main lang={content?.locale ?? locale}>
 			<slot />
 		</main>
+		<footer class="site-footer">
+			<div class="wrap">
+				<a href="mailto:lukas@rauscher.ai" class="footer-cta">
+					{copy.hello} →
+				</a>
+				<div class="footer-links">
+					<a href="mailto:lukas@rauscher.ai">lukas@rauscher.ai</a>
+					<span>Biel/Bienne, CH</span>
+					<a href="https://github.com/lukr-dev">GitHub</a>
+					<a href="https://www.linkedin.com/in/lukasrauscher">LinkedIn</a>
+					<small>
+						© {new Date().getFullYear()} {siteTitle}
+					</small>
+				</div>
+			</div>
+		</footer>
 
 		<EmDashBodyEnd page={pageCtx} />
 	</body>

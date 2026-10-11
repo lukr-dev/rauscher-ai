@@ -2,13 +2,13 @@
 	"$schema": "https://emdashcms.com/seed.schema.json",
 	"version": "1",
 	"meta": {
-		"name": "Starter",
-		"description": "A minimal EmDash starter with posts and pages",
+		"name": "Rauscher.ai",
+		"description": "Trading Cards homepage, About and blog with independent editor block plugins",
 		"author": "EmDash"
 	},
 	"settings": {
-		"title": "My Site",
-		"tagline": "Built with EmDash"
+		"title": "Lukas Rauscher",
+		"tagline": "Projektleiter, Data-Engineering-Student, Ex-Uhrmacher."
 	},
 	"collections": [
 		{
@@ -34,12 +34,23 @@
 					"slug": "content",
 					"label": "Content",
 					"type": "portableText",
-					"searchable": true
+					"searchable": true,
+					"options": {
+						"previewClass": "on-paper copy-article"
+					}
 				},
 				{
 					"slug": "excerpt",
-					"label": "Excerpt",
+					"label": "Preview intro",
 					"type": "text"
+				},
+				{
+					"slug": "project_status",
+					"label": "Project status (optional)",
+					"type": "select",
+					"validation": {
+						"options": ["In Arbeit", "Abgeschlossen"]
+					}
 				}
 			]
 		},
@@ -76,13 +87,43 @@
 			"terms": [
 				{
 					"slug": "general",
-					"label": "General"
+					"label": "General",
+					"id": "term-category-general-de",
+					"locale": "de"
 				},
 				{
 					"slug": "updates",
-					"label": "Updates"
+					"label": "Updates",
+					"id": "term-category-updates-de",
+					"locale": "de"
+				},
+				{
+					"slug": "karriere",
+					"label": "Karriere",
+					"id": "term-category-karriere-de",
+					"locale": "de"
+				},
+				{
+					"slug": "vibe-coding",
+					"label": "Vibe-Coding",
+					"id": "term-category-vibe-coding-de",
+					"locale": "de"
+				},
+				{
+					"slug": "daten",
+					"label": "Daten",
+					"id": "term-category-daten-de",
+					"locale": "de"
+				},
+				{
+					"slug": "projekte",
+					"label": "Projekte",
+					"id": "term-category-projekte-de",
+					"locale": "de"
 				}
-			]
+			],
+			"id": "taxonomy-category-de",
+			"locale": "de"
 		},
 		{
 			"name": "tag",
@@ -93,13 +134,459 @@
 			"terms": [
 				{
 					"slug": "starter",
-					"label": "Starter"
+					"label": "Starter",
+					"id": "term-tag-starter-de",
+					"locale": "de"
 				},
 				{
 					"slug": "example",
-					"label": "Example"
+					"label": "Example",
+					"id": "term-tag-example-de",
+					"locale": "de"
+				},
+				{
+					"slug": "nuxt-js",
+					"label": "Nuxt.js",
+					"id": "term-tag-nuxt-js-de",
+					"locale": "de"
+				},
+				{
+					"slug": "cloudflare-pages",
+					"label": "Cloudflare Pages",
+					"id": "term-tag-cloudflare-pages-de",
+					"locale": "de"
+				},
+				{
+					"slug": "tailwind-css",
+					"label": "Tailwind CSS",
+					"id": "term-tag-tailwind-css-de",
+					"locale": "de"
+				},
+				{
+					"slug": "appwrite",
+					"label": "Appwrite",
+					"id": "term-tag-appwrite-de",
+					"locale": "de"
+				},
+				{
+					"slug": "plunk-email",
+					"label": "Plunk (Email)",
+					"id": "term-tag-plunk-email-de",
+					"locale": "de"
+				},
+				{
+					"slug": "stripe",
+					"label": "Stripe",
+					"id": "term-tag-stripe-de",
+					"locale": "de"
+				},
+				{
+					"slug": "tailwind-css-daisyui",
+					"label": "Tailwind CSS / DaisyUI",
+					"id": "term-tag-tailwind-css-daisyui-de",
+					"locale": "de"
+				},
+				{
+					"slug": "aws",
+					"label": "AWS",
+					"id": "term-tag-aws-de",
+					"locale": "de"
+				},
+				{
+					"slug": "multilingual",
+					"label": "Multilingual",
+					"id": "term-tag-multilingual-de",
+					"locale": "de"
+				},
+				{
+					"slug": "python",
+					"label": "Python",
+					"id": "term-tag-python-de",
+					"locale": "de"
+				},
+				{
+					"slug": "pyqt",
+					"label": "PyQT",
+					"id": "term-tag-pyqt-de",
+					"locale": "de"
+				},
+				{
+					"slug": "perplexity-api",
+					"label": "Perplexity API",
+					"id": "term-tag-perplexity-api-de",
+					"locale": "de"
+				},
+				{
+					"slug": "scrapingbee",
+					"label": "ScrapingBee",
+					"id": "term-tag-scrapingbee-de",
+					"locale": "de"
+				},
+				{
+					"slug": "sales",
+					"label": "Sales",
+					"id": "term-tag-sales-de",
+					"locale": "de"
 				}
-			]
+			],
+			"id": "taxonomy-tag-de",
+			"locale": "de"
+		},
+		{
+			"name": "category",
+			"label": "Categories",
+			"labelSingular": "Category",
+			"hierarchical": true,
+			"collections": ["posts"],
+			"terms": [
+				{
+					"slug": "general",
+					"label": "General",
+					"id": "term-category-general-en",
+					"locale": "en",
+					"translationOf": "term-category-general-de"
+				},
+				{
+					"slug": "updates",
+					"label": "Updates",
+					"id": "term-category-updates-en",
+					"locale": "en",
+					"translationOf": "term-category-updates-de"
+				},
+				{
+					"slug": "karriere",
+					"label": "Career",
+					"id": "term-category-karriere-en",
+					"locale": "en",
+					"translationOf": "term-category-karriere-de"
+				},
+				{
+					"slug": "vibe-coding",
+					"label": "Vibe coding",
+					"id": "term-category-vibe-coding-en",
+					"locale": "en",
+					"translationOf": "term-category-vibe-coding-de"
+				},
+				{
+					"slug": "daten",
+					"label": "Data",
+					"id": "term-category-daten-en",
+					"locale": "en",
+					"translationOf": "term-category-daten-de"
+				},
+				{
+					"slug": "projekte",
+					"label": "Projects",
+					"id": "term-category-projekte-en",
+					"locale": "en",
+					"translationOf": "term-category-projekte-de"
+				}
+			],
+			"id": "taxonomy-category-en",
+			"locale": "en",
+			"translationOf": "taxonomy-category-de"
+		},
+		{
+			"name": "category",
+			"label": "Catégories",
+			"labelSingular": "Catégorie",
+			"hierarchical": true,
+			"collections": ["posts"],
+			"terms": [
+				{
+					"slug": "general",
+					"label": "Général",
+					"id": "term-category-general-fr",
+					"locale": "fr",
+					"translationOf": "term-category-general-de"
+				},
+				{
+					"slug": "updates",
+					"label": "Actualités",
+					"id": "term-category-updates-fr",
+					"locale": "fr",
+					"translationOf": "term-category-updates-de"
+				},
+				{
+					"slug": "karriere",
+					"label": "Parcours",
+					"id": "term-category-karriere-fr",
+					"locale": "fr",
+					"translationOf": "term-category-karriere-de"
+				},
+				{
+					"slug": "vibe-coding",
+					"label": "Vibe coding",
+					"id": "term-category-vibe-coding-fr",
+					"locale": "fr",
+					"translationOf": "term-category-vibe-coding-de"
+				},
+				{
+					"slug": "daten",
+					"label": "Données",
+					"id": "term-category-daten-fr",
+					"locale": "fr",
+					"translationOf": "term-category-daten-de"
+				},
+				{
+					"slug": "projekte",
+					"label": "Projets",
+					"id": "term-category-projekte-fr",
+					"locale": "fr",
+					"translationOf": "term-category-projekte-de"
+				}
+			],
+			"id": "taxonomy-category-fr",
+			"locale": "fr",
+			"translationOf": "taxonomy-category-de"
+		},
+		{
+			"name": "tag",
+			"label": "Tags",
+			"labelSingular": "Tag",
+			"hierarchical": false,
+			"collections": ["posts"],
+			"terms": [
+				{
+					"slug": "starter",
+					"label": "Starter",
+					"id": "term-tag-starter-en",
+					"locale": "en",
+					"translationOf": "term-tag-starter-de"
+				},
+				{
+					"slug": "example",
+					"label": "Example",
+					"id": "term-tag-example-en",
+					"locale": "en",
+					"translationOf": "term-tag-example-de"
+				},
+				{
+					"slug": "nuxt-js",
+					"label": "Nuxt.js",
+					"id": "term-tag-nuxt-js-en",
+					"locale": "en",
+					"translationOf": "term-tag-nuxt-js-de"
+				},
+				{
+					"slug": "cloudflare-pages",
+					"label": "Cloudflare Pages",
+					"id": "term-tag-cloudflare-pages-en",
+					"locale": "en",
+					"translationOf": "term-tag-cloudflare-pages-de"
+				},
+				{
+					"slug": "tailwind-css",
+					"label": "Tailwind CSS",
+					"id": "term-tag-tailwind-css-en",
+					"locale": "en",
+					"translationOf": "term-tag-tailwind-css-de"
+				},
+				{
+					"slug": "appwrite",
+					"label": "Appwrite",
+					"id": "term-tag-appwrite-en",
+					"locale": "en",
+					"translationOf": "term-tag-appwrite-de"
+				},
+				{
+					"slug": "plunk-email",
+					"label": "Plunk (Email)",
+					"id": "term-tag-plunk-email-en",
+					"locale": "en",
+					"translationOf": "term-tag-plunk-email-de"
+				},
+				{
+					"slug": "stripe",
+					"label": "Stripe",
+					"id": "term-tag-stripe-en",
+					"locale": "en",
+					"translationOf": "term-tag-stripe-de"
+				},
+				{
+					"slug": "tailwind-css-daisyui",
+					"label": "Tailwind CSS / DaisyUI",
+					"id": "term-tag-tailwind-css-daisyui-en",
+					"locale": "en",
+					"translationOf": "term-tag-tailwind-css-daisyui-de"
+				},
+				{
+					"slug": "aws",
+					"label": "AWS",
+					"id": "term-tag-aws-en",
+					"locale": "en",
+					"translationOf": "term-tag-aws-de"
+				},
+				{
+					"slug": "multilingual",
+					"label": "Multilingual",
+					"id": "term-tag-multilingual-en",
+					"locale": "en",
+					"translationOf": "term-tag-multilingual-de"
+				},
+				{
+					"slug": "python",
+					"label": "Python",
+					"id": "term-tag-python-en",
+					"locale": "en",
+					"translationOf": "term-tag-python-de"
+				},
+				{
+					"slug": "pyqt",
+					"label": "PyQT",
+					"id": "term-tag-pyqt-en",
+					"locale": "en",
+					"translationOf": "term-tag-pyqt-de"
+				},
+				{
+					"slug": "perplexity-api",
+					"label": "Perplexity API",
+					"id": "term-tag-perplexity-api-en",
+					"locale": "en",
+					"translationOf": "term-tag-perplexity-api-de"
+				},
+				{
+					"slug": "scrapingbee",
+					"label": "ScrapingBee",
+					"id": "term-tag-scrapingbee-en",
+					"locale": "en",
+					"translationOf": "term-tag-scrapingbee-de"
+				},
+				{
+					"slug": "sales",
+					"label": "Sales",
+					"id": "term-tag-sales-en",
+					"locale": "en",
+					"translationOf": "term-tag-sales-de"
+				}
+			],
+			"id": "taxonomy-tag-en",
+			"locale": "en",
+			"translationOf": "taxonomy-tag-de"
+		},
+		{
+			"name": "tag",
+			"label": "Tags",
+			"labelSingular": "Tag",
+			"hierarchical": false,
+			"collections": ["posts"],
+			"terms": [
+				{
+					"slug": "starter",
+					"label": "Starter",
+					"id": "term-tag-starter-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-starter-de"
+				},
+				{
+					"slug": "example",
+					"label": "Exemple",
+					"id": "term-tag-example-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-example-de"
+				},
+				{
+					"slug": "nuxt-js",
+					"label": "Nuxt.js",
+					"id": "term-tag-nuxt-js-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-nuxt-js-de"
+				},
+				{
+					"slug": "cloudflare-pages",
+					"label": "Cloudflare Pages",
+					"id": "term-tag-cloudflare-pages-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-cloudflare-pages-de"
+				},
+				{
+					"slug": "tailwind-css",
+					"label": "Tailwind CSS",
+					"id": "term-tag-tailwind-css-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-tailwind-css-de"
+				},
+				{
+					"slug": "appwrite",
+					"label": "Appwrite",
+					"id": "term-tag-appwrite-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-appwrite-de"
+				},
+				{
+					"slug": "plunk-email",
+					"label": "Plunk (Email)",
+					"id": "term-tag-plunk-email-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-plunk-email-de"
+				},
+				{
+					"slug": "stripe",
+					"label": "Stripe",
+					"id": "term-tag-stripe-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-stripe-de"
+				},
+				{
+					"slug": "tailwind-css-daisyui",
+					"label": "Tailwind CSS / DaisyUI",
+					"id": "term-tag-tailwind-css-daisyui-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-tailwind-css-daisyui-de"
+				},
+				{
+					"slug": "aws",
+					"label": "AWS",
+					"id": "term-tag-aws-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-aws-de"
+				},
+				{
+					"slug": "multilingual",
+					"label": "Multilingue",
+					"id": "term-tag-multilingual-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-multilingual-de"
+				},
+				{
+					"slug": "python",
+					"label": "Python",
+					"id": "term-tag-python-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-python-de"
+				},
+				{
+					"slug": "pyqt",
+					"label": "PyQT",
+					"id": "term-tag-pyqt-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-pyqt-de"
+				},
+				{
+					"slug": "perplexity-api",
+					"label": "Perplexity API",
+					"id": "term-tag-perplexity-api-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-perplexity-api-de"
+				},
+				{
+					"slug": "scrapingbee",
+					"label": "ScrapingBee",
+					"id": "term-tag-scrapingbee-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-scrapingbee-de"
+				},
+				{
+					"slug": "sales",
+					"label": "Vente",
+					"id": "term-tag-sales-fr",
+					"locale": "fr",
+					"translationOf": "term-tag-sales-de"
+				}
+			],
+			"id": "taxonomy-tag-fr",
+			"locale": "fr",
+			"translationOf": "taxonomy-tag-de"
 		}
 	],
 	"menus": [
@@ -109,20 +596,91 @@
 			"items": [
 				{
 					"type": "custom",
-					"label": "Home",
-					"url": "/"
+					"label": "Start",
+					"url": "/",
+					"id": "menu-primary-item-0-de"
 				},
 				{
 					"type": "custom",
-					"label": "Posts",
-					"url": "/posts"
+					"label": "Über mich",
+					"url": "/about",
+					"id": "menu-primary-item-1-de"
 				},
 				{
 					"type": "custom",
-					"label": "About",
-					"url": "/about"
+					"label": "Blog",
+					"url": "/posts",
+					"id": "menu-primary-item-2-de"
 				}
-			]
+			],
+			"id": "menu-primary-de",
+			"locale": "de"
+		},
+		{
+			"name": "primary",
+			"label": "Primary navigation",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Home",
+					"url": "/",
+					"id": "menu-primary-item-0-en",
+					"translationOf": "menu-primary-item-0-de",
+					"locale": "en"
+				},
+				{
+					"type": "custom",
+					"label": "About me",
+					"url": "/about",
+					"id": "menu-primary-item-1-en",
+					"translationOf": "menu-primary-item-1-de",
+					"locale": "en"
+				},
+				{
+					"type": "custom",
+					"label": "Blog",
+					"url": "/posts",
+					"id": "menu-primary-item-2-en",
+					"translationOf": "menu-primary-item-2-de",
+					"locale": "en"
+				}
+			],
+			"id": "menu-primary-en",
+			"locale": "en",
+			"translationOf": "menu-primary-de"
+		},
+		{
+			"name": "primary",
+			"label": "Navigation principale",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Accueil",
+					"url": "/",
+					"id": "menu-primary-item-0-fr",
+					"translationOf": "menu-primary-item-0-de",
+					"locale": "fr"
+				},
+				{
+					"type": "custom",
+					"label": "À propos",
+					"url": "/about",
+					"id": "menu-primary-item-1-fr",
+					"translationOf": "menu-primary-item-1-de",
+					"locale": "fr"
+				},
+				{
+					"type": "custom",
+					"label": "Blog",
+					"url": "/posts",
+					"id": "menu-primary-item-2-fr",
+					"translationOf": "menu-primary-item-2-de",
+					"locale": "fr"
+				}
+			],
+			"id": "menu-primary-fr",
+			"locale": "fr",
+			"translationOf": "menu-primary-de"
 		}
 	],
 	"widgetAreas": [
@@ -155,80 +713,4225 @@
 	"content": {
 		"pages": [
 			{
+				"id": "home",
+				"slug": "home",
+				"status": "published",
+				"data": {
+					"title": "Lukas Rauscher",
+					"content": [
+						{
+							"_type": "rauscher-hero",
+							"_key": "home-hero",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "intro",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "intro-span",
+											"text": "Projektleiter, Data-Engineering-Student, Ex-Uhrmacher. Fünf Versionen, eine Person. Dreh die Karten um.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"cards": [
+								{
+									"title": "Der Projektleiter",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p05.jpg",
+										"alt": "Lukas — Der Projektleiter"
+									},
+									"rarity": "Häufig",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-0",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-0-span",
+													"text": "Hält Kunden, Team und Timeline gleichzeitig im Takt.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Der Uhrmacher",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p03.jpg",
+										"alt": "Lukas — Der Uhrmacher"
+									},
+									"rarity": "Selten",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-1",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-1-span",
+													"text": "Findet Fehler im Mikrometerbereich.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Der Verkäufer",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p09.jpg",
+										"alt": "Lukas — Der Verkäufer"
+									},
+									"rarity": "Selten",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-2",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-2-span",
+													"text": "Verkauft auf Deutsch oder Französisch, je nach Kunde.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Der Student",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p10.jpg",
+										"alt": "Lukas — Der Student"
+									},
+									"rarity": "Häufig",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-3",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-3-span",
+													"text": "Schreibt Queries im Zug.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Der Wochenend-Lukas",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p13.jpg",
+										"alt": "Lukas — Der Wochenend-Lukas"
+									},
+									"rarity": "Legendär",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-4",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-4-span",
+													"text": "Antwortet am Montag. Versprochen.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								}
+							],
+							"completionMessage": "Komplett! Jetzt kennst du alle Karten.",
+							"completionLinkLabel": "Den echten treffen",
+							"completionLink": "mailto:lukas@rauscher.ai"
+						},
+						{
+							"_type": "rauscher-level-up",
+							"_key": "home-level-up",
+							"heading": "Level up",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "level-intro",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "level-intro-span",
+											"text": "Vom Uhrmacher zum Data Engineer. Die Eckdaten auf einen Blick.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"highlights": [
+								{
+									"value": "12",
+									"description": "Jahre Berufserfahrung, seit 2014"
+								},
+								{
+									"value": "3",
+									"description": "Branchen: Uhren, Werkzeughandel, Software"
+								},
+								{
+									"value": "2",
+									"description": "Weiterbildungen: Techniker HF und BSc"
+								},
+								{
+									"value": "3",
+									"description": "Sprachen im Kundenkontakt: DE, FR, EN"
+								}
+							],
+							"buttonLabel": "Ganze Laufbahn ansehen",
+							"buttonLink": "/about"
+						},
+						{
+							"_type": "rauscher-commits",
+							"_key": "home-commits",
+							"heading": "Commits",
+							"username": "lukr-dev",
+							"description": "Meine GitHub-Aktivität der letzten zwölf Monate. Jedes Feld ist ein Tag, je kräftiger die Farbe, desto mehr Beiträge."
+						},
+						{
+							"_type": "rauscher-blog-preview",
+							"_key": "home-blog"
+						},
+						{
+							"_type": "rauscher-active-quests",
+							"_key": "home-quests",
+							"quests": [
+								{
+									"category": "Job",
+									"title": "Junior Projektleiter, apload GmbH",
+									"description": "Verantwortung in der Projektleitung, Kundensupport und enge Zusammenarbeit mit mehreren Teams.",
+									"status": "running",
+									"since": "seit 10.2024"
+								},
+								{
+									"category": "Studium",
+									"title": "BSc Data Engineering, BFH",
+									"description": "Machine Learning, Big Data, SQL, Python, DevOps. Berufsbegleitend.",
+									"status": "running",
+									"since": "seit 2023"
+								},
+								{
+									"category": "Projekt",
+									"title": "Balloon Ride Booking Platform",
+									"description": "Version 1.0 ist online und wird weiterentwickelt.",
+									"status": "running",
+									"since": "seit 02.2025",
+									"link": "https://vole-en-globo.com.mx",
+									"linkLabel": "vole-en-globo.com.mx"
+								},
+								{
+									"category": "Projekt",
+									"title": "Diese Webseite",
+									"description": "Neues Design, neue Seiten. Wird regelmässig aktualisiert und erweitert.",
+									"status": "in-progress",
+									"since": "seit 03.2025",
+									"link": "https://github.com/lukr-dev/rauscher-ai",
+									"linkLabel": "GitHub"
+								},
+								{
+									"category": "Projekt",
+									"title": "Bookmark Garden",
+									"description": "Aus zeitlichen Gründen pausiert. Wie es weitergeht, wird neu evaluiert.",
+									"status": "paused",
+									"since": "seit 05.2025",
+									"link": "https://github.com/lukr-dev/bookmark-garden",
+									"linkLabel": "GitHub",
+									"relatedPost": "bookmark-garden"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
 				"id": "about",
 				"slug": "about",
 				"status": "published",
 				"data": {
-					"title": "About",
+					"title": "Über mich",
 					"content": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"_type": "rauscher-about-hero",
+							"_key": "about-hero",
+							"heading": "Über mich",
+							"badges": [
 								{
-									"_type": "span",
-									"text": "This is the about page. Edit it in the admin panel or replace this template with your own design.",
-									"_key": "k1"
+									"title": "Junior Projektleiter"
+								},
+								{
+									"title": "Data Engineer Student"
+								},
+								{
+									"title": "Biel/Bienne, CH"
 								}
 							],
-							"_key": "k0"
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-0",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-1",
+											"text": "Motivierter Data Engineering Student mit einem Talent für zwischenmenschliche Beziehungen und einer starken Überzeugung, dass datengetriebene Lösungen die Zukunft gestalten. Ich halte mich stets über die neuesten Trends und Technologien in den Bereichen Machine Learning, KI und Softwareengineering auf dem Laufenden. Auf der Suche nach neuen Herausforderungen, bin ich immer bereit, mein Wissen zu erweitern und es in meiner Arbeit praktisch anzuwenden.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"links": [
+								{
+									"title": "E-Mail",
+									"url": "mailto:lukas@rauscher.ai"
+								},
+								{
+									"title": "LinkedIn",
+									"url": "https://www.linkedin.com/in/lukasrauscher"
+								},
+								{
+									"title": "GitHub",
+									"url": "https://github.com/lukr-dev"
+								}
+							],
+							"photo": {
+								"src": "/media/about/p01.jpg",
+								"alt": "Lukas Rauscher"
+							},
+							"cardName": "Lukas Rauscher",
+							"back": [
+								{
+									"_type": "block",
+									"_key": "about-text-2",
+									"style": "h2",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-3",
+											"text": "Steckbrief",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-4",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-5",
+											"text": "Wohnort: Biel/Bienne",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-6",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-7",
+											"text": "Aktuell: apload GmbH",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-8",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-9",
+											"text": "Studium: BSc Data Eng., BFH",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-10",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-11",
+											"text": "Im Beruf seit: 2014",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-12",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-13",
+											"text": "Sprachen: DE · EN · FR · ES",
+											"marks": []
+										}
+									]
+								}
+							],
+							"abilityLabel": "Spezialfähigkeit",
+							"abilityText": "Übersetzt zwischen Werkstatt, Verkauf und Datenbank."
+						},
+						{
+							"_type": "rauscher-skill-deck",
+							"_key": "about-skills",
+							"heading": "Skill-Deck",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-14",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-15",
+											"text": "Drei Päckchen, gesammelt in Werkstatt, Verkauf und Hörsaal.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"groups": [
+								{
+									"title": "Tools & Methoden",
+									"skills": [
+										{
+											"title": "Data Engineering"
+										},
+										{
+											"title": "Machine Learning"
+										},
+										{
+											"title": "Docker"
+										},
+										{
+											"title": "Linux",
+											"proficiency": "Basiswissen"
+										},
+										{
+											"title": "MS365 & Power Platform"
+										}
+									]
+								},
+								{
+									"title": "Sprachen",
+									"skills": [
+										{
+											"title": "Deutsch",
+											"proficiency": "Muttersprache",
+											"level": 6
+										},
+										{
+											"title": "Englisch",
+											"proficiency": "C1",
+											"level": 5
+										},
+										{
+											"title": "Französisch",
+											"proficiency": "B2 / C1",
+											"level": 4
+										},
+										{
+											"title": "Spanisch",
+											"proficiency": "A1",
+											"level": 1
+										}
+									]
+								},
+								{
+									"title": "Soft Skills",
+									"skills": [
+										{
+											"title": "Kundenkontakt"
+										},
+										{
+											"title": "Teamwork"
+										},
+										{
+											"title": "Verantwortung übernehmen"
+										},
+										{
+											"title": "Selbständiges Arbeiten"
+										},
+										{
+											"title": "offene Persönlichkeit"
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "rauscher-career",
+							"_key": "about-career",
+							"heading": "Laufbahn",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-16",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-17",
+											"text": "Sieben Stationen, die neueste zuerst. Jede mit einem neuen Skill-Set.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"entries": [
+								{
+									"title": "Junior Projektleiter",
+									"organisation": "apload GmbH",
+									"dateRange": "2024–heute",
+									"kind": "job",
+									"current": true,
+									"points": [
+										{
+											"text": "Verantwortung in der Projektleitung"
+										},
+										{
+											"text": "Kundensupport und enge Zusammenarbeit mit mehreren Teams"
+										}
+									]
+								},
+								{
+									"title": "BSc Data Engineering",
+									"organisation": "Berner Fachhochschule",
+									"dateRange": "2023–heute",
+									"kind": "education",
+									"current": true,
+									"points": [
+										{
+											"text": "Machine Learning, Big Data, SQL, Python, DevOps"
+										},
+										{
+											"text": "KI-gestütztes CRM-PoC in der Special Week gebaut"
+										}
+									]
+								},
+								{
+									"title": "Verkaufsleiter Westschweiz",
+									"organisation": "Schnyder + Minder AG",
+									"dateRange": "2023–2024",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Verkaufsgebiet Westschweiz entwickelt und gehalten"
+										},
+										{
+											"text": "Aussendienst-Mitarbeiter geführt und gefördert"
+										},
+										{
+											"text": "Prozesse optimiert, IT-Infrastruktur koordiniert"
+										}
+									]
+								},
+								{
+									"title": "Verkauf Innendienst",
+									"organisation": "Schnyder + Minder AG",
+									"dateRange": "2021–2022",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Bindeglied zwischen Aussendienst, Kunden und Lieferanten"
+										},
+										{
+											"text": "Angebote, Liefertermine und Stammdaten verantwortet"
+										},
+										{
+											"text": "IT-Infrastruktur koordiniert"
+										}
+									]
+								},
+								{
+									"title": "Techniker HF Unternehmensprozesse",
+									"organisation": "HFTM, Grenchen",
+									"dateRange": "2019–2022",
+									"kind": "education",
+									"current": false,
+									"points": [
+										{
+											"text": "Prozessoptimierung und Lean Management"
+										},
+										{
+											"text": "Projekt- und Supply-Chain-Management"
+										}
+									]
+								},
+								{
+									"title": "Stv. Abteilungsleiter",
+									"organisation": "ETA SA Manufacture Horlogère Suisse",
+									"dateRange": "2017–2021",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Störungsfreien Ablauf in der Montage sichergestellt"
+										},
+										{
+											"text": "Team geführt und gefördert"
+										},
+										{
+											"text": "Interne Weiterbildung in Teamführung und Lehrlingsbetreuung"
+										}
+									]
+								},
+								{
+									"title": "Uhrmacher",
+									"organisation": "ETA SA Manufacture Horlogère Suisse",
+									"dateRange": "2014–2017",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Qualitätskontrolle in der Uhrwerk-Produktion"
+										},
+										{
+											"text": "Neue Mitarbeitende eingeschult"
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "rauscher-inventory",
+							"_key": "about-inventory",
+							"heading": "Inventar",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-18",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-19",
+											"text": "Die Werkzeuge im täglichen Einsatz, in Studium, Job und Nebenprojekten.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"tools": [
+								{
+									"title": "Python",
+									"category": "Daten"
+								},
+								{
+									"title": "SQL",
+									"category": "Daten"
+								},
+								{
+									"title": "Spark",
+									"category": "Daten"
+								},
+								{
+									"title": "Nuxt.js",
+									"category": "Bauen"
+								},
+								{
+									"title": "Vue.js",
+									"category": "Bauen"
+								},
+								{
+									"title": "JS / TS",
+									"category": "Bauen"
+								},
+								{
+									"title": "Tailwind CSS",
+									"category": "Bauen"
+								},
+								{
+									"title": "Java",
+									"category": "Bauen"
+								},
+								{
+									"title": "PyQt",
+									"category": "Bauen"
+								},
+								{
+									"title": "Docker",
+									"category": "Infrastruktur"
+								},
+								{
+									"title": "Linux",
+									"category": "Infrastruktur"
+								},
+								{
+									"title": "Cloudflare Pages",
+									"category": "Infrastruktur"
+								},
+								{
+									"title": "GitHub Actions",
+									"category": "Infrastruktur"
+								},
+								{
+									"title": "AWS",
+									"category": "Infrastruktur"
+								},
+								{
+									"title": "Appwrite",
+									"category": "Infrastruktur"
+								},
+								{
+									"title": "Perplexity API",
+									"category": "KI & APIs"
+								},
+								{
+									"title": "Google Gemini",
+									"category": "KI & APIs"
+								},
+								{
+									"title": "ScrapingBee",
+									"category": "KI & APIs"
+								},
+								{
+									"title": "Stripe",
+									"category": "KI & APIs"
+								},
+								{
+									"title": "Plunk",
+									"category": "KI & APIs"
+								},
+								{
+									"title": "MS365 & Power Platform",
+									"category": "Büro"
+								}
+							]
 						}
 					]
 				}
+			},
+			{
+				"id": "posts",
+				"slug": "posts",
+				"status": "published",
+				"data": {
+					"title": "Blog",
+					"content": [
+						{
+							"_type": "rauscher-blog-overview",
+							"_key": "blog-overview",
+							"heading": "Blog",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "blog-intro-text",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "blog-intro-span",
+											"text": "Notizen zu Daten, Projekten und dem Weg vom Uhrwerk zur Pipeline. Projekte und Beiträge in einem Stapel.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"highlightPost": ""
+						}
+					]
+				}
+			},
+			{
+				"id": "home-en",
+				"slug": "home",
+				"status": "published",
+				"data": {
+					"title": "Lukas Rauscher",
+					"content": [
+						{
+							"_type": "rauscher-hero",
+							"_key": "home-hero",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "intro",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "intro-span",
+											"text": "Project manager, Data Engineering student, former watchmaker. Five versions, one person. Flip the cards.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"cards": [
+								{
+									"title": "The Project Manager",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p05.jpg",
+										"alt": "Lukas — The Project Manager"
+									},
+									"rarity": "Common",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-0",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-0-span",
+													"text": "Keeps customers, the team and the timeline in sync.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "The Watchmaker",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p03.jpg",
+										"alt": "Lukas — The Watchmaker"
+									},
+									"rarity": "Rare",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-1",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-1-span",
+													"text": "Finds faults down to the micrometre.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "The Salesperson",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p09.jpg",
+										"alt": "Lukas — The Salesperson"
+									},
+									"rarity": "Rare",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-2",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-2-span",
+													"text": "Sells in German or French, depending on the customer.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "The Student",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p10.jpg",
+										"alt": "Lukas — The Student"
+									},
+									"rarity": "Common",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-3",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-3-span",
+													"text": "Writes queries on the train.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Weekend Lukas",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p13.jpg",
+										"alt": "Lukas — Weekend Lukas"
+									},
+									"rarity": "Legendary",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-4",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-4-span",
+													"text": "Replies on Monday. Promise.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								}
+							],
+							"completionMessage": "Complete! Now you know all the cards.",
+							"completionLinkLabel": "Meet the real person",
+							"completionLink": "mailto:lukas@rauscher.ai"
+						},
+						{
+							"_type": "rauscher-level-up",
+							"_key": "home-level-up",
+							"heading": "Level up",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "level-intro",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "level-intro-span",
+											"text": "From watchmaker to data engineer. The key milestones at a glance.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"highlights": [
+								{
+									"value": "12",
+									"description": "Years of professional experience, since 2014"
+								},
+								{
+									"value": "3",
+									"description": "Industries: watches, tool distribution, software"
+								},
+								{
+									"value": "2",
+									"description": "Further education: Advanced Federal Diploma and BSc"
+								},
+								{
+									"value": "3",
+									"description": "Languages used with customers: DE, FR, EN"
+								}
+							],
+							"buttonLabel": "View the full career journey",
+							"buttonLink": "/about"
+						},
+						{
+							"_type": "rauscher-commits",
+							"_key": "home-commits",
+							"heading": "Commits",
+							"username": "lukr-dev",
+							"description": "My GitHub activity over the last twelve months. Each square is a day; the stronger the colour, the more contributions."
+						},
+						{
+							"_type": "rauscher-blog-preview",
+							"_key": "home-blog"
+						},
+						{
+							"_type": "rauscher-active-quests",
+							"_key": "home-quests",
+							"quests": [
+								{
+									"category": "Work",
+									"title": "Junior Project Manager, apload GmbH",
+									"description": "Project management responsibilities, customer support and close collaboration with several teams.",
+									"status": "running",
+									"since": "since 10.2024"
+								},
+								{
+									"category": "Studies",
+									"title": "BSc Data Engineering, BFH",
+									"description": "Machine learning, big data, SQL, Python, DevOps. Studying alongside work.",
+									"status": "running",
+									"since": "since 2023"
+								},
+								{
+									"category": "Project",
+									"title": "Balloon Ride Booking Platform",
+									"description": "Version 1.0 is live and development continues.",
+									"status": "running",
+									"since": "since 02.2025",
+									"link": "https://vole-en-globo.com.mx",
+									"linkLabel": "vole-en-globo.com.mx"
+								},
+								{
+									"category": "Project",
+									"title": "This website",
+									"description": "New design, new pages. Updated and expanded regularly.",
+									"status": "in-progress",
+									"since": "since 03.2025",
+									"link": "https://github.com/lukr-dev/rauscher-ai",
+									"linkLabel": "GitHub"
+								},
+								{
+									"category": "Project",
+									"title": "Bookmark Garden",
+									"description": "Paused due to time constraints. Next steps are being reconsidered.",
+									"status": "paused",
+									"since": "since 05.2025",
+									"link": "https://github.com/lukr-dev/bookmark-garden",
+									"linkLabel": "GitHub",
+									"relatedPost": "bookmark-garden"
+								}
+							]
+						}
+					]
+				},
+				"locale": "en",
+				"translationOf": "home"
+			},
+			{
+				"id": "about-en",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "About me",
+					"content": [
+						{
+							"_type": "rauscher-about-hero",
+							"_key": "about-hero",
+							"heading": "About me",
+							"badges": [
+								{
+									"title": "Junior Project Manager"
+								},
+								{
+									"title": "Data Engineering Student"
+								},
+								{
+									"title": "Biel/Bienne, CH"
+								}
+							],
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-0",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-1",
+											"text": "Motivated Data Engineering student with a talent for building relationships and a firm belief that data-driven solutions will shape the future. I keep up with the latest trends and technologies in machine learning, AI and software engineering. Always looking for new challenges, I am ready to expand my knowledge and put it into practice at work.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"links": [
+								{
+									"title": "Email",
+									"url": "mailto:lukas@rauscher.ai"
+								},
+								{
+									"title": "LinkedIn",
+									"url": "https://www.linkedin.com/in/lukasrauscher"
+								},
+								{
+									"title": "GitHub",
+									"url": "https://github.com/lukr-dev"
+								}
+							],
+							"photo": {
+								"src": "/media/about/p01.jpg",
+								"alt": "Lukas Rauscher"
+							},
+							"cardName": "Lukas Rauscher",
+							"back": [
+								{
+									"_type": "block",
+									"_key": "about-text-2",
+									"style": "h2",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-3",
+											"text": "Profile",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-4",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-5",
+											"text": "Based in: Biel/Bienne",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-6",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-7",
+											"text": "Currently: apload GmbH",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-8",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-9",
+											"text": "Studies: BSc Data Engineering, BFH",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-10",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-11",
+											"text": "Working since: 2014",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-12",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-13",
+											"text": "Languages: DE · EN · FR · ES",
+											"marks": []
+										}
+									]
+								}
+							],
+							"abilityLabel": "Special ability",
+							"abilityText": "Translates between the workshop, sales and the database."
+						},
+						{
+							"_type": "rauscher-skill-deck",
+							"_key": "about-skills",
+							"heading": "Skill deck",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-14",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-15",
+											"text": "Three packs, collected in the workshop, in sales and in the lecture hall.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"groups": [
+								{
+									"title": "Tools & methods",
+									"skills": [
+										{
+											"title": "Data Engineering"
+										},
+										{
+											"title": "Machine Learning"
+										},
+										{
+											"title": "Docker"
+										},
+										{
+											"title": "Linux",
+											"proficiency": "Basic knowledge"
+										},
+										{
+											"title": "MS365 & Power Platform"
+										}
+									]
+								},
+								{
+									"title": "Languages",
+									"skills": [
+										{
+											"title": "German",
+											"proficiency": "Native language",
+											"level": 6
+										},
+										{
+											"title": "English",
+											"proficiency": "C1",
+											"level": 5
+										},
+										{
+											"title": "French",
+											"proficiency": "B2 / C1",
+											"level": 4
+										},
+										{
+											"title": "Spanish",
+											"proficiency": "A1",
+											"level": 1
+										}
+									]
+								},
+								{
+									"title": "Soft skills",
+									"skills": [
+										{
+											"title": "Customer relations"
+										},
+										{
+											"title": "Teamwork"
+										},
+										{
+											"title": "Taking responsibility"
+										},
+										{
+											"title": "Working independently"
+										},
+										{
+											"title": "Open personality"
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "rauscher-career",
+							"_key": "about-career",
+							"heading": "Career",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-16",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-17",
+											"text": "Seven stages, newest first. Each with a new skill set.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"entries": [
+								{
+									"title": "Junior Project Manager",
+									"organisation": "apload GmbH",
+									"dateRange": "2024–present",
+									"kind": "job",
+									"current": true,
+									"points": [
+										{
+											"text": "Project management responsibilities"
+										},
+										{
+											"text": "Customer support and close collaboration with several teams"
+										}
+									]
+								},
+								{
+									"title": "BSc Data Engineering",
+									"organisation": "Bern University of Applied Sciences",
+									"dateRange": "2023–present",
+									"kind": "education",
+									"current": true,
+									"points": [
+										{
+											"text": "Machine Learning, Big Data, SQL, Python, DevOps"
+										},
+										{
+											"text": "Built an AI-powered CRM proof of concept during Special Week"
+										}
+									]
+								},
+								{
+									"title": "Sales Manager, Western Switzerland",
+									"organisation": "Schnyder + Minder AG",
+									"dateRange": "2023–2024",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Developed and maintained the Western Switzerland sales territory"
+										},
+										{
+											"text": "Led and supported field sales staff"
+										},
+										{
+											"text": "Optimised processes and coordinated IT infrastructure"
+										}
+									]
+								},
+								{
+									"title": "Inside Sales",
+									"organisation": "Schnyder + Minder AG",
+									"dateRange": "2021–2022",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Liaison between field sales, customers and suppliers"
+										},
+										{
+											"text": "Responsible for quotations, delivery dates and master data"
+										},
+										{
+											"text": "Coordinated IT infrastructure"
+										}
+									]
+								},
+								{
+									"title": "Advanced Federal Diploma in Business Processes",
+									"organisation": "HFTM, Grenchen",
+									"dateRange": "2019–2022",
+									"kind": "education",
+									"current": false,
+									"points": [
+										{
+											"text": "Process optimisation and lean management"
+										},
+										{
+											"text": "Project and supply chain management"
+										}
+									]
+								},
+								{
+									"title": "Deputy Department Manager",
+									"organisation": "ETA SA Manufacture Horlogère Suisse",
+									"dateRange": "2017–2021",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Ensured smooth assembly operations"
+										},
+										{
+											"text": "Led and supported the team"
+										},
+										{
+											"text": "Internal training in team leadership and apprentice mentoring"
+										}
+									]
+								},
+								{
+									"title": "Watchmaker",
+									"organisation": "ETA SA Manufacture Horlogère Suisse",
+									"dateRange": "2014–2017",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Quality control in movement production"
+										},
+										{
+											"text": "Trained new employees"
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "rauscher-inventory",
+							"_key": "about-inventory",
+							"heading": "Inventory",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-18",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-19",
+											"text": "The tools I use every day in my studies, at work and on side projects.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"tools": [
+								{
+									"title": "Python",
+									"category": "Data"
+								},
+								{
+									"title": "SQL",
+									"category": "Data"
+								},
+								{
+									"title": "Spark",
+									"category": "Data"
+								},
+								{
+									"title": "Nuxt.js",
+									"category": "Building"
+								},
+								{
+									"title": "Vue.js",
+									"category": "Building"
+								},
+								{
+									"title": "JS / TS",
+									"category": "Building"
+								},
+								{
+									"title": "Tailwind CSS",
+									"category": "Building"
+								},
+								{
+									"title": "Java",
+									"category": "Building"
+								},
+								{
+									"title": "PyQt",
+									"category": "Building"
+								},
+								{
+									"title": "Docker",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Linux",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Cloudflare Pages",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "GitHub Actions",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "AWS",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Appwrite",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Perplexity API",
+									"category": "AI & APIs"
+								},
+								{
+									"title": "Google Gemini",
+									"category": "AI & APIs"
+								},
+								{
+									"title": "ScrapingBee",
+									"category": "AI & APIs"
+								},
+								{
+									"title": "Stripe",
+									"category": "AI & APIs"
+								},
+								{
+									"title": "Plunk",
+									"category": "AI & APIs"
+								},
+								{
+									"title": "MS365 & Power Platform",
+									"category": "Office"
+								}
+							]
+						}
+					]
+				},
+				"locale": "en",
+				"translationOf": "about"
+			},
+			{
+				"id": "posts-en",
+				"slug": "posts",
+				"status": "published",
+				"data": {
+					"title": "Blog",
+					"content": [
+						{
+							"heading": "Blog",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "blog-intro-text",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"_key": "6de50vmqt",
+											"text": "Notes on data, projects and the journey from clockwork to pipelines. Projects and posts in one deck."
+										}
+									]
+								}
+							],
+							"highlightPost": "",
+							"_type": "rauscher-blog-overview",
+							"_key": "blog-overview"
+						}
+					]
+				},
+				"locale": "en",
+				"translationOf": "posts"
+			},
+			{
+				"id": "home-fr",
+				"slug": "home",
+				"status": "published",
+				"data": {
+					"title": "Lukas Rauscher",
+					"content": [
+						{
+							"_type": "rauscher-hero",
+							"_key": "home-hero",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "intro",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "intro-span",
+											"text": "Chef de projet, étudiant en Data Engineering, ancien horloger. Cinq versions, une personne. Retournez les cartes.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"cards": [
+								{
+									"title": "Le Chef de projet",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p05.jpg",
+										"alt": "Lukas — Le Chef de projet"
+									},
+									"rarity": "Commune",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-0",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-0-span",
+													"text": "Garde les clients, l’équipe et le calendrier au même rythme.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "L’Horloger",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p03.jpg",
+										"alt": "Lukas — L’Horloger"
+									},
+									"rarity": "Rare",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-1",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-1-span",
+													"text": "Repère les défauts à l’échelle du micromètre.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Le Vendeur",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p09.jpg",
+										"alt": "Lukas — Le Vendeur"
+									},
+									"rarity": "Rare",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-2",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-2-span",
+													"text": "Vend en allemand ou en français, selon le client.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "L’Étudiant",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p10.jpg",
+										"alt": "Lukas — L’Étudiant"
+									},
+									"rarity": "Commune",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-3",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-3-span",
+													"text": "Écrit des requêtes dans le train.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								},
+								{
+									"title": "Lukas du week-end",
+									"photo": {
+										"id": "",
+										"provider": "external",
+										"src": "/media/hero/p13.jpg",
+										"alt": "Lukas — Lukas du week-end"
+									},
+									"rarity": "Légendaire",
+									"back": [
+										{
+											"_type": "block",
+											"_key": "card-4",
+											"style": "normal",
+											"markDefs": [],
+											"children": [
+												{
+													"_type": "span",
+													"_key": "card-4-span",
+													"text": "Répond lundi. Promis.",
+													"marks": []
+												}
+											]
+										}
+									],
+									"abilityLabel": "",
+									"abilityText": ""
+								}
+							],
+							"completionMessage": "Collection complète ! Vous connaissez maintenant toutes les cartes.",
+							"completionLinkLabel": "Rencontrer la vraie personne",
+							"completionLink": "mailto:lukas@rauscher.ai"
+						},
+						{
+							"_type": "rauscher-level-up",
+							"_key": "home-level-up",
+							"heading": "Passer au niveau supérieur",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "level-intro",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "level-intro-span",
+											"text": "De l’horlogerie au Data Engineering. Les étapes clés en un coup d’œil.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"highlights": [
+								{
+									"value": "12",
+									"description": "Années d’expérience professionnelle, depuis 2014"
+								},
+								{
+									"value": "3",
+									"description": "Secteurs : horlogerie, commerce d’outillage, logiciels"
+								},
+								{
+									"value": "2",
+									"description": "Formations complémentaires : diplôme ES et BSc"
+								},
+								{
+									"value": "3",
+									"description": "Langues utilisées avec les clients : DE, FR, EN"
+								}
+							],
+							"buttonLabel": "Voir tout le parcours",
+							"buttonLink": "/about"
+						},
+						{
+							"_type": "rauscher-commits",
+							"_key": "home-commits",
+							"heading": "Commits",
+							"username": "lukr-dev",
+							"description": "Mon activité GitHub au cours des douze derniers mois. Chaque case représente un jour ; plus la couleur est intense, plus il y a de contributions."
+						},
+						{
+							"_type": "rauscher-blog-preview",
+							"_key": "home-blog"
+						},
+						{
+							"_type": "rauscher-active-quests",
+							"_key": "home-quests",
+							"quests": [
+								{
+									"category": "Emploi",
+									"title": "Chef de projet junior, apload GmbH",
+									"description": "Responsabilités en gestion de projet, support client et collaboration étroite avec plusieurs équipes.",
+									"status": "running",
+									"since": "depuis 10.2024"
+								},
+								{
+									"category": "Études",
+									"title": "BSc Data Engineering, BFH",
+									"description": "Machine learning, big data, SQL, Python, DevOps. Études en parallèle de l’activité professionnelle.",
+									"status": "running",
+									"since": "depuis 2023"
+								},
+								{
+									"category": "Projet",
+									"title": "Balloon Ride Booking Platform",
+									"description": "La version 1.0 est en ligne et le développement se poursuit.",
+									"status": "running",
+									"since": "depuis 02.2025",
+									"link": "https://vole-en-globo.com.mx",
+									"linkLabel": "vole-en-globo.com.mx"
+								},
+								{
+									"category": "Projet",
+									"title": "Ce site web",
+									"description": "Nouveau design, nouvelles pages. Mis à jour et enrichi régulièrement.",
+									"status": "in-progress",
+									"since": "depuis 03.2025",
+									"link": "https://github.com/lukr-dev/rauscher-ai",
+									"linkLabel": "GitHub"
+								},
+								{
+									"category": "Projet",
+									"title": "Bookmark Garden",
+									"description": "En pause par manque de temps. La suite du projet est en cours de réévaluation.",
+									"status": "paused",
+									"since": "depuis 05.2025",
+									"link": "https://github.com/lukr-dev/bookmark-garden",
+									"linkLabel": "GitHub",
+									"relatedPost": "bookmark-garden"
+								}
+							]
+						}
+					]
+				},
+				"locale": "fr",
+				"translationOf": "home"
+			},
+			{
+				"id": "about-fr",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "À propos",
+					"content": [
+						{
+							"_type": "rauscher-about-hero",
+							"_key": "about-hero",
+							"heading": "À propos",
+							"badges": [
+								{
+									"title": "Chef de projet junior"
+								},
+								{
+									"title": "Étudiant en Data Engineering"
+								},
+								{
+									"title": "Biel/Bienne, CH"
+								}
+							],
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-0",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-1",
+											"text": "Étudiant motivé en Data Engineering, doté d’un talent pour les relations humaines et convaincu que les solutions fondées sur les données façonneront l’avenir. Je me tiens au courant des dernières tendances et technologies en machine learning, en IA et en génie logiciel. À la recherche de nouveaux défis, je suis toujours prêt à élargir mes connaissances et à les mettre en pratique dans mon travail.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"links": [
+								{
+									"title": "E-mail",
+									"url": "mailto:lukas@rauscher.ai"
+								},
+								{
+									"title": "LinkedIn",
+									"url": "https://www.linkedin.com/in/lukasrauscher"
+								},
+								{
+									"title": "GitHub",
+									"url": "https://github.com/lukr-dev"
+								}
+							],
+							"photo": {
+								"src": "/media/about/p01.jpg",
+								"alt": "Lukas Rauscher"
+							},
+							"cardName": "Lukas Rauscher",
+							"back": [
+								{
+									"_type": "block",
+									"_key": "about-text-2",
+									"style": "h2",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-3",
+											"text": "Profil",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-4",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-5",
+											"text": "Domicile : Biel/Bienne",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-6",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-7",
+											"text": "Actuellement : apload GmbH",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-8",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-9",
+											"text": "Études : BSc Data Engineering, BFH",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-10",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-11",
+											"text": "Dans la vie professionnelle depuis : 2014",
+											"marks": []
+										}
+									]
+								},
+								{
+									"_type": "block",
+									"_key": "about-text-12",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-13",
+											"text": "Langues : DE · EN · FR · ES",
+											"marks": []
+										}
+									]
+								}
+							],
+							"abilityLabel": "Capacité spéciale",
+							"abilityText": "Fait le lien entre l’atelier, la vente et la base de données."
+						},
+						{
+							"_type": "rauscher-skill-deck",
+							"_key": "about-skills",
+							"heading": "Jeu de compétences",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-14",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-15",
+											"text": "Trois paquets, constitués à l’atelier, dans la vente et sur les bancs de l’école.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"groups": [
+								{
+									"title": "Outils et méthodes",
+									"skills": [
+										{
+											"title": "Data Engineering"
+										},
+										{
+											"title": "Machine Learning"
+										},
+										{
+											"title": "Docker"
+										},
+										{
+											"title": "Linux",
+											"proficiency": "Connaissances de base"
+										},
+										{
+											"title": "MS365 & Power Platform"
+										}
+									]
+								},
+								{
+									"title": "Langues",
+									"skills": [
+										{
+											"title": "Allemand",
+											"proficiency": "Langue maternelle",
+											"level": 6
+										},
+										{
+											"title": "Anglais",
+											"proficiency": "C1",
+											"level": 5
+										},
+										{
+											"title": "Français",
+											"proficiency": "B2 / C1",
+											"level": 4
+										},
+										{
+											"title": "Espagnol",
+											"proficiency": "A1",
+											"level": 1
+										}
+									]
+								},
+								{
+									"title": "Compétences relationnelles",
+									"skills": [
+										{
+											"title": "Relation client"
+										},
+										{
+											"title": "Travail en équipe"
+										},
+										{
+											"title": "Prise de responsabilités"
+										},
+										{
+											"title": "Travail autonome"
+										},
+										{
+											"title": "Personnalité ouverte"
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "rauscher-career",
+							"_key": "about-career",
+							"heading": "Parcours",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-16",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-17",
+											"text": "Sept étapes, de la plus récente à la plus ancienne. Chacune avec de nouvelles compétences.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"entries": [
+								{
+									"title": "Chef de projet junior",
+									"organisation": "apload GmbH",
+									"dateRange": "2024–aujourd’hui",
+									"kind": "job",
+									"current": true,
+									"points": [
+										{
+											"text": "Responsabilités en gestion de projet"
+										},
+										{
+											"text": "Support client et collaboration étroite avec plusieurs équipes"
+										}
+									]
+								},
+								{
+									"title": "BSc Data Engineering",
+									"organisation": "Haute école spécialisée bernoise",
+									"dateRange": "2023–aujourd’hui",
+									"kind": "education",
+									"current": true,
+									"points": [
+										{
+											"text": "Machine Learning, Big Data, SQL, Python, DevOps"
+										},
+										{
+											"text": "Développement d’un PoC CRM assisté par l’IA pendant la Special Week"
+										}
+									]
+								},
+								{
+									"title": "Responsable des ventes en Suisse romande",
+									"organisation": "Schnyder + Minder AG",
+									"dateRange": "2023–2024",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Développement et suivi du secteur de vente en Suisse romande"
+										},
+										{
+											"text": "Encadrement et accompagnement de l’équipe de vente externe"
+										},
+										{
+											"text": "Optimisation des processus et coordination de l’infrastructure informatique"
+										}
+									]
+								},
+								{
+									"title": "Vente interne",
+									"organisation": "Schnyder + Minder AG",
+									"dateRange": "2021–2022",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Interface entre la vente externe, les clients et les fournisseurs"
+										},
+										{
+											"text": "Gestion des offres, des délais de livraison et des données de base"
+										},
+										{
+											"text": "Coordination de l’infrastructure informatique"
+										}
+									]
+								},
+								{
+									"title": "Technicien ES en processus d’entreprise",
+									"organisation": "HFTM, Grenchen",
+									"dateRange": "2019–2022",
+									"kind": "education",
+									"current": false,
+									"points": [
+										{
+											"text": "Optimisation des processus et lean management"
+										},
+										{
+											"text": "Gestion de projet et de la chaîne d’approvisionnement"
+										}
+									]
+								},
+								{
+									"title": "Responsable de département adjoint",
+									"organisation": "ETA SA Manufacture Horlogère Suisse",
+									"dateRange": "2017–2021",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Garantie du bon déroulement des opérations d’assemblage"
+										},
+										{
+											"text": "Encadrement et accompagnement de l’équipe"
+										},
+										{
+											"text": "Formation interne en conduite d’équipe et accompagnement des apprentis"
+										}
+									]
+								},
+								{
+									"title": "Horloger",
+									"organisation": "ETA SA Manufacture Horlogère Suisse",
+									"dateRange": "2014–2017",
+									"kind": "job",
+									"current": false,
+									"points": [
+										{
+											"text": "Contrôle qualité dans la production de mouvements horlogers"
+										},
+										{
+											"text": "Formation des nouveaux collaborateurs"
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "rauscher-inventory",
+							"_key": "about-inventory",
+							"heading": "Inventaire",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "about-text-18",
+									"style": "normal",
+									"markDefs": [],
+									"children": [
+										{
+											"_type": "span",
+											"_key": "about-span-19",
+											"text": "Les outils que j’utilise au quotidien dans mes études, au travail et dans mes projets personnels.",
+											"marks": []
+										}
+									]
+								}
+							],
+							"tools": [
+								{
+									"title": "Python",
+									"category": "Données"
+								},
+								{
+									"title": "SQL",
+									"category": "Données"
+								},
+								{
+									"title": "Spark",
+									"category": "Données"
+								},
+								{
+									"title": "Nuxt.js",
+									"category": "Développement"
+								},
+								{
+									"title": "Vue.js",
+									"category": "Développement"
+								},
+								{
+									"title": "JS / TS",
+									"category": "Développement"
+								},
+								{
+									"title": "Tailwind CSS",
+									"category": "Développement"
+								},
+								{
+									"title": "Java",
+									"category": "Développement"
+								},
+								{
+									"title": "PyQt",
+									"category": "Développement"
+								},
+								{
+									"title": "Docker",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Linux",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Cloudflare Pages",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "GitHub Actions",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "AWS",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Appwrite",
+									"category": "Infrastructure"
+								},
+								{
+									"title": "Perplexity API",
+									"category": "IA et API"
+								},
+								{
+									"title": "Google Gemini",
+									"category": "IA et API"
+								},
+								{
+									"title": "ScrapingBee",
+									"category": "IA et API"
+								},
+								{
+									"title": "Stripe",
+									"category": "IA et API"
+								},
+								{
+									"title": "Plunk",
+									"category": "IA et API"
+								},
+								{
+									"title": "MS365 & Power Platform",
+									"category": "Bureautique"
+								}
+							]
+						}
+					]
+				},
+				"locale": "fr",
+				"translationOf": "about"
+			},
+			{
+				"id": "posts-fr",
+				"slug": "posts",
+				"status": "published",
+				"data": {
+					"title": "Blog",
+					"content": [
+						{
+							"heading": "Blog",
+							"intro": [
+								{
+									"_type": "block",
+									"_key": "blog-intro-text",
+									"style": "normal",
+									"children": [
+										{
+											"_type": "span",
+											"_key": "6de50vmqt",
+											"text": "Notes sur les données, les projets et le chemin de l’horlogerie aux pipelines. Projets et articles dans un même jeu."
+										}
+									]
+								}
+							],
+							"highlightPost": "",
+							"_type": "rauscher-blog-overview",
+							"_key": "blog-overview"
+						}
+					]
+				},
+				"locale": "fr",
+				"translationOf": "posts"
 			}
 		],
 		"posts": [
 			{
-				"id": "post-1",
-				"slug": "welcome",
+				"id": "vom-uhrwerk-zur-pipeline",
+				"slug": "vom-uhrwerk-zur-pipeline",
 				"status": "published",
 				"data": {
-					"title": "Welcome",
-					"excerpt": "Your first post. Replace this with your own content.",
+					"title": "Vom Uhrwerk zur Pipeline",
+					"excerpt": "Was mir zehn Jahre Uhrmacherei über Data Engineering beigebracht haben.",
 					"content": [
 						{
 							"_type": "block",
+							"_key": "post-vom-uhrwerk-zur-pipeline",
 							"style": "normal",
+							"markDefs": [],
 							"children": [
 								{
 									"_type": "span",
-									"text": "This is a starter post. The templates in this project show the basic patterns for querying and rendering EmDash content. Replace them with your own design.",
-									"_key": "k1"
+									"_key": "post-vom-uhrwerk-zur-pipeline-span",
+									"text": "Was mir zehn Jahre Uhrmacherei über Data Engineering beigebracht haben.",
+									"marks": []
 								}
-							],
-							"_key": "k0"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "What to do next",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "Open the admin panel to add content, or edit the Astro pages in src/pages to change how content is displayed.",
-									"_key": "k5"
-								}
-							],
-							"_key": "k4"
+							]
 						}
 					]
 				},
 				"taxonomies": {
-					"category": ["general"],
-					"tag": ["starter", "example"]
+					"category": ["karriere"]
 				}
+			},
+			{
+				"id": "bookmark-garden",
+				"slug": "bookmark-garden",
+				"status": "published",
+				"data": {
+					"title": "Bookmark Garden",
+					"excerpt": "Ein W.i.P. für die Organisation von Lesezeichen. (Vibe-coding Experiment)",
+					"project_status": "In Arbeit",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Ein W.i.P. für die Organisation von Lesezeichen. (Vibe-coding Experiment)",
+									"marks": []
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "cloudflare-pages", "tailwind-css", "appwrite"]
+				}
+			},
+			{
+				"id": "crm-daten-aufraeumen",
+				"slug": "crm-daten-aufraeumen",
+				"status": "published",
+				"data": {
+					"title": "CRM-Daten aufräumen mit LLMs",
+					"excerpt": "Scraping, Perplexity API und warum Dubletten teurer sind als gedacht.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "post-crm-daten-aufraeumen",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "post-crm-daten-aufraeumen-span",
+									"text": "Scraping, Perplexity API und warum Dubletten teurer sind als gedacht.",
+									"marks": []
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["daten"]
+				}
+			},
+			{
+				"id": "personal-portfolio",
+				"slug": "personal-portfolio",
+				"status": "published",
+				"data": {
+					"title": "Personal Portfolio Website",
+					"excerpt": "Diese Portfolio-Webseite, welche mit Nuxt.js und Tailwind CSS erstellt wurde.",
+					"project_status": "In Arbeit",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Diese Portfolio-Webseite, welche mit Nuxt.js und Tailwind CSS erstellt wurde.",
+									"marks": []
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "cloudflare-pages", "tailwind-css", "plunk-email"]
+				}
+			},
+			{
+				"id": "balloon-ride-booking",
+				"slug": "balloon-ride-booking",
+				"status": "published",
+				"data": {
+					"title": "Balloon Ride Booking Platform",
+					"excerpt": "Buchungsplattform für Heissluftballonfahrten in Mexiko. Simple, responsive und mehrsprachig.",
+					"project_status": "In Arbeit",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Buchungsplattform für Heissluftballonfahrten in Mexiko. Simple, responsive und mehrsprachig.",
+									"marks": []
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "stripe", "tailwind-css-daisyui", "aws", "multilingual"]
+				}
+			},
+			{
+				"id": "crm-enhancement",
+				"slug": "crm-enhancement",
+				"status": "published",
+				"data": {
+					"title": "Case Study: CRM Enhancement",
+					"excerpt": "Dieses PoC, zeigt mögliche KI-gestützte Erweiterungen für ein CRM-System.",
+					"project_status": "Abgeschlossen",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "crm-body-0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-0-0",
+									"text": "Dieses Proof of Concept (PoC) wurde als Teil der Special Week an der Berner Fachhochschule entwickelt. Es zeigt, wie KI-gestützte Funktionen in die Datenaktualisierung eines CRM-Systems vereinfachen können, um die Effizienz und Benutzerfreundlichkeit zu verbessern. Das PoC nutzt PyQt für die GUI-Entwicklung und verschiedene KI-APIs für die Funktionalität.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-1-0",
+									"text": "Optimierung des CRM",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-2",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-2-0",
+									"text": "In der heutigen datengesteuerten Geschäftswelt ist ein effektives Kundenbeziehungsmanagement (CRM) unerlässlich. Doch selbst die fortschrittlichsten CRM-Systeme sind nur so gut wie die Daten, die sie enthalten. In einem Projekt, welches sich mit den Herausforderungen in der Datenqualität eines bestehenden CRM-Systems auseinandersetzte, konten wertvolle Einblicke gewonnen werden.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-3",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-3-0",
+									"text": "Projektinhalt",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-4",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-4-0",
+									"text": "Dieses Proof of Concept (PoC) wurde von einem Projektteam im Rahmen der Special Week an der Berner Fachhochschule entwickelt. Mittels PyQt wurde eine einfache GUI erstellt, die es ermöglicht, basierend auf einer URL-Liste Daten aus dem Web zu extrahieren. Über verschiedene Schritte werden folgenden Informationen gesammelt:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-5",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-5-0",
+									"text": "Unternehmensanalyse:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-5-1",
+									"text": " Kurzbeschreibung des Unternehmens, was es macht und in welcher Branche es tätig ist.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-6",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-6-0",
+									"text": "Mitbewerberanalyse:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-6-1",
+									"text": " Es werden 5–10 ähnliche Unternehmen identifiziert, die in der gleichen Branche tätig sind. Eine neue Abfrage für die neuen Unternehmen kann ebenfalls direkt gestartet werden.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-7-0",
+									"text": "Generelle Kontaktdaten:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-7-1",
+									"text": " E-Mail-Adresse, Telefonnummer, Adresse und weitere relevante Kontaktdaten.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-8",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-8-0",
+									"text": "Kontaktpersonen:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-8-1",
+									"text": " Informationen über spezifische Kontaktpersonen, die für das Unternehmen relevant sind, wie Name, Position und E-Mail-Adresse. Ein Screenshot der Webseite wird erstellt, um die Richtigkeit der gesammelten Daten zu überprüfen.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-9",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-9-0",
+									"text": "Die Herausforderung: Ineffiziente Daten und manuelle Arbeit",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-10",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-10-0",
+									"text": "Das Ausgangsproblem war typisch für viele Unternehmen: Das vorhandene CRM-System litt unter doppelten Einträgen, veralteten Informationen und unvollständigen Datensätzen. Diese Inkonsistenzen beeinträchtigten die Wirksamkeit von Vertriebs- und Marketingbemühungen erheblich. Manuelle Überprüfungen waren zeitaufwändig und banden wertvolle Ressourcen, die an anderer Stelle besser eingesetzt werden könnten. Das Ziel war klar: Die CRM-Daten sollten bereinigt, validiert und angereichert werden, um ihre Genauigkeit und Relevanz zu verbessern und die Zuverlässigkeit des Systems zu erhöhen.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-11",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-11-0",
+									"text": "Zwei Lösungsansätze für mehr Datenqualität",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-12",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-12-0",
+									"text": "Um diesen Anforderungen gerecht zu werden, wurden zwei primäre Lösungsansätze entwickelt: Ein Roboter-Automatisierungstool und eine API- & Web-Scraping-Lösung. Da die Roboter-Automatisierungslösung sehr komplex und wenig flexibel war, wurde der Fokus auf die zweite Lösung gelegt.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-13",
+							"style": "h3",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-13-0",
+									"text": "API- & Web-Scraping-Lösung: Tiefenanalyse aus dem Web",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-14",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-14-0",
+									"text": "Die zweite Lösung nutzt öffentlich verfügbare APIs, um Daten aus externen Quellen zu sammeln, zu filtern und zu analysieren. Der Workflow ist dabei mehrstufig:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-15",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-15-0",
+									"text": "Schritt für Schritt zur umfassenden Information:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-16",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-16-1",
+									"text": "URL-Verarbeitung (Scraping):",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-16-2",
+									"text": " URLs aus einer bereinigten Eingabedatei werden an eine Scraping-API übergeben. Diese extrahiert alle Links von der Homepage, filtert relevante URLs und speichert sie. Dieser Ansatz ermöglicht eine einfache Integration von Filtermechanismen.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-17",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-17-1",
+									"text": "URL-Analyse (Intelligente API-Nutzung):",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-17-2",
+									"text": " Die Perplexity API (LLM mit Internetzugang), wir genutzt, um Informationen über Unternehmen, Domains und ähnliche Unternehmen zu sammeln. Dies vereinfacht die Datenerfassung erheblich und liefert aktuelle Informationen sowie Zusammenfassungen des aktuellen Seitenstatus.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-18",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-18-1",
+									"text": "Kontaktdaten-Scraping:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-18-2",
+									"text": " Eine weitere API wird verwendet, um präzise und umfassende Kontaktdaten von den gefilterten Seiten zu extrahieren. Alle gesammelten Kontaktdaten werden pro Domain in einer einzigen Datei zusammengeführt. Um die Richtigkeit zu überprüfen, wird auch ein Screenshot der Seite erfasst, was eine schnelle Verifizierung ohne Browseröffnung ermöglicht.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-19",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-19-1",
+									"text": "Datenvisualisierung:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-19-2",
+									"text": " Nach jedem Verarbeitungsschritt werden die gesammelten Daten in einer benutzerfreundlichen grafischen Oberfläche (GUI) visualisiert, um einen schnellen Überblick zu ermöglichen.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-20",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-20-0",
+									"text": "Ausblick und zukünftige Verbesserungen",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-21",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-21-0",
+									"text": "Das Projekt birgt ein enormes Potenzial für zukünftige Erweiterungen:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-22",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-22-0",
+									"text": "Robot-Automatisierung:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-22-1",
+									"text": " Integration zukünftiger KI-APIs mit Web-Browsing-Funktionen und automatische UI-Anpassung durch Bilderkennung oder maschinelles Lernen.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-23",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-23-0",
+									"text": "API & Scraping:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-23-1",
+									"text": " Erweiterung der Datenquellen (z.B. branchenspezifische Datenbanken), Parallelverarbeitung und Caching zur Beschleunigung und Kostenreduzierung, verbesserte Datenvalidierung und Optimierung von KI-Modellen. Eine anspruchsvollere GUI mit interaktiven Datenvisualisierungen könnte die Benutzererfahrung weiter verbessern.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-24",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-24-0",
+									"text": "Fazit: Ein strategisches Asset für die Zukunft",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-25",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-25-0",
+									"text": "Die Implementierung dieser Lösungen kann das CRM-System eines Unternehmens in einen zuverlässigeren und strategischen Vermögenswert verwandeln. Durch die Konzentration auf Automatisierung und Datenanalyse legt dieses Projekt den Grundstein für ein leistungsstarkes CRM- und Marktanalysetool.",
+									"marks": []
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["python", "pyqt", "perplexity-api", "scrapingbee", "sales"]
+				}
+			},
+			{
+				"id": "vom-uhrwerk-zur-pipeline-en",
+				"slug": "vom-uhrwerk-zur-pipeline",
+				"status": "published",
+				"data": {
+					"title": "From clockwork to pipelines",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "post-vom-uhrwerk-zur-pipeline",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "post-vom-uhrwerk-zur-pipeline-span",
+									"text": "What ten years of watchmaking taught me about data engineering.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "What ten years of watchmaking taught me about data engineering."
+				},
+				"taxonomies": {
+					"category": ["karriere"]
+				},
+				"locale": "en",
+				"translationOf": "vom-uhrwerk-zur-pipeline"
+			},
+			{
+				"id": "bookmark-garden-en",
+				"slug": "bookmark-garden",
+				"status": "published",
+				"data": {
+					"title": "Bookmark Garden",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "A work in progress for organising bookmarks. (Vibe coding experiment)",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "A work in progress for organising bookmarks. (Vibe coding experiment)",
+					"project_status": "In Arbeit"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "cloudflare-pages", "tailwind-css", "appwrite"]
+				},
+				"locale": "en",
+				"translationOf": "bookmark-garden"
+			},
+			{
+				"id": "crm-daten-aufraeumen-en",
+				"slug": "crm-daten-aufraeumen",
+				"status": "published",
+				"data": {
+					"title": "Cleaning up CRM data with LLMs",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "post-crm-daten-aufraeumen",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "post-crm-daten-aufraeumen-span",
+									"text": "Scraping, the Perplexity API and why duplicates cost more than you think.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Scraping, the Perplexity API and why duplicates cost more than you think."
+				},
+				"taxonomies": {
+					"category": ["daten"]
+				},
+				"locale": "en",
+				"translationOf": "crm-daten-aufraeumen"
+			},
+			{
+				"id": "personal-portfolio-en",
+				"slug": "personal-portfolio",
+				"status": "published",
+				"data": {
+					"title": "Personal Portfolio Website",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "This portfolio website was built with Nuxt.js and Tailwind CSS.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "This portfolio website was built with Nuxt.js and Tailwind CSS.",
+					"project_status": "In Arbeit"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "cloudflare-pages", "tailwind-css", "plunk-email"]
+				},
+				"locale": "en",
+				"translationOf": "personal-portfolio"
+			},
+			{
+				"id": "balloon-ride-booking-en",
+				"slug": "balloon-ride-booking",
+				"status": "published",
+				"data": {
+					"title": "Balloon Ride Booking Platform",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Booking platform for hot-air balloon rides in Mexico. Simple, responsive and multilingual.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Booking platform for hot-air balloon rides in Mexico. Simple, responsive and multilingual.",
+					"project_status": "In Arbeit"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "stripe", "tailwind-css-daisyui", "aws", "multilingual"]
+				},
+				"locale": "en",
+				"translationOf": "balloon-ride-booking"
+			},
+			{
+				"id": "crm-enhancement-en",
+				"slug": "crm-enhancement",
+				"status": "published",
+				"data": {
+					"title": "Case Study: CRM Enhancement",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "crm-body-0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-0-0",
+									"text": "This proof of concept (PoC) was developed during Special Week at Bern University of Applied Sciences. It shows how AI-powered features can simplify data updates in a CRM system to improve efficiency and usability. The PoC uses PyQt for GUI development and various AI APIs for its functionality.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-1-0",
+									"text": "Optimising the CRM",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-2",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-2-0",
+									"text": "In today’s data-driven business world, effective customer relationship management (CRM) is essential. Yet even the most advanced CRM systems are only as good as the data they contain. A project addressing data quality challenges in an existing CRM system provided valuable insights.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-3",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-3-0",
+									"text": "Project scope",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-4",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-4-0",
+									"text": "This proof of concept (PoC) was developed by a project team during Special Week at Bern University of Applied Sciences. A simple GUI built with PyQt extracts data from the web using a list of URLs. Several steps collect the following information:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-5",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-5-0",
+									"text": "Company analysis:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-5-1",
+									"text": " A short description of the company, what it does and which industry it operates in.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-6",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-6-0",
+									"text": "Competitor analysis:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-6-1",
+									"text": " Identifies 5–10 similar companies in the same industry. A new query for those companies can also be launched directly.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-7-0",
+									"text": "General contact details:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-7-1",
+									"text": " Email address, telephone number, address and other relevant contact details.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-8",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-8-0",
+									"text": "Contact people:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-8-1",
+									"text": " Information about relevant contacts at the company, such as name, position and email address. A screenshot of the website is taken to verify the collected data.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-9",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-9-0",
+									"text": "The challenge: inefficient data and manual work",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-10",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-10-0",
+									"text": "The initial problem was typical of many companies: the existing CRM system contained duplicate entries, outdated information and incomplete records. These inconsistencies significantly reduced the effectiveness of sales and marketing efforts. Manual checks were time-consuming and tied up valuable resources that could be better used elsewhere. The goal was clear: clean, validate and enrich the CRM data to improve its accuracy and relevance and make the system more reliable.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-11",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-11-0",
+									"text": "Two approaches to better data quality",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-12",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-12-0",
+									"text": "Two main approaches were developed to meet these requirements: a robotic automation tool and an API and web scraping solution. Since robotic automation was very complex and lacked flexibility, the focus shifted to the second solution.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-13",
+							"style": "h3",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-13-0",
+									"text": "API and web scraping: in-depth analysis from the web",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-14",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-14-0",
+									"text": "The second solution uses publicly available APIs to collect, filter and analyse data from external sources. The workflow has several stages:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-15",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-15-0",
+									"text": "Step by step towards comprehensive information:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-16",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-16-1",
+									"text": "URL processing (scraping):",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-16-2",
+									"text": " URLs from a cleaned input file are sent to a scraping API. It extracts all links from the homepage, filters relevant URLs and saves them. This approach makes it easy to integrate filtering mechanisms.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-17",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-17-1",
+									"text": "URL analysis (intelligent API use):",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-17-2",
+									"text": " The Perplexity API, an LLM with internet access, collects information about companies, domains and similar businesses. This greatly simplifies data collection and provides up-to-date information and summaries of the current state of each site.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-18",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-18-1",
+									"text": "Contact detail scraping:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-18-2",
+									"text": " Another API extracts accurate and comprehensive contact details from the filtered pages. All contact details are combined into a single file per domain. A screenshot is also captured to verify accuracy quickly without opening a browser.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-19",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-19-1",
+									"text": "Data visualisation:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-19-2",
+									"text": " After each processing step, the collected data is displayed in a user-friendly graphical interface (GUI) for a quick overview.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-20",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-20-0",
+									"text": "Outlook and future improvements",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-21",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-21-0",
+									"text": "The project has considerable potential for future extensions:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-22",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-22-0",
+									"text": "Robotic automation:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-22-1",
+									"text": " Integration of future AI APIs with web browsing capabilities and automatic UI adaptation through image recognition or machine learning.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-23",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-23-0",
+									"text": "API & scraping:",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-23-1",
+									"text": " More data sources, such as industry-specific databases; parallel processing and caching to improve speed and reduce costs; better data validation and optimised AI models. A more advanced GUI with interactive data visualisations could further improve the user experience.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-24",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-24-0",
+									"text": "Conclusion: a strategic asset for the future",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-25",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-25-0",
+									"text": "Implementing these solutions can turn a company’s CRM into a more reliable strategic asset. By focusing on automation and data analysis, this project lays the groundwork for a powerful CRM and market analysis tool.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "This PoC demonstrates potential AI-powered extensions for a CRM system.",
+					"project_status": "Abgeschlossen"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["python", "pyqt", "perplexity-api", "scrapingbee", "sales"]
+				},
+				"locale": "en",
+				"translationOf": "crm-enhancement"
+			},
+			{
+				"id": "vom-uhrwerk-zur-pipeline-fr",
+				"slug": "vom-uhrwerk-zur-pipeline",
+				"status": "published",
+				"data": {
+					"title": "De l’horlogerie aux pipelines",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "post-vom-uhrwerk-zur-pipeline",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "post-vom-uhrwerk-zur-pipeline-span",
+									"text": "Ce que dix ans d’horlogerie m’ont appris sur le Data Engineering.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Ce que dix ans d’horlogerie m’ont appris sur le Data Engineering."
+				},
+				"taxonomies": {
+					"category": ["karriere"]
+				},
+				"locale": "fr",
+				"translationOf": "vom-uhrwerk-zur-pipeline"
+			},
+			{
+				"id": "bookmark-garden-fr",
+				"slug": "bookmark-garden",
+				"status": "published",
+				"data": {
+					"title": "Bookmark Garden",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Un projet en cours pour organiser les favoris. (Expérience de vibe coding)",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Un projet en cours pour organiser les favoris. (Expérience de vibe coding)",
+					"project_status": "In Arbeit"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "cloudflare-pages", "tailwind-css", "appwrite"]
+				},
+				"locale": "fr",
+				"translationOf": "bookmark-garden"
+			},
+			{
+				"id": "crm-daten-aufraeumen-fr",
+				"slug": "crm-daten-aufraeumen",
+				"status": "published",
+				"data": {
+					"title": "Nettoyer les données CRM avec les LLM",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "post-crm-daten-aufraeumen",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "post-crm-daten-aufraeumen-span",
+									"text": "Scraping, API Perplexity et pourquoi les doublons coûtent plus cher qu’on ne le pense.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Scraping, API Perplexity et pourquoi les doublons coûtent plus cher qu’on ne le pense."
+				},
+				"taxonomies": {
+					"category": ["daten"]
+				},
+				"locale": "fr",
+				"translationOf": "crm-daten-aufraeumen"
+			},
+			{
+				"id": "personal-portfolio-fr",
+				"slug": "personal-portfolio",
+				"status": "published",
+				"data": {
+					"title": "Site web portfolio personnel",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Ce site web portfolio a été créé avec Nuxt.js et Tailwind CSS.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Ce site web portfolio a été créé avec Nuxt.js et Tailwind CSS.",
+					"project_status": "In Arbeit"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "cloudflare-pages", "tailwind-css", "plunk-email"]
+				},
+				"locale": "fr",
+				"translationOf": "personal-portfolio"
+			},
+			{
+				"id": "balloon-ride-booking-fr",
+				"slug": "balloon-ride-booking",
+				"status": "published",
+				"data": {
+					"title": "Balloon Ride Booking Platform",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blog-intro-text",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blog-intro-span",
+									"text": "Plateforme de réservation de vols en montgolfière au Mexique. Simple, responsive et multilingue.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Plateforme de réservation de vols en montgolfière au Mexique. Simple, responsive et multilingue.",
+					"project_status": "In Arbeit"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["nuxt-js", "stripe", "tailwind-css-daisyui", "aws", "multilingual"]
+				},
+				"locale": "fr",
+				"translationOf": "balloon-ride-booking"
+			},
+			{
+				"id": "crm-enhancement-fr",
+				"slug": "crm-enhancement",
+				"status": "published",
+				"data": {
+					"title": "Étude de cas : amélioration d’un CRM",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "crm-body-0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-0-0",
+									"text": "Ce prototype de démonstration (PoC) a été développé pendant la Special Week à la Haute école spécialisée bernoise. Il montre comment des fonctions assistées par l’IA peuvent simplifier la mise à jour des données d’un CRM afin d’améliorer son efficacité et sa facilité d’utilisation. Le PoC utilise PyQt pour l’interface graphique et différentes API d’IA pour ses fonctionnalités.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-1-0",
+									"text": "Optimisation du CRM",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-2",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-2-0",
+									"text": "Dans le monde des affaires actuel, fondé sur les données, une gestion efficace de la relation client (CRM) est essentielle. Pourtant, même les CRM les plus avancés ne valent que par la qualité des données qu’ils contiennent. Un projet consacré aux défis de qualité des données d’un CRM existant a permis de tirer des enseignements précieux.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-3",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-3-0",
+									"text": "Contenu du projet",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-4",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-4-0",
+									"text": "Ce prototype de démonstration (PoC) a été développé par une équipe de projet pendant la Special Week à la Haute école spécialisée bernoise. Une interface graphique simple, créée avec PyQt, permet d’extraire des données du web à partir d’une liste d’URL. Plusieurs étapes permettent de recueillir les informations suivantes :",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-5",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-5-0",
+									"text": "Analyse de l’entreprise :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-5-1",
+									"text": " Une brève description de l’entreprise, de son activité et de son secteur.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-6",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-6-0",
+									"text": "Analyse de la concurrence :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-6-1",
+									"text": " Identification de 5 à 10 entreprises similaires dans le même secteur. Une nouvelle requête pour ces entreprises peut également être lancée directement.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-7-0",
+									"text": "Coordonnées générales :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-7-1",
+									"text": " Adresse e-mail, numéro de téléphone, adresse postale et autres coordonnées pertinentes.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-8",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-8-0",
+									"text": "Personnes de contact :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-8-1",
+									"text": " Informations sur les personnes de contact pertinentes au sein de l’entreprise, comme leur nom, leur fonction et leur adresse e-mail. Une capture d’écran du site permet de vérifier les données recueillies.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-9",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-9-0",
+									"text": "Le défi : des données inefficaces et du travail manuel",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-10",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-10-0",
+									"text": "Le problème initial était typique de nombreuses entreprises : le CRM existant contenait des doublons, des informations obsolètes et des fiches incomplètes. Ces incohérences réduisaient considérablement l’efficacité des actions commerciales et marketing. Les vérifications manuelles prenaient du temps et mobilisaient des ressources précieuses qui auraient pu être mieux employées ailleurs. L’objectif était clair : nettoyer, valider et enrichir les données du CRM pour améliorer leur exactitude et leur pertinence, et rendre le système plus fiable.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-11",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-11-0",
+									"text": "Deux approches pour améliorer la qualité des données",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-12",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-12-0",
+									"text": "Deux approches principales ont été développées pour répondre à ces besoins : un outil d’automatisation robotisée et une solution fondée sur les API et le web scraping. L’automatisation robotisée étant très complexe et peu flexible, l’équipe s’est concentrée sur la seconde solution.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-13",
+							"style": "h3",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-13-0",
+									"text": "API et web scraping : analyse approfondie à partir du web",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-14",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-14-0",
+									"text": "La seconde solution utilise des API accessibles au public pour collecter, filtrer et analyser des données provenant de sources externes. Le processus comporte plusieurs étapes :",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-15",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-15-0",
+									"text": "Étape par étape vers une information complète :",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-16",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-16-1",
+									"text": "Traitement des URL (scraping) :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-16-2",
+									"text": " Les URL d’un fichier d’entrée nettoyé sont transmises à une API de scraping. Elle extrait tous les liens de la page d’accueil, filtre les URL pertinentes et les enregistre. Cette approche facilite l’intégration de mécanismes de filtrage.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-17",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-17-1",
+									"text": "Analyse des URL (utilisation intelligente des API) :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-17-2",
+									"text": " L’API Perplexity, un LLM disposant d’un accès à internet, recueille des informations sur les entreprises, les domaines et les sociétés similaires. Elle simplifie considérablement la collecte et fournit des informations à jour ainsi que des résumés de l’état actuel de chaque site.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-18",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-18-1",
+									"text": "Extraction des coordonnées :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-18-2",
+									"text": " Une autre API extrait des coordonnées précises et complètes depuis les pages filtrées. Toutes les coordonnées sont réunies dans un seul fichier par domaine. Une capture d’écran permet également de vérifier rapidement leur exactitude sans ouvrir de navigateur.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-19",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-19-1",
+									"text": "Visualisation des données :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-19-2",
+									"text": " Après chaque étape de traitement, les données recueillies sont présentées dans une interface graphique conviviale pour offrir un aperçu rapide.",
+									"marks": []
+								}
+							],
+							"listItem": "number",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-20",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-20-0",
+									"text": "Perspectives et améliorations futures",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-21",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-21-0",
+									"text": "Le projet offre un potentiel important pour de futures extensions :",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-22",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-22-0",
+									"text": "Automatisation robotisée :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-22-1",
+									"text": " Intégration de futures API d’IA capables de naviguer sur le web et adaptation automatique de l’interface par reconnaissance d’images ou machine learning.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-23",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-23-0",
+									"text": "API et scraping :",
+									"marks": ["strong"]
+								},
+								{
+									"_type": "span",
+									"_key": "crm-body-23-1",
+									"text": " Ajout de sources de données, comme des bases sectorielles ; traitement parallèle et mise en cache pour accélérer le processus et réduire les coûts ; meilleure validation des données et optimisation des modèles d’IA. Une interface plus évoluée, avec des visualisations interactives, pourrait encore améliorer l’expérience utilisateur.",
+									"marks": []
+								}
+							],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-24",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-24-0",
+									"text": "Conclusion : un atout stratégique pour l’avenir",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "crm-body-25",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "crm-body-25-0",
+									"text": "La mise en œuvre de ces solutions peut faire du CRM d’une entreprise un atout stratégique plus fiable. En misant sur l’automatisation et l’analyse des données, ce projet pose les bases d’un outil performant de CRM et d’analyse du marché.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"excerpt": "Ce PoC présente des extensions possibles d’un CRM grâce à l’IA.",
+					"project_status": "Abgeschlossen"
+				},
+				"taxonomies": {
+					"category": ["projekte"],
+					"tag": ["python", "pyqt", "perplexity-api", "scrapingbee", "sales"]
+				},
+				"locale": "fr",
+				"translationOf": "crm-enhancement"
 			}
 		]
-	}
+	},
+	"defaultLocale": "de"
 }

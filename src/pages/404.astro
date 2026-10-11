@@ -1,9 +1,12 @@
 ---
+import { siteUi, localizedHref } from "../utils/i18n";
+const copy = siteUi(Astro.currentLocale);
+Astro.response.status = 404;
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Not Found">
-	<h1>Page not found</h1>
-	<p>The page you're looking for doesn't exist.</p>
-	<a href="/">Go home</a>
+<Base title={copy.notFound}>
+	<h1>{copy.notFound}</h1>
+	<p>{copy.missingPage}</p>
+	<a href={localizedHref("/", Astro.currentLocale)}>{copy.home}</a>
 </Base>

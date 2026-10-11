@@ -1,0 +1,13 @@
+{
+	"name": "@rauscher-ai/emdash-skill-deck",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./astro": "./src/astro/index.ts"
+	},
+	"peerDependencies": {
+		"emdash": "^1.2.0"
+	}
+}

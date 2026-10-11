@@ -1,0 +1,266 @@
+---
+import {
+	siteUi,
+	localizedHref,
+	projectStatusLabel,
+} from "../../../../src/utils/i18n";
+import type { ContentEntry } from "emdash";
+import type { BlogPost } from "../content";
+import { postPreview } from "@rauscher-ai/emdash-blog-preview/preview";
+
+interface Props {
+	entry: ContentEntry<BlogPost>;
+	index?: number;
+	featured?: boolean;
+	highlighted?: boolean;
+}
+const { entry, index = 0, featured = false, highlighted = false } = Astro.props;
+const { intro, readingMinutes } = postPreview(
+	entry.data.content,
+	entry.data.excerpt,
+);
+const categories = entry.data.terms?.category ?? [];
+const tags = entry.data.terms?.tag ?? [];
+const colours = [
+	"var(--paper)",
+	"var(--yellow)",
+	"var(--lavender)",
+	"var(--paper)",
+];
+const rotations = [-1.5, 1, -0.5, 1.5];
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<a
+	class:list={["blog-card", { featured }]}
+	href={localizedHref(`/posts/${entry.id}`, locale)}
+	style={`--card-colour:${colours[index % colours.length]};--rotation:${rotations[index % rotations.length]}deg`}
+>
+	{!featured && (
+		<div class="card-top">
+			<span>{String(index + 2).padStart(2, "0")}</span>
+			<span
+				class:list={[
+					"status",
+					{ completed: entry.data.project_status === "Abgeschlossen" },
+				]}
+			>
+				{projectStatusLabel(entry.data.project_status, locale) || copy.post}
+			</span>
+		</div>
+	)}
+	<div class="card-heading">
+		<div class="meta">
+			{featured && (
+				<span class="new-label">
+					{highlighted ? copy.highlighted : copy.newest}
+				</span>
+			)}
+			{categories.map((category) => (
+				<span class="category">{category.label}</span>
+			))}
+			{featured && entry.data.project_status && (
+				<span
+					class:list={[
+						"status",
+						{ completed: entry.data.project_status === "Abgeschlossen" },
+					]}
+				>
+					{projectStatusLabel(entry.data.project_status, locale)}
+				</span>
+			)}
+			<span class="date-reading">
+				{entry.data.publishedAt && (
+					<time datetime={entry.data.publishedAt.toISOString()}>
+						{entry.data.publishedAt.toLocaleDateString(locale, {
+							month: "2-digit",
+							year: "numeric",
+						})}
+					</time>
+				)}
+				<span> · {readingMinutes} min</span>
+			</span>
+		</div>
+		<h2 {...entry.edit.title}>{entry.data.title}</h2>
+	</div>
+	<div class="card-description">
+		{intro && <p {...entry.edit.excerpt}>{intro}</p>}
+		{featured && <span class="read-link">{copy.read} →</span>}
+	</div>
+	{tags.length > 0 && (
+		<div class="technologies">
+			{tags.map((tag) => (
+				<span>{tag.label}</span>
+			))}
+		</div>
+	)}
+</a>
+
+<style>
+	.blog-card {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		padding: 22px;
+		min-width: 0;
+		min-height: 300px;
+		border-radius: 22px;
+		border: 2px solid var(--ink);
+		background: var(--card-colour);
+		color: var(--ink);
+		transform: rotate(var(--rotation));
+		box-shadow: 4px 4px 0 var(--ink);
+		text-decoration: none;
+		transition:
+			transform 0.3s,
+			box-shadow 0.3s;
+	}
+	.blog-card:hover,
+	.blog-card:focus-visible {
+		transform: rotate(0) translateY(-8px);
+		box-shadow: 6px 12px 0 var(--ink);
+	}
+	.card-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+	}
+	.status {
+		border: 1.5px solid currentColor;
+		border-radius: 99px;
+		padding: 3px 8px;
+		font-size: 11px;
+		text-transform: uppercase;
+	}
+	.status.completed {
+		background: var(--blue);
+		color: var(--paper);
+		border-color: var(--ink);
+	}
+	.card-heading,
+	.card-description {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		min-width: 0;
+	}
+	.meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px;
+		font-size: 13px;
+	}
+	.category,
+	.new-label {
+		background: var(--ink);
+		color: var(--paper);
+		border-radius: 99px;
+		padding: 4px 10px;
+		text-transform: uppercase;
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+	}
+	.date-reading {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+	h2 {
+		font: 900 40px/0.9 var(--font-display);
+		margin: 0;
+		text-wrap: balance;
+		overflow-wrap: anywhere;
+	}
+	p {
+		font-size: 16px;
+		line-height: 1.45;
+		margin: 0;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
+		overflow: hidden;
+	}
+	.technologies {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-top: auto;
+		padding-top: 14px;
+		border-top: 1px dashed #16130f4d;
+	}
+	.technologies span {
+		font-size: 12px;
+		border: 1.5px solid currentColor;
+		border-radius: 99px;
+		padding: 3px 9px;
+	}
+	.featured {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+		align-items: end;
+		gap: 28px 56px;
+		padding: 36px;
+		background: var(--ink);
+		color: var(--paper);
+		border-radius: 28px;
+		box-shadow: 8px 8px 0 var(--ink);
+		transform: none;
+		min-height: 0;
+	}
+	.featured .category {
+		border: 1.5px solid var(--paper);
+		padding: 3px 10px;
+	}
+	.featured .new-label {
+		background: var(--yellow);
+		color: var(--ink);
+	}
+	.featured .date-reading {
+		color: #d6d0c2;
+	}
+	.featured h2 {
+		font-size: clamp(56px, 7vw, 104px);
+		line-height: 0.85;
+		letter-spacing: -0.02em;
+		color: var(--yellow);
+	}
+	.featured p {
+		font-size: 20px;
+		line-height: 1.5;
+		color: #e9e4d8;
+	}
+	.featured .technologies {
+		grid-column: 1/-1;
+		border-top-color: #fffdf64d;
+	}
+	.read-link {
+		align-self: flex-start;
+		background: var(--yellow);
+		color: var(--ink);
+		border-radius: 99px;
+		padding: 12px 20px;
+		font-weight: 700;
+		font-size: 15px;
+	}
+	@media (max-width: 600px) {
+		.featured {
+			padding: 24px;
+		}
+		.featured h2 {
+			font-size: clamp(40px, 11vw, 60px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.blog-card {
+			transition: none;
+		}
+	}
+</style>

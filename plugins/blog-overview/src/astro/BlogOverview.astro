@@ -1,0 +1,252 @@
+---
+import { siteUi } from "../../../../src/utils/i18n";
+import {
+	getEmDashCollection,
+	getEmDashEntry,
+	getTaxonomyTermsWithCacheHint,
+} from "emdash";
+import type { PortableTextBlock } from "emdash";
+import { PortableText } from "emdash/ui";
+import PostCard from "./PostCard.astro";
+import { featuredPosts, flattenTerms } from "../content";
+interface Props {
+	node: {
+		heading?: string;
+		intro?: PortableTextBlock[];
+		highlightPost?: string;
+	};
+}
+const { node } = Astro.props;
+const category = Astro.url.searchParams.get("category") || undefined;
+const tag = Astro.url.searchParams.get("tag") || undefined;
+const cursor = Astro.url.searchParams.get("cursor") || undefined;
+const [result, termsResult, highlightResult] = await Promise.all([
+	getEmDashCollection("posts", {
+		status: "published",
+		locale: Astro.locals.contentLocale ?? Astro.currentLocale,
+		orderBy: { published_at: "desc" },
+		limit: 20,
+		cursor,
+		where: { ...(category ? { category } : {}), ...(tag ? { tag } : {}) },
+	}),
+	getTaxonomyTermsWithCacheHint("category", {
+		locale: Astro.locals.contentLocale ?? Astro.currentLocale,
+	}),
+	node.highlightPost
+		? getEmDashEntry("posts", node.highlightPost, {
+				locale: Astro.locals.contentLocale ?? Astro.currentLocale,
+			})
+		: Promise.resolve(null),
+]);
+if (Astro.cache?.enabled) {
+	Astro.cache.set(result.cacheHint);
+	Astro.cache.set(termsResult.cacheHint);
+	if (highlightResult) Astro.cache.set(highlightResult.cacheHint);
+}
+if (result.error) {
+	console.error("Unable to load blog posts", result.error);
+	Astro.response.status = 503;
+}
+const categories = flattenTerms(termsResult.data).filter(
+	(term) => (term.count ?? 0) > 0,
+);
+const { featured, rest, highlighted } = featuredPosts(
+	result.entries,
+	highlightResult?.entry &&
+		"locale" in highlightResult.entry.data &&
+		highlightResult.entry.data.locale ===
+			(Astro.locals.contentLocale ?? Astro.currentLocale ?? "de")
+		? highlightResult.entry
+		: null,
+	cursor,
+	category,
+	tag,
+);
+const shown = rest.length + (featured ? 1 : 0);
+const href = (selected?: string, nextCursor?: string) => {
+	const params = new URLSearchParams();
+	if (selected) params.set("category", selected);
+	if (tag) params.set("tag", tag);
+	if (nextCursor) params.set("cursor", nextCursor);
+	return `${Astro.url.pathname}${params.size ? `?${params}` : ""}`;
+};
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+---
+
+<section class="blog-overview">
+	<div class="wrap">
+		<div class="blog-introduction">
+			<h1>{node.heading ?? "Blog"}</h1>
+			<div class="rauscher-rich-text on-yellow copy-intro">
+				<PortableText value={node.intro ?? []} />
+			</div>
+		</div>
+		<div class="blog-filters">
+			<nav aria-label={copy.categoryFilter}>
+				<a href={href()} aria-current={!category ? "page" : undefined}>
+					{copy.all}
+				</a>
+				{categories.map((term) => (
+					<a
+						href={href(term.slug)}
+						aria-current={category === term.slug ? "page" : undefined}
+					>
+						{term.label}
+						<span>{term.count}</span>
+					</a>
+				))}
+			</nav>
+			<span class="entry-count">
+				{shown} {shown === 1 ? copy.entry : copy.entries}
+				{result.nextCursor ? ` ${copy.onPage}` : ""}
+			</span>
+		</div>
+		{tag && (
+			<div class="tag-filter">
+				<span>Tag: {tag}</span>
+				<a
+					href={`${Astro.url.pathname}${category ? `?category=${encodeURIComponent(category)}` : ""}`}
+				>
+					{copy.clearFilter} ×
+				</a>
+			</div>
+		)}
+		{result.error ? (
+			<p role="alert">{copy.loadError}</p>
+		) : (
+			<>
+				{featured && (
+					<PostCard entry={featured} featured highlighted={highlighted} />
+				)}
+				<div class="post-grid">
+					{rest.map((entry, index) => (
+						<PostCard entry={entry} index={index} />
+					))}
+				</div>
+				{shown === 0 && (
+					<div class="empty-state">
+						<h2>{copy.empty}</h2>
+						<p>{category || tag ? copy.emptyFilter : copy.emptyAll}</p>
+						{(category || tag) && (
+							<a class="button dark" href={Astro.url.pathname}>
+								{copy.showAll} →
+							</a>
+						)}
+					</div>
+				)}
+				{(cursor || result.nextCursor) && (
+					<nav class="pagination" aria-label={copy.morePosts}>
+						{cursor && (
+							<a class="button" href={href(category)}>
+								{copy.firstPage}
+							</a>
+						)}
+						{result.nextCursor && (
+							<a class="button dark" href={href(category, result.nextCursor)}>
+								{copy.morePosts} →
+							</a>
+						)}
+					</nav>
+				)}
+			</>
+		)}
+	</div>
+</section>
+<style>
+	.blog-overview {
+		padding: 40px 0 120px;
+		overflow: clip;
+	}
+	.blog-introduction {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		gap: 24px 48px;
+		padding-bottom: 48px;
+	}
+	h1 {
+		font: 900 clamp(120px, 20vw, 300px)/0.72 var(--font-display);
+		letter-spacing: -0.04em;
+		margin: 0;
+		padding: 20px 0 0.2em;
+		overflow-wrap: anywhere;
+		max-width: 100%;
+	}
+	.blog-introduction > div {
+		max-width: 24em;
+	}
+	.blog-filters {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 16px;
+		flex-wrap: wrap;
+		border-top: 2px solid var(--ink);
+		padding-top: 20px;
+		margin-bottom: 32px;
+	}
+	.blog-filters nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+	.blog-filters a {
+		display: inline-flex;
+		gap: 6px;
+		font-weight: 700;
+		font-size: 15px;
+		border-radius: 99px;
+		padding: 9px 16px;
+		border: 2px solid var(--ink);
+		background: var(--paper);
+		text-decoration: none;
+	}
+	.blog-filters a[aria-current="page"] {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.blog-filters a span {
+		opacity: 0.6;
+		font-weight: 500;
+	}
+	.entry-count {
+		font-size: 15px;
+	}
+	.tag-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-bottom: 24px;
+		font-size: 14px;
+	}
+	.post-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+		gap: 24px;
+		margin-top: 32px;
+	}
+	.pagination {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 48px;
+	}
+	.empty-state {
+		padding: 48px 0;
+	}
+	.empty-state h2 {
+		font: 900 56px/0.95 var(--font-display);
+		margin: 0 0 16px;
+	}
+	@media (max-width: 600px) {
+		.blog-overview {
+			padding-top: 24px;
+		}
+		.blog-introduction {
+			padding-bottom: 32px;
+		}
+	}
+</style>
