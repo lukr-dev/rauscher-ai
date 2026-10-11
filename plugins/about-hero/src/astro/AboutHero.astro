@@ -3,6 +3,7 @@ import { siteUi, localizedHref } from "../../../../src/utils/i18n";
 import { isSafeHref } from "emdash";
 import type { ImageValue, PortableTextBlock } from "emdash";
 import { Image, PortableText } from "emdash/ui";
+import { aboutCardBack } from "../content";
 interface Props {
 	node: {
 		heading?: string;
@@ -11,6 +12,8 @@ interface Props {
 		links?: { title: string; url: string }[];
 		photo?: ImageValue;
 		cardName?: string;
+		backTitle?: string;
+		facts?: { label?: string; value?: string }[];
 		back?: PortableTextBlock[];
 		abilityLabel?: string;
 		abilityText?: string;
@@ -19,6 +22,7 @@ interface Props {
 const { node } = Astro.props;
 const locale = Astro.currentLocale;
 const copy = siteUi(locale);
+const back = aboutCardBack(node);
 ---
 
 <section class="about-hero">
@@ -47,23 +51,32 @@ const copy = siteUi(locale);
 			</div>
 		</div>
 		<div class="portrait-wrap">
-			<article class="portrait" data-about-card>
-				<button
-					class="front"
-					type="button"
-					data-about-flip
-					aria-expanded="false"
-					aria-label={`${node.cardName ?? copy.profile}: ${copy.flip}`}
-				>
+			<div
+				class="portrait"
+				role="button"
+				tabindex="0"
+				aria-pressed="false"
+				aria-label={`${node.cardName ?? copy.profile}: ${copy.flip}`}
+				data-about-card
+			>
+				<div class="front">
 					{node.photo && (
 						<Image image={node.photo} class="portrait-photo" priority />
 					)}
 					<span class="card-name">{node.cardName}</span>
-				</button>
-				<div class="back" data-about-back inert aria-hidden="true">
-					<div class="rauscher-rich-text on-dark copy-card">
-						<PortableText value={node.back ?? []} />
-					</div>
+				</div>
+				<div class="back" data-about-back aria-hidden="true">
+					{back.title && <h2>{back.title}</h2>}
+					{back.facts.length > 0 && (
+						<dl class="facts">
+							{back.facts.map((fact) => (
+								<div>
+									<dt>{fact.label}</dt>
+									<dd>{fact.value}</dd>
+								</div>
+							))}
+						</dl>
+					)}
 					{(node.abilityLabel?.trim() || node.abilityText?.trim()) && (
 						<div class="ability">
 							{node.abilityLabel?.trim() && (
@@ -72,11 +85,8 @@ const copy = siteUi(locale);
 							{node.abilityText?.trim() && <p>{node.abilityText}</p>}
 						</div>
 					)}
-					<button type="button" data-about-close class="close">
-						↶ {copy.back}
-					</button>
 				</div>
-			</article>
+			</div>
 			<p class="hint">{copy.clickCard} ↻</p>
 		</div>
 	</div>
@@ -85,21 +95,36 @@ const copy = siteUi(locale);
 	for (const card of document.querySelectorAll<HTMLElement>(
 		"[data-about-card]",
 	)) {
-		const front = card.querySelector<HTMLButtonElement>("[data-about-flip]")!;
 		const back = card.querySelector<HTMLElement>("[data-about-back]")!;
-		const close = card.querySelector<HTMLButtonElement>("[data-about-close]")!;
 		const flip = (flipped: boolean) => {
 			card.classList.toggle("flipped", flipped);
-			front.setAttribute("aria-expanded", String(flipped));
-			front.inert = flipped;
-			back.inert = !flipped;
+			card.setAttribute("aria-pressed", String(flipped));
 			back.setAttribute("aria-hidden", String(!flipped));
-			(flipped ? close : front).focus({ preventScroll: true });
 		};
-		front.addEventListener("click", () => flip(true));
-		close.addEventListener("click", () => flip(false));
+		const toggle = () => flip(!card.classList.contains("flipped"));
+		card.addEventListener("click", toggle);
 		card.addEventListener("keydown", (event) => {
-			if (event.key === "Escape") flip(false);
+			if (event.key === "Enter" || event.key === " ") {
+				event.preventDefault();
+				toggle();
+			} else if (event.key === "Escape") flip(false);
+		});
+		// Tilt towards the hovered corner; measured on the untransformed wrapper so the tilt doesn't feed back.
+		const wrap = card.parentElement!;
+		const tilt = window.matchMedia(
+			"(hover: hover) and (prefers-reduced-motion: no-preference)",
+		);
+		card.addEventListener("pointermove", (event) => {
+			if (!tilt.matches || event.pointerType !== "mouse") return;
+			const rect = wrap.getBoundingClientRect();
+			const x = (event.clientX - rect.left) / rect.width - 0.5;
+			const y = (event.clientY - rect.top) / card.offsetHeight - 0.5;
+			card.style.setProperty("--tilt-x", `${(-y * 16).toFixed(2)}deg`);
+			card.style.setProperty("--tilt-y", `${(x * 16).toFixed(2)}deg`);
+		});
+		card.addEventListener("pointerleave", () => {
+			card.style.removeProperty("--tilt-x");
+			card.style.removeProperty("--tilt-y");
 		});
 	}
 </script>
@@ -151,7 +176,7 @@ const copy = siteUi(locale);
 		background: var(--ink);
 	}
 	.contacts {
-		margin-top: 30px;
+		margin-top: 52px;
 	}
 	.portrait-wrap {
 		justify-self: center;
@@ -161,7 +186,18 @@ const copy = siteUi(locale);
 		position: relative;
 		height: 460px;
 		perspective: 1200px;
-		transform: rotate(4deg);
+		transform: perspective(900px) rotate(4deg) rotateX(var(--tilt-x, 0deg))
+			rotateY(var(--tilt-y, 0deg));
+		transition: transform 0.4s ease-out;
+		cursor: pointer;
+	}
+	.portrait:hover {
+		transition-duration: 0.12s;
+	}
+	.portrait:focus-visible {
+		outline: 4px solid var(--blue);
+		outline-offset: 8px;
+		border-radius: 24px;
 	}
 	.front,
 	.back {
@@ -171,6 +207,7 @@ const copy = siteUi(locale);
 		flex-direction: column;
 		gap: 16px;
 		padding: 12px;
+		box-sizing: border-box;
 		border: 2px solid var(--ink);
 		border-radius: 22px;
 		box-shadow: 8px 8px 0 var(--ink);
@@ -180,9 +217,6 @@ const copy = siteUi(locale);
 	.front {
 		background: var(--paper);
 		color: var(--ink);
-		text-align: left;
-		font: inherit;
-		cursor: pointer;
 	}
 	.front :global(.portrait-photo) {
 		width: 100%;
@@ -200,8 +234,34 @@ const copy = siteUi(locale);
 		background: var(--ink);
 		color: var(--paper);
 		transform: rotateY(180deg);
+		padding: 26px 24px 24px;
 		visibility: hidden;
 		overflow-y: auto;
+	}
+	.back h2 {
+		color: var(--yellow);
+		font: 900 36px/1 var(--font-display);
+		margin: 0 0 6px;
+	}
+	.facts {
+		margin: 0;
+		font-size: 15px;
+	}
+	.facts div {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 16px;
+		padding: 10px 0;
+		border-bottom: 1px dashed #fffdf64d;
+	}
+	.facts dt {
+		color: #fffdf6b3;
+	}
+	.facts dd {
+		margin: 0;
+		font-weight: 700;
+		text-align: right;
 	}
 	.flipped .front {
 		transform: rotateY(-180deg);
@@ -213,9 +273,7 @@ const copy = siteUi(locale);
 	}
 	.ability {
 		margin-top: auto;
-		padding-top: 14px;
-		border-top: 1px dashed #fffdf64d;
-		font-size: 14px;
+		font-size: 15px;
 	}
 	.ability strong {
 		color: var(--yellow);
@@ -225,15 +283,6 @@ const copy = siteUi(locale);
 	}
 	.ability p {
 		margin: 8px 0;
-	}
-	.close {
-		background: none;
-		border: 0;
-		color: var(--yellow);
-		padding: 6px 0;
-		text-align: left;
-		cursor: pointer;
-		font: 700 13px var(--font-body);
 	}
 	.hint {
 		text-align: center;
@@ -250,6 +299,7 @@ const copy = siteUi(locale);
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
+		.portrait,
 		.front,
 		.back {
 			transition: none;
