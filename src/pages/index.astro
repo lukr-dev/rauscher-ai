@@ -6,6 +6,7 @@ import {
 } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../layouts/Base.astro";
+import { localizedHref } from "../utils/i18n";
 import { resolveStarterSiteIdentity } from "../utils/site-identity";
 
 const [{ entry: page, cacheHint, fallbackLocale }, settings] =
@@ -20,7 +21,11 @@ if (Astro.cache?.enabled) {
 }
 const { siteTitle, siteTagline } = resolveStarterSiteIdentity(settings.data);
 const seo = page
-	? getSeoMeta(page, { siteTitle, siteUrl: Astro.url.origin, path: "/" })
+	? getSeoMeta(page, {
+			siteTitle,
+			siteUrl: Astro.url.origin,
+			path: localizedHref("/", Astro.currentLocale),
+		})
 	: undefined;
 const title =
 	seo?.title === `${siteTitle} | ${siteTitle}`

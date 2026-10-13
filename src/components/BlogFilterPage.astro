@@ -1,0 +1,39 @@
+---
+import BlogOverview from "../../plugins/blog-overview/src/astro/BlogOverview.astro";
+import { blogFilterPath } from "../../plugins/blog-overview/src/content";
+import Base from "../layouts/Base.astro";
+import type { BlogFilterPageData } from "../utils/blog-filter";
+import { localizedHref, siteUi } from "../utils/i18n";
+
+type Props = BlogFilterPageData;
+const { taxonomy, term, node, contentLocale, alternates } = Astro.props;
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
+const cursor = Astro.url.searchParams.get("cursor") || undefined;
+const description =
+	term.description ||
+	copy[
+		taxonomy === "category" ? "categoryDescription" : "tagDescription"
+	].replace("{label}", term.label);
+const canonical = new URL(
+	localizedHref(blogFilterPath({ taxonomy, slug: term.slug }, cursor), locale),
+	Astro.url.origin,
+).href;
+---
+
+<Base
+	title={`${node.heading ?? "Blog"}: ${term.label}`}
+	description={description}
+	canonical={canonical}
+	robots={cursor || !term.count ? "noindex, follow" : undefined}
+	alternates={alternates}
+	languageFallback="/posts"
+	navPath={localizedHref("/posts", locale)}
+	contentLocale={contentLocale}
+>
+	<BlogOverview
+		node={node}
+		filter={{ taxonomy, term }}
+		description={description}
+	/>
+</Base>
