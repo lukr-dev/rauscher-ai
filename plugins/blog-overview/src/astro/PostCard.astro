@@ -12,21 +12,16 @@ interface Props {
 	entry: ContentEntry<BlogPost>;
 	index?: number;
 	featured?: boolean;
-	highlighted?: boolean;
+	topPost?: boolean;
 }
-const { entry, index = 0, featured = false, highlighted = false } = Astro.props;
+const { entry, index = 0, featured = false, topPost = false } = Astro.props;
 const { intro, readingMinutes } = postPreview(
 	entry.data.content,
 	entry.data.excerpt,
 );
 const categories = entry.data.terms?.category ?? [];
 const tags = entry.data.terms?.tag ?? [];
-const colours = [
-	"var(--paper)",
-	"var(--yellow)",
-	"var(--lavender)",
-	"var(--paper)",
-];
+const colour = entry.data.highlight ? "var(--lavender)" : "var(--paper)";
 const rotations = [-1.5, 1, -0.5, 1.5];
 const locale = Astro.currentLocale;
 const copy = siteUi(locale);
@@ -35,7 +30,7 @@ const copy = siteUi(locale);
 <a
 	class:list={["blog-card", { featured }]}
 	href={localizedHref(`/posts/${entry.id}`, locale)}
-	style={`--card-colour:${colours[index % colours.length]};--rotation:${rotations[index % rotations.length]}deg`}
+	style={`--card-colour:${colour};--rotation:${rotations[index % rotations.length]}deg`}
 >
 	{!featured && (
 		<div class="card-top">
@@ -53,9 +48,7 @@ const copy = siteUi(locale);
 	<div class="card-heading">
 		<div class="meta">
 			{featured && (
-				<span class="new-label">
-					{highlighted ? copy.highlighted : copy.newest}
-				</span>
+				<span class="new-label">{topPost ? copy.topPost : copy.newest}</span>
 			)}
 			{categories.map((category) => (
 				<span class="category">{category.label}</span>
