@@ -14,7 +14,7 @@ The homepage renders the published `pages/home` entry. Its rich-text editor offe
 
 `seed/seed.json` contains the design's homepage content and three short example posts. Load sample content during initial CMS setup; changing this file does not overwrite an existing site's content. Photos from the design are in `public/media/hero/`.
 
-EmDash 1.2.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.2.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
+EmDash 1.2.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, icon pickers, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.2.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
 
 ## About blocks
 
@@ -23,7 +23,7 @@ The published `pages/about` entry uses four separate plugins: About Hero, Skill 
 - About Hero has role/location badges, contact links, photo and card name. Its back is rich text with optional special ability copy. There is no rarity or front counter.
 - Skill Deck has reorderable groups and skills, optional proficiency text and optional six-segment levels.
 - Career has reorderable roles/qualifications, organisation, date range, job/education type, current marker, and repeatable bullet points.
-- Inventory has tool names, categories and optional uploaded logos. Filters come from the tools' category text, merging differences in case and whitespace.
+- Inventory has tool names, categories and optional brand icons picked from the [CoreUI Brands](https://icones.js.org/collection/cib) set (CC0, via `@iconify-json/cib`). The editor searches the set by name and previews each icon; the block stores only the icon name. When no brand fits, upload a custom logo instead; it is shown only if no brand icon is selected. Filters come from the tools' category text, merging differences in case and whitespace.
 
 The seed includes the About design content and `public/media/about/p01.jpg`. Existing CMS content must be updated through the editor/API separately.
 
@@ -31,7 +31,18 @@ The seed includes the About design content and `public/media/about/p01.jpg`. Exi
 
 ## Blog views
 
-The published `pages/posts` entry contains the separate **Blog Overview** plugin, with an editable heading, rich-text introduction and optional highlighted-post picker. Without a selection, the newest published post is featured. Category filters come from published posts; a highlighted post only appears within filters it matches. Lists use CMS publication dates and calculated reading time, with pagination after 20 posts.
+The published `pages/posts` entry contains the separate **Blog Overview** plugin, with an editable heading and rich-text introduction. Each post has two independent checkboxes: **Highlight (blue card)** changes its regular card from cream to light blue; **Top Post** makes it eligible for the large dark featured card. The newest published Top Post wins; without one, the newest published post is featured. The selection respects the current language, category and tag filters and can feature a post outside the first page; a filtered page without a matching Top Post shows every match as a regular card. Lists use CMS publication dates and calculated reading time, with pagination after 20 posts. Highlight and Top Post flags are shared across translations.
+
+Each filter is its own server-rendered page: `/category/{slug}` and `/tag/{slug}` (plus `/en/…` and `/fr/…`), with a localized title, description, canonical URL, hreflang links and `CollectionPage` structured data. One filter applies at a time; old `/posts?category=…` and `?tag=…` links redirect permanently. Category and tag badges on cards and articles link to these pages. With JavaScript, filter and pagination links swap the list in place (view transition, history entry, screen-reader announcement); without it they are plain links. A category or tag description entered in the CMS (per language) replaces the generic page intro and meta description. Paginated (`?cursor=`) and empty filter pages are `noindex, follow`. `/sitemap.xml` adds `/sitemap-taxonomies.xml` to EmDash's collection sitemaps, and `/llms.txt` lists categories and posts per language for agents.
+
+For an existing CMS, add these fields before deploying the updated overview:
+
+```bash
+# Local development uses dev bypass. Remote sites require EMDASH_TOKEN with schema:write.
+node scripts/migrations/002-post-highlights.mjs <site-url>
+```
+
+The migration adds missing fields from the seed and can be rerun. It keeps existing posts and leaves both options unchecked. The old page-level highlighted-post picker is replaced by the post-level Top Post checkbox; choose any preferred Top Post in its post editor.
 
 Posts use **Preview intro** (`excerpt`) for card introductions, falling back to the first two sentences of their content. The optional **Project status** field offers _In Arbeit_ and _Abgeschlossen_. Categories group posts, and tags appear as technology badges.
 

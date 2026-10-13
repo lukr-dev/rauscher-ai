@@ -62,11 +62,29 @@ const fields = [
 		initial_value: "Lukas Rauscher",
 	},
 	{
-		type: "portable_text",
-		action_id: "back",
-		label: "Card back",
+		type: "text_input",
+		action_id: "backTitle",
+		label: "Card back title",
+		initial_value: "Steckbrief",
+	},
+	{
+		type: "repeater",
+		action_id: "facts",
+		label: "Card back facts",
+		item_label: "Fact",
 		initial_value: [],
-		preview_class: "on-dark copy-card",
+		fields: [
+			{
+				type: "text_input",
+				action_id: "label",
+				label: "Label",
+			},
+			{
+				type: "text_input",
+				action_id: "value",
+				label: "Value",
+			},
+		],
 	},
 	{
 		type: "text_input",

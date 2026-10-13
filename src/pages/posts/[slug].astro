@@ -9,6 +9,7 @@ import {
 } from "emdash";
 import { Image, PortableText } from "emdash/ui";
 import PostCard from "@rauscher-ai/emdash-blog-overview/card";
+import { blogFilterPath } from "../../../plugins/blog-overview/src/content";
 import { postPreview } from "@rauscher-ai/emdash-blog-preview/preview";
 import Base from "../../layouts/Base.astro";
 import { resolveStarterSiteIdentity } from "../../utils/site-identity";
@@ -85,7 +86,7 @@ const copy = siteUi(locale);
 				<a
 					class="category"
 					href={localizedHref(
-						`/posts?category=${encodeURIComponent(category.slug)}`,
+						blogFilterPath({ taxonomy: "category", slug: category.slug }),
 						locale,
 					)}
 				>
@@ -131,7 +132,7 @@ const copy = siteUi(locale);
 				{tags.map((tag) => (
 					<a
 						href={localizedHref(
-							`/posts?tag=${encodeURIComponent(tag.slug)}`,
+							blogFilterPath({ taxonomy: "tag", slug: tag.slug }),
 							locale,
 						)}
 					>

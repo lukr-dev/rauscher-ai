@@ -51,6 +51,21 @@
 					"validation": {
 						"options": ["In Arbeit", "Abgeschlossen"]
 					}
+				},
+				{
+					"slug": "highlight",
+					"label": "Highlight (blue card)",
+					"type": "boolean",
+					"defaultValue": false,
+					"translatable": false
+				},
+				{
+					"slug": "top_post",
+					"label": "Top Post",
+					"type": "boolean",
+					"defaultValue": false,
+					"indexed": true,
+					"translatable": false
 				}
 			]
 		},
@@ -1044,90 +1059,27 @@
 								"alt": "Lukas Rauscher"
 							},
 							"cardName": "Lukas Rauscher",
-							"back": [
+							"backTitle": "Steckbrief",
+							"facts": [
 								{
-									"_type": "block",
-									"_key": "about-text-2",
-									"style": "h2",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-3",
-											"text": "Steckbrief",
-											"marks": []
-										}
-									]
+									"label": "Wohnort",
+									"value": "Biel/Bienne"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-4",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-5",
-											"text": "Wohnort: Biel/Bienne",
-											"marks": []
-										}
-									]
+									"label": "Aktuell",
+									"value": "apload GmbH"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-6",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-7",
-											"text": "Aktuell: apload GmbH",
-											"marks": []
-										}
-									]
+									"label": "Studium",
+									"value": "BSc Data Eng., BFH"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-8",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-9",
-											"text": "Studium: BSc Data Eng., BFH",
-											"marks": []
-										}
-									]
+									"label": "Im Beruf seit",
+									"value": "2014"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-10",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-11",
-											"text": "Im Beruf seit: 2014",
-											"marks": []
-										}
-									]
-								},
-								{
-									"_type": "block",
-									"_key": "about-text-12",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-13",
-											"text": "Sprachen: DE · EN · FR · ES",
-											"marks": []
-										}
-									]
+									"label": "Sprachen",
+									"value": "DE · EN · FR · ES"
 								}
 							],
 							"abilityLabel": "Spezialfähigkeit",
@@ -1382,27 +1334,33 @@
 							"tools": [
 								{
 									"title": "Python",
-									"category": "Daten"
+									"category": "Daten",
+									"icon": "python"
 								},
 								{
 									"title": "SQL",
-									"category": "Daten"
+									"category": "Daten",
+									"icon": "postgresql"
 								},
 								{
 									"title": "Spark",
-									"category": "Daten"
+									"category": "Daten",
+									"icon": "apache-spark"
 								},
 								{
 									"title": "Nuxt.js",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "nuxt-js"
 								},
 								{
 									"title": "Vue.js",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "vue-js"
 								},
 								{
 									"title": "JS / TS",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "typescript"
 								},
 								{
 									"title": "Tailwind CSS",
@@ -1410,7 +1368,8 @@
 								},
 								{
 									"title": "Java",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "java"
 								},
 								{
 									"title": "PyQt",
@@ -1418,23 +1377,28 @@
 								},
 								{
 									"title": "Docker",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "docker"
 								},
 								{
 									"title": "Linux",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "linux"
 								},
 								{
 									"title": "Cloudflare Pages",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "cloudflare"
 								},
 								{
 									"title": "GitHub Actions",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "github"
 								},
 								{
 									"title": "AWS",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "amazon-aws"
 								},
 								{
 									"title": "Appwrite",
@@ -1446,7 +1410,8 @@
 								},
 								{
 									"title": "Google Gemini",
-									"category": "KI & APIs"
+									"category": "KI & APIs",
+									"icon": "google"
 								},
 								{
 									"title": "ScrapingBee",
@@ -1454,7 +1419,8 @@
 								},
 								{
 									"title": "Stripe",
-									"category": "KI & APIs"
+									"category": "KI & APIs",
+									"icon": "stripe"
 								},
 								{
 									"title": "Plunk",
@@ -1462,7 +1428,8 @@
 								},
 								{
 									"title": "MS365 & Power Platform",
-									"category": "Büro"
+									"category": "Büro",
+									"icon": "microsoft"
 								}
 							]
 						}
@@ -1495,8 +1462,7 @@
 										}
 									]
 								}
-							],
-							"highlightPost": ""
+							]
 						}
 					]
 				}
@@ -1835,90 +1801,27 @@
 								"alt": "Lukas Rauscher"
 							},
 							"cardName": "Lukas Rauscher",
-							"back": [
+							"backTitle": "Profile",
+							"facts": [
 								{
-									"_type": "block",
-									"_key": "about-text-2",
-									"style": "h2",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-3",
-											"text": "Profile",
-											"marks": []
-										}
-									]
+									"label": "Based in",
+									"value": "Biel/Bienne"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-4",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-5",
-											"text": "Based in: Biel/Bienne",
-											"marks": []
-										}
-									]
+									"label": "Currently",
+									"value": "apload GmbH"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-6",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-7",
-											"text": "Currently: apload GmbH",
-											"marks": []
-										}
-									]
+									"label": "Studies",
+									"value": "BSc Data Engineering, BFH"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-8",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-9",
-											"text": "Studies: BSc Data Engineering, BFH",
-											"marks": []
-										}
-									]
+									"label": "Working since",
+									"value": "2014"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-10",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-11",
-											"text": "Working since: 2014",
-											"marks": []
-										}
-									]
-								},
-								{
-									"_type": "block",
-									"_key": "about-text-12",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-13",
-											"text": "Languages: DE · EN · FR · ES",
-											"marks": []
-										}
-									]
+									"label": "Languages",
+									"value": "DE · EN · FR · ES"
 								}
 							],
 							"abilityLabel": "Special ability",
@@ -2173,27 +2076,33 @@
 							"tools": [
 								{
 									"title": "Python",
-									"category": "Data"
+									"category": "Data",
+									"icon": "python"
 								},
 								{
 									"title": "SQL",
-									"category": "Data"
+									"category": "Data",
+									"icon": "postgresql"
 								},
 								{
 									"title": "Spark",
-									"category": "Data"
+									"category": "Data",
+									"icon": "apache-spark"
 								},
 								{
 									"title": "Nuxt.js",
-									"category": "Building"
+									"category": "Building",
+									"icon": "nuxt-js"
 								},
 								{
 									"title": "Vue.js",
-									"category": "Building"
+									"category": "Building",
+									"icon": "vue-js"
 								},
 								{
 									"title": "JS / TS",
-									"category": "Building"
+									"category": "Building",
+									"icon": "typescript"
 								},
 								{
 									"title": "Tailwind CSS",
@@ -2201,7 +2110,8 @@
 								},
 								{
 									"title": "Java",
-									"category": "Building"
+									"category": "Building",
+									"icon": "java"
 								},
 								{
 									"title": "PyQt",
@@ -2209,23 +2119,28 @@
 								},
 								{
 									"title": "Docker",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "docker"
 								},
 								{
 									"title": "Linux",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "linux"
 								},
 								{
 									"title": "Cloudflare Pages",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "cloudflare"
 								},
 								{
 									"title": "GitHub Actions",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "github"
 								},
 								{
 									"title": "AWS",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "amazon-aws"
 								},
 								{
 									"title": "Appwrite",
@@ -2237,7 +2152,8 @@
 								},
 								{
 									"title": "Google Gemini",
-									"category": "AI & APIs"
+									"category": "AI & APIs",
+									"icon": "google"
 								},
 								{
 									"title": "ScrapingBee",
@@ -2245,7 +2161,8 @@
 								},
 								{
 									"title": "Stripe",
-									"category": "AI & APIs"
+									"category": "AI & APIs",
+									"icon": "stripe"
 								},
 								{
 									"title": "Plunk",
@@ -2253,7 +2170,8 @@
 								},
 								{
 									"title": "MS365 & Power Platform",
-									"category": "Office"
+									"category": "Office",
+									"icon": "microsoft"
 								}
 							]
 						}
@@ -2285,7 +2203,6 @@
 									]
 								}
 							],
-							"highlightPost": "",
 							"_type": "rauscher-blog-overview",
 							"_key": "blog-overview"
 						}
@@ -2628,90 +2545,27 @@
 								"alt": "Lukas Rauscher"
 							},
 							"cardName": "Lukas Rauscher",
-							"back": [
+							"backTitle": "Profil",
+							"facts": [
 								{
-									"_type": "block",
-									"_key": "about-text-2",
-									"style": "h2",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-3",
-											"text": "Profil",
-											"marks": []
-										}
-									]
+									"label": "Domicile",
+									"value": "Biel/Bienne"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-4",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-5",
-											"text": "Domicile : Biel/Bienne",
-											"marks": []
-										}
-									]
+									"label": "Actuellement",
+									"value": "apload GmbH"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-6",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-7",
-											"text": "Actuellement : apload GmbH",
-											"marks": []
-										}
-									]
+									"label": "Études",
+									"value": "BSc Data Engineering, BFH"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-8",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-9",
-											"text": "Études : BSc Data Engineering, BFH",
-											"marks": []
-										}
-									]
+									"label": "Dans la vie professionnelle depuis",
+									"value": "2014"
 								},
 								{
-									"_type": "block",
-									"_key": "about-text-10",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-11",
-											"text": "Dans la vie professionnelle depuis : 2014",
-											"marks": []
-										}
-									]
-								},
-								{
-									"_type": "block",
-									"_key": "about-text-12",
-									"style": "normal",
-									"markDefs": [],
-									"children": [
-										{
-											"_type": "span",
-											"_key": "about-span-13",
-											"text": "Langues : DE · EN · FR · ES",
-											"marks": []
-										}
-									]
+									"label": "Langues",
+									"value": "DE · EN · FR · ES"
 								}
 							],
 							"abilityLabel": "Capacité spéciale",
@@ -2966,27 +2820,33 @@
 							"tools": [
 								{
 									"title": "Python",
-									"category": "Données"
+									"category": "Données",
+									"icon": "python"
 								},
 								{
 									"title": "SQL",
-									"category": "Données"
+									"category": "Données",
+									"icon": "postgresql"
 								},
 								{
 									"title": "Spark",
-									"category": "Données"
+									"category": "Données",
+									"icon": "apache-spark"
 								},
 								{
 									"title": "Nuxt.js",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "nuxt-js"
 								},
 								{
 									"title": "Vue.js",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "vue-js"
 								},
 								{
 									"title": "JS / TS",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "typescript"
 								},
 								{
 									"title": "Tailwind CSS",
@@ -2994,7 +2854,8 @@
 								},
 								{
 									"title": "Java",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "java"
 								},
 								{
 									"title": "PyQt",
@@ -3002,23 +2863,28 @@
 								},
 								{
 									"title": "Docker",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "docker"
 								},
 								{
 									"title": "Linux",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "linux"
 								},
 								{
 									"title": "Cloudflare Pages",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "cloudflare"
 								},
 								{
 									"title": "GitHub Actions",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "github"
 								},
 								{
 									"title": "AWS",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "amazon-aws"
 								},
 								{
 									"title": "Appwrite",
@@ -3030,7 +2896,8 @@
 								},
 								{
 									"title": "Google Gemini",
-									"category": "IA et API"
+									"category": "IA et API",
+									"icon": "google"
 								},
 								{
 									"title": "ScrapingBee",
@@ -3038,7 +2905,8 @@
 								},
 								{
 									"title": "Stripe",
-									"category": "IA et API"
+									"category": "IA et API",
+									"icon": "stripe"
 								},
 								{
 									"title": "Plunk",
@@ -3046,7 +2914,8 @@
 								},
 								{
 									"title": "MS365 & Power Platform",
-									"category": "Bureautique"
+									"category": "Bureautique",
+									"icon": "microsoft"
 								}
 							]
 						}
@@ -3078,7 +2947,6 @@
 									]
 								}
 							],
-							"highlightPost": "",
 							"_type": "rauscher-blog-overview",
 							"_key": "blog-overview"
 						}

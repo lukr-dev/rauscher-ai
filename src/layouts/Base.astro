@@ -9,6 +9,7 @@ import { createPublicPageContext } from "emdash/page";
 import { resolveStarterSiteIdentity } from "../utils/site-identity";
 import {
 	languages,
+	type Locale,
 	siteLocale,
 	siteUi,
 	localizedHref,
@@ -29,10 +30,29 @@ interface Props {
 		slug?: string | null;
 		locale?: string;
 	};
+	/** Locale of the rendered CMS content on custom pages, for the fallback notice. */
+	contentLocale?: string;
+	/** Translations of a custom page, rendered as hreflang links and used by the switcher. */
+	alternates?: Partial<Record<Locale, string>>;
+	/** Unlocalized switcher target for locales missing from `alternates`. */
+	languageFallback?: string;
+	robots?: string;
+	/** Path that decides the active menu item, if not the current URL. */
+	navPath?: string;
 }
 
-const { title, pageTitle, description, image, canonical, content } =
-	Astro.props;
+const {
+	title,
+	pageTitle,
+	description,
+	image,
+	canonical,
+	content,
+	alternates,
+	languageFallback = "/",
+	robots,
+	navPath = Astro.url.pathname,
+} = Astro.props;
 const locale = siteLocale(Astro.currentLocale);
 const copy = siteUi(locale);
 const [settingsResult, menuResult] = await Promise.all([
@@ -54,10 +74,28 @@ const titleIncludesSiteName =
 const fullTitle = titleIncludesSiteName ? title : `${title} — ${siteTitle}`;
 const pageDescription = description ?? siteTagline;
 const menu = menuResult.data;
+const currentLanguage =
+	languages.find((language) => language.code === locale) ?? languages[0];
 const { translations } = content
 	? await getTranslations(content.collection, content.id)
 	: { translations: [] };
-const fallback = content?.locale && content.locale !== locale;
+const contentLocale = content?.locale ?? Astro.props.contentLocale;
+const fallback = contentLocale && contentLocale !== locale;
+const alternateLinks: { hreflang: string; href: string }[] = alternates
+	? languages.flatMap((language) => {
+			const href = alternates[language.code];
+			return href
+				? [{ hreflang: language.code, href: new URL(href, Astro.url).href }]
+				: [];
+		})
+	: [];
+if (alternateLinks[0])
+	alternateLinks.push({
+		hreflang: "x-default",
+		href:
+			alternateLinks.find((link) => link.hreflang === "de")?.href ??
+			alternateLinks[0].href,
+	});
 const menuLabel = (label: string, href: string) => {
 	if (menu?.locale === locale) return label;
 	const path = localizedHref(href, "de");
@@ -75,6 +113,7 @@ const pageCtx = createPublicPageContext({
 	image,
 	content,
 	siteName: siteTitle,
+	seo: robots ? { robots } : undefined,
 });
 ---
 
@@ -86,6 +125,9 @@ const pageCtx = createPublicPageContext({
 		<title>{fullTitle}</title>
 		<link rel="stylesheet" href="/styles/rich-text.css" />
 		<EmDashHead page={pageCtx} />
+		{alternateLinks.map((link) => (
+			<link rel="alternate" hreflang={link.hreflang} href={link.href} />
+		))}
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
@@ -108,16 +150,29 @@ const pageCtx = createPublicPageContext({
 						</>
 					)}
 				</a>
-				<div class="header-controls">
+				<button
+					type="button"
+					class="menu-toggle"
+					aria-expanded="false"
+					aria-controls="header-controls"
+					aria-label={copy.menu}
+				>
+					<span class="menu-toggle-bars" aria-hidden="true">
+						<span></span>
+						<span></span>
+					</span>
+					<span class="menu-toggle-label">{copy.menu}</span>
+				</button>
+				<div class="header-controls" id="header-controls">
 					<nav class="menu-links" aria-label={copy.navigation}>
 						{menu?.items.map((item) => (
 							<a
 								href={localizedHref(item.url, locale)}
 								aria-current={
 									localizedHref(item.url, "de") ===
-										localizedHref(Astro.url.pathname, "de") ||
+										localizedHref(navPath, "de") ||
 									(localizedHref(item.url, "de") !== "/" &&
-										localizedHref(Astro.url.pathname, "de").startsWith(
+										localizedHref(navPath, "de").startsWith(
 											`${localizedHref(item.url, "de")}/`,
 										))
 										? "page"
@@ -132,24 +187,55 @@ const pageCtx = createPublicPageContext({
 							</a>
 						))}
 					</nav>
-					<nav class="language-switcher" aria-label={copy.language}>
-						{languages.map((language) => (
-							<a
-								href={translationHref(
-									Astro.url.pathname,
-									language.code,
-									content,
-									translations,
-								)}
-								lang={language.code}
-								title={language.name}
-								aria-label={language.name}
-								aria-current={language.code === locale ? "page" : undefined}
+					<details class="language-menu" data-page-swap="language">
+						<summary aria-label={`${copy.language}: ${currentLanguage.name}`}>
+							<svg
+								class="globe"
+								viewBox="0 0 24 24"
+								width="18"
+								height="18"
+								aria-hidden="true"
 							>
-								{language.code.toUpperCase()}
-							</a>
-						))}
-					</nav>
+								<circle cx="12" cy="12" r="9.5" />
+								<path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5M12 2.5c-2.6 2.7-3.9 5.9-3.9 9.5s1.3 6.8 3.9 9.5" />
+							</svg>
+							<span>{locale.toUpperCase()}</span>
+							<svg
+								class="chevron"
+								viewBox="0 0 12 12"
+								width="10"
+								height="10"
+								aria-hidden="true"
+							>
+								<path d="M2 4.5 6 8.5l4-4" />
+							</svg>
+						</summary>
+						<nav class="language-list" aria-label={copy.language}>
+							{languages.map((language) => (
+								<a
+									href={
+										alternates
+											? (alternates[language.code] ??
+												localizedHref(languageFallback, language.code))
+											: translationHref(
+													Astro.url.pathname,
+													language.code,
+													content,
+													translations,
+												)
+									}
+									lang={language.code}
+									hreflang={language.code}
+									aria-current={language.code === locale ? "page" : undefined}
+								>
+									<span class="language-code">
+										{language.code.toUpperCase()}
+									</span>
+									{language.name}
+								</a>
+							))}
+						</nav>
+					</details>
 				</div>
 			</div>
 		</header>
@@ -159,7 +245,7 @@ const pageCtx = createPublicPageContext({
 				{copy.fallback}
 			</p>
 		)}
-		<main lang={content?.locale ?? locale}>
+		<main lang={contentLocale ?? locale}>
 			<slot />
 		</main>
 		<footer class="site-footer">
@@ -184,5 +270,39 @@ const pageCtx = createPublicPageContext({
 		</footer>
 
 		<EmDashBodyEnd page={pageCtx} />
+		<script>
+			const nav = document.querySelector<HTMLElement>(".site-nav");
+			const toggle = nav?.querySelector<HTMLButtonElement>(".menu-toggle");
+			const languageMenu =
+				document.querySelector<HTMLDetailsElement>(".language-menu");
+			const setMenu = (open: boolean) => {
+				nav?.toggleAttribute("data-menu-open", open);
+				toggle?.setAttribute("aria-expanded", String(open));
+			};
+			nav?.setAttribute("data-menu-ready", "");
+			toggle?.addEventListener("click", () =>
+				setMenu(toggle.getAttribute("aria-expanded") !== "true"),
+			);
+			document.addEventListener("click", (event) => {
+				const target = event.target as Node;
+				if (languageMenu?.open && !languageMenu.contains(target))
+					languageMenu.open = false;
+				if (nav?.hasAttribute("data-menu-open") && !nav.contains(target))
+					setMenu(false);
+			});
+			document.addEventListener("keydown", (event) => {
+				if (event.key !== "Escape") return;
+				if (languageMenu?.open) {
+					languageMenu.open = false;
+					languageMenu.querySelector("summary")?.focus();
+				} else if (nav?.hasAttribute("data-menu-open")) {
+					setMenu(false);
+					toggle?.focus();
+				}
+			});
+			matchMedia("(min-width: 761px)").addEventListener("change", () =>
+				setMenu(false),
+			);
+		</script>
 	</body>
 </html>

@@ -6,8 +6,18 @@ import {
 } from "emdash";
 import { PortableText } from "emdash/ui";
 import BlogOverview from "../../../plugins/blog-overview/src/astro/BlogOverview.astro";
+import {
+	blogFilterPath,
+	legacyFilterPath,
+} from "../../../plugins/blog-overview/src/content";
 import Base from "../../layouts/Base.astro";
+import { localizedHref } from "../../utils/i18n";
 import { resolveStarterSiteIdentity } from "../../utils/site-identity";
+
+const legacyFilter = legacyFilterPath(Astro.url.searchParams);
+if (legacyFilter)
+	return Astro.redirect(localizedHref(legacyFilter, Astro.currentLocale), 301);
+const cursor = Astro.url.searchParams.get("cursor") || undefined;
 const [{ entry: page, cacheHint, fallbackLocale }, settings] =
 	await Promise.all([
 		getEmDashEntry("pages", "posts", { locale: Astro.currentLocale }),
@@ -20,7 +30,14 @@ if (Astro.cache?.enabled) {
 }
 const { siteTitle } = resolveStarterSiteIdentity(settings.data);
 const seo = page
-	? getSeoMeta(page, { siteTitle, siteUrl: Astro.url.origin, path: "/posts" })
+	? getSeoMeta(page, {
+			siteTitle,
+			siteUrl: Astro.url.origin,
+			path: localizedHref(
+				blogFilterPath(undefined, cursor),
+				Astro.currentLocale,
+			),
+		})
 	: undefined;
 ---
 
@@ -29,6 +46,7 @@ const seo = page
 	pageTitle={seo?.ogTitle}
 	description={seo?.description}
 	canonical={seo?.canonical}
+	robots={cursor ? "noindex, follow" : undefined}
 	content={
 		page
 			? {
