@@ -23,7 +23,7 @@ The published `pages/about` entry uses four separate plugins: About Hero, Skill 
 - About Hero has role/location badges, contact links, photo and card name. Its back is rich text with optional special ability copy. There is no rarity or front counter.
 - Skill Deck has reorderable groups and skills, optional proficiency text and optional six-segment levels.
 - Career has reorderable roles/qualifications, organisation, date range, job/education type, current marker, and repeatable bullet points.
-- Inventory has tool names, categories and optional brand icons picked from the [CoreUI Brands](https://icones.js.org/collection/cib) set (CC0, via `@iconify-json/cib`). The editor searches the set by name and previews each icon; the block stores only the icon name. Filters come from the tools' category text, merging differences in case and whitespace.
+- Inventory has tool names, categories and optional brand icons picked from the [CoreUI Brands](https://icones.js.org/collection/cib) set (CC0, via `@iconify-json/cib`). The editor searches the set by name and previews each icon; the block stores only the icon name. When no brand fits, upload a custom logo instead; it is shown only if no brand icon is selected. Filters come from the tools' category text, merging differences in case and whitespace.
 
 The seed includes the About design content and `public/media/about/p01.jpg`. Existing CMS content must be updated through the editor/API separately.
 
