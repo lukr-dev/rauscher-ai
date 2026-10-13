@@ -91,7 +91,160 @@
  						ref: inputRef,
  						type: "url",
  						className: "w-full",
-@@ -30168,6 +30190,16 @@
+@@ -30162,12 +30184,169 @@
+ 		})
+ 	});
+ }
++// Rauscher: searchable icon picker for plugin block forms, fed by a plugin route.
++const blockKitIconSets = /* @__PURE__ */ new Map();
++function loadBlockKitIconSet(pluginId, route) {
++	const url = `/_emdash/api/plugins/${pluginId}/${route}`;
++	if (!blockKitIconSets.has(url)) blockKitIconSets.set(url, fetch(url).then(async (res) => {
++		if (!res.ok) throw new Error(`Icon set request failed: ${res.status}`);
++		return (await res.json()).data;
++	}).catch((error) => {
++		blockKitIconSets.delete(url);
++		throw error;
++	}));
++	return blockKitIconSets.get(url);
++}
++function searchBlockKitIcons(names, query) {
++	const q = query.trim().toLowerCase();
++	const terms = q.split(/[\s-]+/).filter(Boolean);
++	const rank = (name) => name === q ? 0 : name.startsWith(q) ? 1 : 2;
++	return names.filter((name) => terms.every((term) => name.includes(term))).sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
++}
++function BlockKitIconSvg({ iconSet, name, className }) {
++	const body = iconSet && Object.hasOwn(iconSet.icons, name) ? iconSet.icons[name] : null;
++	if (!body) return null;
++	return jsx("svg", {
++		viewBox: `0 0 ${iconSet.width} ${iconSet.height}`,
++		className,
++		"aria-hidden": true,
++		dangerouslySetInnerHTML: { __html: body }
++	});
++}
++function BlockKitIconPicker({ field, pluginId, value, onChange }) {
++	const PAGE_SIZE = 240;
++	const [iconSet, setIconSet] = React$1.useState(null);
++	const [failed, setFailed] = React$1.useState(false);
++	const [open, setOpen] = React$1.useState(false);
++	const [query, setQuery] = React$1.useState("");
++	const [limit, setLimit] = React$1.useState(PAGE_SIZE);
++	const name = typeof value === "string" ? value : "";
++	React$1.useEffect(() => {
++		if (!field.icons_route || !pluginId) return;
++		let active = true;
++		loadBlockKitIconSet(pluginId, field.icons_route).then((set) => active && setIconSet(set), () => active && setFailed(true));
++		return () => {
++			active = false;
++		};
++	}, [field.icons_route, pluginId]);
++	const names = React$1.useMemo(() => Object.keys(iconSet?.icons ?? {}), [iconSet]);
++	const matches = React$1.useMemo(() => searchBlockKitIcons(names, query), [names, query]);
++	const select = (next) => {
++		onChange(field.action_id, next);
++		setOpen(false);
++		setQuery("");
++	};
++	const tile = "flex items-center justify-center rounded-md border";
++	return jsxs("div", {
++		className: "space-y-2",
++		children: [
++			jsx("label", { className: "text-sm font-medium mb-1.5 block", children: field.label }),
++			jsxs("div", {
++				className: "flex items-center gap-3",
++				children: [
++					jsx("div", {
++						className: `${tile} size-14 shrink-0 bg-kumo-tint text-kumo-default ${name ? "border-kumo-line" : "border-dashed border-kumo-line"}`,
++						children: name ? jsx(BlockKitIconSvg, { iconSet, name, className: "size-8" }) : null
++					}),
++					jsxs("div", {
++						className: "min-w-0 flex-1",
++						children: [jsx("div", { className: "truncate text-sm font-medium", children: name || "No icon" }), name && jsx("div", { className: "truncate font-mono text-xs text-kumo-subtle", children: `${field.icon_prefix || "cib"}:${name}` })]
++					}),
++					jsx(Button, {
++						type: "button",
++						size: "sm",
++						variant: "outline",
++						icon: jsx(MagnifyingGlass, {}),
++						onClick: () => setOpen((current) => !current),
++						"aria-expanded": open,
++						children: open ? "Close" : name ? "Change" : "Choose icon"
++					}),
++					name && jsx(Button, {
++						type: "button",
++						shape: "square",
++						variant: "ghost",
++						className: "h-8 w-8",
++						onClick: () => select(""),
++						"aria-label": "Remove icon",
++						children: jsx(X, { className: "h-4 w-4" })
++					})
++				]
++			}),
++			open && jsxs("div", {
++				className: "space-y-2 rounded-lg border border-kumo-line p-2",
++				children: [
++					jsxs("div", {
++						className: "relative",
++						children: [jsx(MagnifyingGlass, { className: "absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-kumo-subtle pointer-events-none" }), jsx(Input, {
++							type: "search",
++							className: "w-full ps-9",
++							autoFocus: true,
++							placeholder: field.placeholder || "Search icons…",
++							"aria-label": field.placeholder || "Search icons",
++							value: query,
++							onChange: (e) => {
++								setQuery(e.target.value);
++								setLimit(PAGE_SIZE);
++							},
++							onKeyDown: (e) => {
++								// Enter picks the best match instead of submitting the block form.
++								if (e.key !== "Enter") return;
++								e.preventDefault();
++								if (matches[0]) select(matches[0]);
++							}
++						})]
++					}),
++					failed ? jsx("p", { className: "text-sm text-kumo-subtle", children: "Icons could not be loaded." }) : !iconSet ? jsxs("p", {
++						className: "flex items-center gap-2 text-sm text-kumo-subtle",
++						children: [jsx(CircleNotch, { className: "h-4 w-4 animate-spin" }), "Loading icons…"]
++					}) : jsxs(Fragment, { children: [
++						jsx("p", { className: "text-xs text-kumo-subtle", children: `${matches.length} of ${names.length} icons` }),
++						matches.length === 0 ? jsx("p", { className: "text-sm text-kumo-subtle", children: ["No icons match.", field.empty_hint && ` ${field.empty_hint}`] }) : jsx("div", {
++							role: "listbox",
++							"aria-label": field.label,
++							className: "overflow-y-auto",
++							style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(48px, 1fr))", gap: "4px", maxHeight: "288px" },
++							children: matches.slice(0, limit).map((icon) => jsx("button", {
++								type: "button",
++								role: "option",
++								"aria-selected": icon === name,
++								title: icon,
++								"aria-label": icon,
++								className: `${tile} aspect-square text-kumo-default hover:bg-kumo-tint hover:border-kumo-brand ${icon === name ? "border-kumo-brand bg-kumo-brand/10" : "border-transparent"}`,
++								onClick: () => select(icon),
++								children: jsx(BlockKitIconSvg, { iconSet, name: icon, className: "size-6" })
++							}, icon))
++						}),
++						matches.length > limit && jsx(Button, {
++							type: "button",
++							size: "sm",
++							variant: "ghost",
++							className: "w-full justify-center",
++							onClick: () => setLimit((current) => current + PAGE_SIZE),
++							children: `Show more (${matches.length - limit})`
++						})
++					] })
++				]
++			})
++		]
++	});
++}
+ /**
+ * Renders a single Block Kit field element.
+ * Supports text_input, number_input, select (with optional async options), and toggle.
  */
  function BlockKitField({ field, pluginId, value, onChange }) {
  	switch (field.type) {
@@ -108,18 +261,31 @@
  		case "text_input": {
  			const multiline = !!field.multiline;
  			const placeholder = typeof field.placeholder === "string" ? field.placeholder : void 0;
-@@ -30297,6 +30329,10 @@
- 		for (const sf of field.fields) switch (sf.type) {
+@@ -30229,6 +30408,12 @@
+ 				value,
+ 				onChange
+ 			});
++		case "icon_picker": return jsx(BlockKitIconPicker, {
++			field,
++			pluginId,
++			value,
++			onChange
++		});
+ 		case "media_picker": return /* @__PURE__ */ jsx(BlockKitMediaPickerField, {
+ 			actionId: field.action_id,
+ 			label: field.label,
+@@ -30298,6 +30483,10 @@
  			case "toggle":
  				newItem[sf.action_id] = false;
-+				break;
+ 				break;
 +			case "repeater":
 +			case "portable_text":
 +				newItem[sf.action_id] = [];
- 				break;
++				break;
  			case "number_input":
  				newItem[sf.action_id] = void 0;
-@@ -35119,11 +35155,13 @@
+ 				break;
+@@ -35119,11 +35308,13 @@
  			onCheckedChange: handleChange
  		});
  		case "portableText": {
@@ -135,7 +301,7 @@
  					id: labelId,
  					children: label
  				}) }), /* @__PURE__ */ jsx(PortableTextEditor, {
-@@ -35172,14 +35210,18 @@
+@@ -35172,14 +35363,18 @@
  			});
  		}
  		case "select": {

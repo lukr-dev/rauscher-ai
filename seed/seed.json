@@ -1319,27 +1319,33 @@
 							"tools": [
 								{
 									"title": "Python",
-									"category": "Daten"
+									"category": "Daten",
+									"icon": "python"
 								},
 								{
 									"title": "SQL",
-									"category": "Daten"
+									"category": "Daten",
+									"icon": "postgresql"
 								},
 								{
 									"title": "Spark",
-									"category": "Daten"
+									"category": "Daten",
+									"icon": "apache-spark"
 								},
 								{
 									"title": "Nuxt.js",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "nuxt-js"
 								},
 								{
 									"title": "Vue.js",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "vue-js"
 								},
 								{
 									"title": "JS / TS",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "typescript"
 								},
 								{
 									"title": "Tailwind CSS",
@@ -1347,7 +1353,8 @@
 								},
 								{
 									"title": "Java",
-									"category": "Bauen"
+									"category": "Bauen",
+									"icon": "java"
 								},
 								{
 									"title": "PyQt",
@@ -1355,23 +1362,28 @@
 								},
 								{
 									"title": "Docker",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "docker"
 								},
 								{
 									"title": "Linux",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "linux"
 								},
 								{
 									"title": "Cloudflare Pages",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "cloudflare"
 								},
 								{
 									"title": "GitHub Actions",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "github"
 								},
 								{
 									"title": "AWS",
-									"category": "Infrastruktur"
+									"category": "Infrastruktur",
+									"icon": "amazon-aws"
 								},
 								{
 									"title": "Appwrite",
@@ -1383,7 +1395,8 @@
 								},
 								{
 									"title": "Google Gemini",
-									"category": "KI & APIs"
+									"category": "KI & APIs",
+									"icon": "google"
 								},
 								{
 									"title": "ScrapingBee",
@@ -1391,7 +1404,8 @@
 								},
 								{
 									"title": "Stripe",
-									"category": "KI & APIs"
+									"category": "KI & APIs",
+									"icon": "stripe"
 								},
 								{
 									"title": "Plunk",
@@ -1399,7 +1413,8 @@
 								},
 								{
 									"title": "MS365 & Power Platform",
-									"category": "Büro"
+									"category": "Büro",
+									"icon": "microsoft"
 								}
 							]
 						}
@@ -2047,27 +2062,33 @@
 							"tools": [
 								{
 									"title": "Python",
-									"category": "Data"
+									"category": "Data",
+									"icon": "python"
 								},
 								{
 									"title": "SQL",
-									"category": "Data"
+									"category": "Data",
+									"icon": "postgresql"
 								},
 								{
 									"title": "Spark",
-									"category": "Data"
+									"category": "Data",
+									"icon": "apache-spark"
 								},
 								{
 									"title": "Nuxt.js",
-									"category": "Building"
+									"category": "Building",
+									"icon": "nuxt-js"
 								},
 								{
 									"title": "Vue.js",
-									"category": "Building"
+									"category": "Building",
+									"icon": "vue-js"
 								},
 								{
 									"title": "JS / TS",
-									"category": "Building"
+									"category": "Building",
+									"icon": "typescript"
 								},
 								{
 									"title": "Tailwind CSS",
@@ -2075,7 +2096,8 @@
 								},
 								{
 									"title": "Java",
-									"category": "Building"
+									"category": "Building",
+									"icon": "java"
 								},
 								{
 									"title": "PyQt",
@@ -2083,23 +2105,28 @@
 								},
 								{
 									"title": "Docker",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "docker"
 								},
 								{
 									"title": "Linux",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "linux"
 								},
 								{
 									"title": "Cloudflare Pages",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "cloudflare"
 								},
 								{
 									"title": "GitHub Actions",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "github"
 								},
 								{
 									"title": "AWS",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "amazon-aws"
 								},
 								{
 									"title": "Appwrite",
@@ -2111,7 +2138,8 @@
 								},
 								{
 									"title": "Google Gemini",
-									"category": "AI & APIs"
+									"category": "AI & APIs",
+									"icon": "google"
 								},
 								{
 									"title": "ScrapingBee",
@@ -2119,7 +2147,8 @@
 								},
 								{
 									"title": "Stripe",
-									"category": "AI & APIs"
+									"category": "AI & APIs",
+									"icon": "stripe"
 								},
 								{
 									"title": "Plunk",
@@ -2127,7 +2156,8 @@
 								},
 								{
 									"title": "MS365 & Power Platform",
-									"category": "Office"
+									"category": "Office",
+									"icon": "microsoft"
 								}
 							]
 						}
@@ -2777,27 +2807,33 @@
 							"tools": [
 								{
 									"title": "Python",
-									"category": "Données"
+									"category": "Données",
+									"icon": "python"
 								},
 								{
 									"title": "SQL",
-									"category": "Données"
+									"category": "Données",
+									"icon": "postgresql"
 								},
 								{
 									"title": "Spark",
-									"category": "Données"
+									"category": "Données",
+									"icon": "apache-spark"
 								},
 								{
 									"title": "Nuxt.js",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "nuxt-js"
 								},
 								{
 									"title": "Vue.js",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "vue-js"
 								},
 								{
 									"title": "JS / TS",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "typescript"
 								},
 								{
 									"title": "Tailwind CSS",
@@ -2805,7 +2841,8 @@
 								},
 								{
 									"title": "Java",
-									"category": "Développement"
+									"category": "Développement",
+									"icon": "java"
 								},
 								{
 									"title": "PyQt",
@@ -2813,23 +2850,28 @@
 								},
 								{
 									"title": "Docker",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "docker"
 								},
 								{
 									"title": "Linux",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "linux"
 								},
 								{
 									"title": "Cloudflare Pages",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "cloudflare"
 								},
 								{
 									"title": "GitHub Actions",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "github"
 								},
 								{
 									"title": "AWS",
-									"category": "Infrastructure"
+									"category": "Infrastructure",
+									"icon": "amazon-aws"
 								},
 								{
 									"title": "Appwrite",
@@ -2841,7 +2883,8 @@
 								},
 								{
 									"title": "Google Gemini",
-									"category": "IA et API"
+									"category": "IA et API",
+									"icon": "google"
 								},
 								{
 									"title": "ScrapingBee",
@@ -2849,7 +2892,8 @@
 								},
 								{
 									"title": "Stripe",
-									"category": "IA et API"
+									"category": "IA et API",
+									"icon": "stripe"
 								},
 								{
 									"title": "Plunk",
@@ -2857,7 +2901,8 @@
 								},
 								{
 									"title": "MS365 & Power Platform",
-									"category": "Bureautique"
+									"category": "Bureautique",
+									"icon": "microsoft"
 								}
 							]
 						}
