@@ -40,6 +40,13 @@ const fields = [
 				label: "Brand icon (optional)",
 				icons_route: "icons",
 				placeholder: "Search CoreUI brands…",
+				empty_hint: "No matching brand? Upload a custom logo below.",
+			},
+			{
+				type: "media_picker",
+				action_id: "logo",
+				label: "Custom logo (used when no brand icon is selected)",
+				mime_type_filter: "image/",
 			},
 		],
 	},

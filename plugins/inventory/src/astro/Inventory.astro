@@ -1,13 +1,18 @@
 ---
 import { siteUi } from "../../../../src/utils/i18n";
-import type { PortableTextBlock } from "emdash";
-import { PortableText } from "emdash/ui";
+import type { ImageValue, PortableTextBlock } from "emdash";
+import { Image, PortableText } from "emdash/ui";
 import { categoryKey, inventoryCategories } from "../content";
 interface Props {
 	node: {
 		heading?: string;
 		intro?: PortableTextBlock[];
-		tools?: { title: string; category?: string; icon?: string }[];
+		tools?: {
+			title: string;
+			category?: string;
+			icon?: string;
+			logo?: ImageValue | null;
+		}[];
 	};
 }
 const { node } = Astro.props;
@@ -55,6 +60,9 @@ const copy = siteUi(locale);
 							aria-hidden="true"
 							set:html={tool.brandIcon.body}
 						/>
+					)}
+					{!tool.brandIcon && tool.logo?.src && (
+						<Image image={tool.logo} alt="" class="tool-logo" />
 					)}
 				</article>
 			))}
@@ -162,22 +170,32 @@ const copy = siteUi(locale);
 		position: relative;
 		z-index: 1;
 	}
-	.tool-logo {
+	.tool :global(.tool-logo) {
 		position: absolute;
 		width: 60px;
 		height: 60px;
 		right: 14px;
 		top: 36px;
+		transform: rotate(-10deg);
+	}
+	svg.tool-logo {
 		/* Translucent colour instead of opacity avoids a visible compositing box. */
 		color: color-mix(in srgb, var(--paper) 22%, transparent);
-		transform: rotate(-10deg);
 		transition: color 0.2s;
+	}
+	.tool :global(img.tool-logo) {
+		object-fit: contain;
+		opacity: 0.22;
+		transition: opacity 0.2s;
 	}
 	.tool:hover {
 		transform: translateY(-6px) rotate(-2deg);
 		border-color: var(--yellow);
 	}
-	.tool:hover .tool-logo {
+	.tool:hover svg.tool-logo {
 		color: color-mix(in srgb, var(--yellow) 40%, transparent);
+	}
+	.tool:hover :global(img.tool-logo) {
+		opacity: 0.4;
 	}
 </style>

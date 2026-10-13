@@ -212,7 +212,7 @@
 +						children: [jsx(CircleNotch, { className: "h-4 w-4 animate-spin" }), "Loading icons…"]
 +					}) : jsxs(Fragment, { children: [
 +						jsx("p", { className: "text-xs text-kumo-subtle", children: `${matches.length} of ${names.length} icons` }),
-+						matches.length === 0 ? jsx("p", { className: "text-sm text-kumo-subtle", children: "No icons match." }) : jsx("div", {
++						matches.length === 0 ? jsx("p", { className: "text-sm text-kumo-subtle", children: ["No icons match.", field.empty_hint && ` ${field.empty_hint}`] }) : jsx("div", {
 +							role: "listbox",
 +							"aria-label": field.label,
 +							className: "overflow-y-auto",

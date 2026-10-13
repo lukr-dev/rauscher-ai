@@ -10,7 +10,8 @@ const { version } = JSON.parse(
 );
 assert.equal(version, "1.2.0", "Review the nested-rich-text patch before upgrading EmDash admin.");
 const installed = readFileSync(entry, "utf8");
-if (!installed.includes("// Rauscher: searchable icon picker")) {
+// Bump this marker whenever the patch changes so stale installs are detected.
+if (!installed.includes("field.empty_hint")) {
 	assert.ok(
 		!installed.includes("// Rauscher: optional status fields"),
 		"An older admin patch is applied. Reinstall @emdash-cms/admin (rm -rf node_modules/@emdash-cms/admin && npm install).",
