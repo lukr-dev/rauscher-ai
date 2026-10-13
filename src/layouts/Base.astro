@@ -9,6 +9,7 @@ import { createPublicPageContext } from "emdash/page";
 import { resolveStarterSiteIdentity } from "../utils/site-identity";
 import {
 	languages,
+	type Locale,
 	siteLocale,
 	siteUi,
 	localizedHref,
@@ -29,10 +30,29 @@ interface Props {
 		slug?: string | null;
 		locale?: string;
 	};
+	/** Locale of the rendered CMS content on custom pages, for the fallback notice. */
+	contentLocale?: string;
+	/** Translations of a custom page, rendered as hreflang links and used by the switcher. */
+	alternates?: Partial<Record<Locale, string>>;
+	/** Unlocalized switcher target for locales missing from `alternates`. */
+	languageFallback?: string;
+	robots?: string;
+	/** Path that decides the active menu item, if not the current URL. */
+	navPath?: string;
 }
 
-const { title, pageTitle, description, image, canonical, content } =
-	Astro.props;
+const {
+	title,
+	pageTitle,
+	description,
+	image,
+	canonical,
+	content,
+	alternates,
+	languageFallback = "/",
+	robots,
+	navPath = Astro.url.pathname,
+} = Astro.props;
 const locale = siteLocale(Astro.currentLocale);
 const copy = siteUi(locale);
 const [settingsResult, menuResult] = await Promise.all([
@@ -57,7 +77,23 @@ const menu = menuResult.data;
 const { translations } = content
 	? await getTranslations(content.collection, content.id)
 	: { translations: [] };
-const fallback = content?.locale && content.locale !== locale;
+const contentLocale = content?.locale ?? Astro.props.contentLocale;
+const fallback = contentLocale && contentLocale !== locale;
+const alternateLinks: { hreflang: string; href: string }[] = alternates
+	? languages.flatMap((language) => {
+			const href = alternates[language.code];
+			return href
+				? [{ hreflang: language.code, href: new URL(href, Astro.url).href }]
+				: [];
+		})
+	: [];
+if (alternateLinks[0])
+	alternateLinks.push({
+		hreflang: "x-default",
+		href:
+			alternateLinks.find((link) => link.hreflang === "de")?.href ??
+			alternateLinks[0].href,
+	});
 const menuLabel = (label: string, href: string) => {
 	if (menu?.locale === locale) return label;
 	const path = localizedHref(href, "de");
@@ -75,6 +111,7 @@ const pageCtx = createPublicPageContext({
 	image,
 	content,
 	siteName: siteTitle,
+	seo: robots ? { robots } : undefined,
 });
 ---
 
@@ -86,6 +123,9 @@ const pageCtx = createPublicPageContext({
 		<title>{fullTitle}</title>
 		<link rel="stylesheet" href="/styles/rich-text.css" />
 		<EmDashHead page={pageCtx} />
+		{alternateLinks.map((link) => (
+			<link rel="alternate" hreflang={link.hreflang} href={link.href} />
+		))}
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
@@ -115,9 +155,9 @@ const pageCtx = createPublicPageContext({
 								href={localizedHref(item.url, locale)}
 								aria-current={
 									localizedHref(item.url, "de") ===
-										localizedHref(Astro.url.pathname, "de") ||
+										localizedHref(navPath, "de") ||
 									(localizedHref(item.url, "de") !== "/" &&
-										localizedHref(Astro.url.pathname, "de").startsWith(
+										localizedHref(navPath, "de").startsWith(
 											`${localizedHref(item.url, "de")}/`,
 										))
 										? "page"
@@ -132,15 +172,24 @@ const pageCtx = createPublicPageContext({
 							</a>
 						))}
 					</nav>
-					<nav class="language-switcher" aria-label={copy.language}>
+					<nav
+						class="language-switcher"
+						aria-label={copy.language}
+						data-page-swap="language"
+					>
 						{languages.map((language) => (
 							<a
-								href={translationHref(
-									Astro.url.pathname,
-									language.code,
-									content,
-									translations,
-								)}
+								href={
+									alternates
+										? (alternates[language.code] ??
+											localizedHref(languageFallback, language.code))
+										: translationHref(
+												Astro.url.pathname,
+												language.code,
+												content,
+												translations,
+											)
+								}
 								lang={language.code}
 								title={language.name}
 								aria-label={language.name}
@@ -159,7 +208,7 @@ const pageCtx = createPublicPageContext({
 				{copy.fallback}
 			</p>
 		)}
-		<main lang={content?.locale ?? locale}>
+		<main lang={contentLocale ?? locale}>
 			<slot />
 		</main>
 		<footer class="site-footer">

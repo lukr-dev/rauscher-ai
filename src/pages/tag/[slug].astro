@@ -1,84 +1,10 @@
 ---
+import BlogFilterPage from "../../components/BlogFilterPage.astro";
+import { loadBlogFilter } from "../../utils/blog-filter";
 import { localizedHref } from "../../utils/i18n";
-import {
-	getTaxonomyTermsWithCacheHint,
-	getEmDashCollection,
-	decodeSlug,
-} from "emdash";
-import { Image } from "emdash/ui";
-import Base from "../../layouts/Base.astro";
 
-const slug = decodeSlug(Astro.params.slug);
-const termsResult = await getTaxonomyTermsWithCacheHint("tag", {
-	includeCounts: false,
-	locale: Astro.currentLocale,
-});
-const term = slug ? termsResult.data.find((item) => item.slug === slug) : null;
-
-if (!term) {
-	return Astro.redirect("/404");
-}
-
-const cursor = Astro.url.searchParams.get("cursor") || undefined;
-const {
-	entries: posts,
-	cacheHint,
-	nextCursor,
-} = await getEmDashCollection("posts", {
-	locale: Astro.currentLocale,
-	where: { tag: term.slug },
-	orderBy: { published_at: "desc" },
-	limit: 20,
-	cursor,
-});
-if (Astro.cache?.enabled) {
-	Astro.cache.set(termsResult.cacheHint);
-	Astro.cache.set(cacheHint);
-}
+const filter = await loadBlogFilter(Astro, "tag");
+if (!filter) return Astro.rewrite(localizedHref("/404", Astro.currentLocale));
 ---
 
-<Base
-	title={`Posts tagged "${term.label}"`}
-	description={`Posts tagged ${term.label}`}
->
-	<h1>Tag: {term.label}</h1>
-
-	{posts.length === 0 ? (
-		<p>No posts with this tag yet.</p>
-	) : (
-		<ul>
-			{posts.map((post) => (
-				<li>
-					<a href={localizedHref(`/posts/${post.id}`, Astro.currentLocale)}>
-						{post.data.featured_image && (
-							<div {...post.edit.featured_image}>
-								<Image image={post.data.featured_image} />
-							</div>
-						)}
-						<h2 {...post.edit.title}>{post.data.title}</h2>
-					</a>
-					{post.data.excerpt && (
-						<p {...post.edit.excerpt}>{post.data.excerpt}</p>
-					)}
-				</li>
-			))}
-		</ul>
-	)}
-	<nav aria-label="Pagination">
-		{cursor && (
-			<a href={localizedHref(`/tag/${term.slug}`, Astro.currentLocale)}>
-				First page
-			</a>
-		)}
-		{nextCursor && (
-			<a
-				href={localizedHref(
-					`/tag/${term.slug}?cursor=${encodeURIComponent(nextCursor)}`,
-					Astro.currentLocale,
-				)}
-			>
-				Next page
-			</a>
-		)}
-	</nav>
-</Base>
+<BlogFilterPage {...filter} />

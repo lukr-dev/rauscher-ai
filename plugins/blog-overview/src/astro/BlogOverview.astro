@@ -1,39 +1,41 @@
 ---
-import { siteUi } from "../../../../src/utils/i18n";
+import { localizedHref, siteUi } from "../../../../src/utils/i18n";
 import { getEmDashCollection, getTaxonomyTermsWithCacheHint } from "emdash";
-import type { PortableTextBlock } from "emdash";
+import { safeJsonLdSerialize } from "emdash/page";
 import { PortableText } from "emdash/ui";
 import PostCard from "./PostCard.astro";
-import { featuredPosts, flattenTerms } from "../content";
+import {
+	blogFilterPath,
+	blogListJsonLd,
+	featuredPosts,
+	flattenTerms,
+} from "../content";
+import type { BlogFilter, BlogOverviewNode } from "../content";
 interface Props {
-	node: {
-		heading?: string;
-		intro?: PortableTextBlock[];
-	};
+	node: BlogOverviewNode;
+	/** Set by the category and tag pages; the block itself always lists every post. */
+	filter?: BlogFilter;
+	description?: string;
 }
-const { node } = Astro.props;
-const category = Astro.url.searchParams.get("category") || undefined;
-const tag = Astro.url.searchParams.get("tag") || undefined;
+const { node, filter, description } = Astro.props;
+const contentLocale = Astro.locals.contentLocale ?? Astro.currentLocale;
 const cursor = Astro.url.searchParams.get("cursor") || undefined;
-const filters = { ...(category ? { category } : {}), ...(tag ? { tag } : {}) };
-const localeOptions = {
-	locale: Astro.locals.contentLocale ?? Astro.currentLocale,
-};
+const category = filter?.taxonomy === "category" ? filter.term.slug : undefined;
+const tag = filter?.taxonomy === "tag" ? filter.term.slug : undefined;
+const filters = filter ? { [filter.taxonomy]: filter.term.slug } : {};
 const [result, termsResult, topPostResult] = await Promise.all([
 	getEmDashCollection("posts", {
 		status: "published",
-		...localeOptions,
+		locale: contentLocale,
 		orderBy: { published_at: "desc" },
 		limit: 20,
 		cursor,
 		where: filters,
 	}),
-	getTaxonomyTermsWithCacheHint("category", {
-		locale: Astro.locals.contentLocale ?? Astro.currentLocale,
-	}),
+	getTaxonomyTermsWithCacheHint("category", { locale: contentLocale }),
 	getEmDashCollection("posts", {
 		status: "published",
-		...localeOptions,
+		locale: contentLocale,
 		orderBy: { published_at: "desc" },
 		limit: 1,
 		where: { ...filters, top_post: "1" },
@@ -60,34 +62,68 @@ const { featured, rest, topPost } = featuredPosts(
 	tag,
 );
 const shown = rest.length + (featured ? 1 : 0);
-const href = (selected?: string, nextCursor?: string) => {
-	const params = new URLSearchParams();
-	if (selected) params.set("category", selected);
-	if (tag) params.set("tag", tag);
-	if (nextCursor) params.set("cursor", nextCursor);
-	return `${Astro.url.pathname}${params.size ? `?${params}` : ""}`;
-};
 const locale = Astro.currentLocale;
 const copy = siteUi(locale);
+const heading = node.heading ?? "Blog";
+const filterRef = filter && {
+	taxonomy: filter.taxonomy,
+	slug: filter.term.slug,
+};
+const href = (path: string) => localizedHref(path, locale);
+const absolute = (path: string) => new URL(href(path), Astro.url.origin).href;
+const jsonLd = blogListJsonLd({
+	url: absolute(blogFilterPath(filterRef, cursor)),
+	name: filter ? `${heading}: ${filter.term.label}` : heading,
+	description,
+	locale: contentLocale ?? "de",
+	siteUrl: absolute("/"),
+	breadcrumbs: [
+		{ name: copy.home, url: absolute("/") },
+		{ name: heading, url: absolute("/posts") },
+		...(filter
+			? [{ name: filter.term.label, url: absolute(blogFilterPath(filterRef)) }]
+			: []),
+	],
+	posts: [...(featured ? [featured] : []), ...rest].map((entry) => ({
+		url: absolute(`/posts/${entry.id}`),
+		name: entry.data.title,
+		datePublished: entry.data.publishedAt?.toISOString(),
+	})),
+});
 ---
 
-<section class="blog-overview">
+<section class="blog-overview" data-blog-overview>
 	<div class="wrap">
 		<div class="blog-introduction">
-			<h1>{node.heading ?? "Blog"}</h1>
+			<h1 tabindex="-1">
+				{heading}
+				{filter && " "}
+				{filter && <span class="filter-heading">{filter.term.label}</span>}
+			</h1>
 			<div class="rauscher-rich-text on-yellow copy-intro">
-				<PortableText value={node.intro ?? []} />
+				{filter ? (
+					<p>{description}</p>
+				) : (
+					<PortableText value={node.intro ?? []} />
+				)}
 			</div>
 		</div>
 		<div class="blog-filters">
 			<nav aria-label={copy.categoryFilter}>
-				<a href={href()} aria-current={!category ? "page" : undefined}>
+				<a
+					href={href("/posts")}
+					aria-current={!filter ? "page" : undefined}
+					data-blog-nav
+				>
 					{copy.all}
 				</a>
 				{categories.map((term) => (
 					<a
-						href={href(term.slug)}
+						href={href(
+							blogFilterPath({ taxonomy: "category", slug: term.slug }),
+						)}
 						aria-current={category === term.slug ? "page" : undefined}
+						data-blog-nav
 					>
 						{term.label}
 						<span>{term.count}</span>
@@ -99,55 +135,248 @@ const copy = siteUi(locale);
 				{result.nextCursor ? ` ${copy.onPage}` : ""}
 			</span>
 		</div>
-		{tag && (
+		{filter?.taxonomy === "tag" && (
 			<div class="tag-filter">
-				<span>Tag: {tag}</span>
-				<a
-					href={`${Astro.url.pathname}${category ? `?category=${encodeURIComponent(category)}` : ""}`}
-				>
+				<span>
+					{copy.tag}: {filter.term.label}
+				</span>
+				<a href={href("/posts")} data-blog-nav>
 					{copy.clearFilter} ×
 				</a>
 			</div>
 		)}
-		{loadError ? (
-			<p role="alert">{copy.loadError}</p>
-		) : (
-			<>
-				{featured && <PostCard entry={featured} featured topPost={topPost} />}
-				<div class="post-grid">
-					{rest.map((entry, index) => (
-						<PostCard entry={entry} index={index} />
-					))}
-				</div>
-				{shown === 0 && (
-					<div class="empty-state">
-						<h2>{copy.empty}</h2>
-						<p>{category || tag ? copy.emptyFilter : copy.emptyAll}</p>
-						{(category || tag) && (
-							<a class="button dark" href={Astro.url.pathname}>
-								{copy.showAll} →
-							</a>
-						)}
+		<div class="blog-results" data-blog-results tabindex="-1">
+			{loadError ? (
+				<p role="alert">{copy.loadError}</p>
+			) : (
+				<>
+					{featured && <PostCard entry={featured} featured topPost={topPost} />}
+					<div class="post-grid">
+						{rest.map((entry, index) => (
+							<PostCard
+								entry={entry}
+								index={index}
+								position={index + (featured ? 2 : 1)}
+							/>
+						))}
 					</div>
-				)}
-				{(cursor || result.nextCursor) && (
-					<nav class="pagination" aria-label={copy.morePosts}>
-						{cursor && (
-							<a class="button" href={href(category)}>
-								{copy.firstPage}
-							</a>
-						)}
-						{result.nextCursor && (
-							<a class="button dark" href={href(category, result.nextCursor)}>
-								{copy.morePosts} →
-							</a>
-						)}
-					</nav>
-				)}
-			</>
-		)}
+					{shown === 0 && (
+						<div class="empty-state">
+							<h2>{copy.empty}</h2>
+							<p>{filter ? copy.emptyFilter : copy.emptyAll}</p>
+							{filter && (
+								<a class="button dark" href={href("/posts")} data-blog-nav>
+									{copy.showAll} →
+								</a>
+							)}
+						</div>
+					)}
+					{(cursor || result.nextCursor) && (
+						<nav class="pagination" aria-label={copy.morePosts}>
+							{cursor && (
+								<a
+									class="button"
+									href={href(blogFilterPath(filterRef))}
+									data-blog-nav
+								>
+									{copy.firstPage}
+								</a>
+							)}
+							{result.nextCursor && (
+								<a
+									class="button dark"
+									href={href(blogFilterPath(filterRef, result.nextCursor))}
+									data-blog-nav
+								>
+									{copy.morePosts} →
+								</a>
+							)}
+						</nav>
+					)}
+				</>
+			)}
+		</div>
 	</div>
+	<script
+		type="application/ld+json"
+		is:inline
+		set:html={safeJsonLdSerialize(jsonLd)}
+	/>
 </section>
+<script>
+	// Progressive enhancement: links stay real pages for crawlers, agents and
+	// no-JS visitors; here the next page's list is swapped in without a reload.
+	const SECTION = "[data-blog-overview]";
+	const HEAD = [
+		'meta[name="description"]',
+		'meta[name="robots"]',
+		'link[rel="canonical"]',
+		'link[rel="alternate"][hreflang]',
+		'meta[property^="og:"]',
+		'meta[name^="twitter:"]',
+		'script[type="application/ld+json"]',
+	].join(",");
+	const CACHE_MS = 30_000;
+	const cache = new Map<
+		string,
+		{ time: number; page: Promise<{ url: string; doc: Document } | null> }
+	>();
+	const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+	let navigation = 0;
+
+	function load(url: string) {
+		const cached = cache.get(url);
+		if (cached && Date.now() - cached.time < CACHE_MS) return cached.page;
+		const page = fetch(url, { headers: { Accept: "text/html" } })
+			.then(async (response) =>
+				response.ok
+					? {
+							url: response.url,
+							doc: new DOMParser().parseFromString(
+								await response.text(),
+								"text/html",
+							),
+						}
+					: null,
+			)
+			.catch(() => null);
+		cache.set(url, { time: Date.now(), page });
+		void page.then((result) => result || cache.delete(url));
+		return page;
+	}
+
+	function navLink(target: EventTarget | null) {
+		const link =
+			target instanceof Element
+				? target.closest<HTMLAnchorElement>("a[data-blog-nav]")
+				: null;
+		return link &&
+			link.origin === location.origin &&
+			!link.target &&
+			!link.hasAttribute("download")
+			? link
+			: null;
+	}
+
+	function announce(text: string) {
+		let region = document.querySelector<HTMLElement>("[data-blog-announcer]");
+		if (!region) {
+			region = document.createElement("div");
+			region.dataset.blogAnnouncer = "";
+			region.setAttribute("aria-live", "polite");
+			region.style.cssText =
+				"position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap";
+			document.body.appendChild(region);
+		}
+		region.textContent = text;
+	}
+
+	function swap(doc: Document, next: Element) {
+		document
+			.querySelector(SECTION)
+			?.replaceWith(document.importNode(next, true));
+		document.title = doc.title;
+		document.head.querySelectorAll(HEAD).forEach((element) => element.remove());
+		doc.head
+			.querySelectorAll(HEAD)
+			.forEach((element) =>
+				document.head.appendChild(document.importNode(element, true)),
+			);
+		document.querySelectorAll("[data-page-swap]").forEach((element) => {
+			const key = (element as HTMLElement).dataset.pageSwap;
+			const replacement = doc.querySelector(`[data-page-swap="${key}"]`);
+			if (replacement)
+				element.replaceWith(document.importNode(replacement, true));
+		});
+		const main = doc.querySelector("main");
+		if (main?.lang)
+			document.querySelector("main")?.setAttribute("lang", main.lang);
+	}
+
+	async function navigate(
+		url: string,
+		push: boolean,
+		trigger?: HTMLAnchorElement,
+	) {
+		const current = document.querySelector(SECTION);
+		if (!current) return location.assign(url);
+		const token = ++navigation;
+		current.setAttribute("aria-busy", "true");
+		const page = await load(url);
+		if (token !== navigation) return;
+		const next = page?.doc.querySelector(SECTION);
+		if (!page || !next) return location.assign(url);
+		if (push) history.pushState({ blogOverview: true }, "", page.url);
+		// View transitions apply the update on a later frame; a newer navigation
+		// may have started by then, so only the latest one touches the DOM.
+		const update = () => {
+			if (token === navigation) swap(page.doc, next);
+		};
+		if (document.startViewTransition && !reducedMotion.matches) {
+			const transition = document.startViewTransition(update);
+			// A newer navigation skips this transition, which rejects `ready`.
+			transition.ready.catch(() => {});
+			await transition.updateCallbackDone;
+		} else update();
+		if (token !== navigation) return;
+
+		const section = document.querySelector(SECTION)!;
+		const same = trigger
+			? section.querySelector<HTMLElement>(
+					`a[data-blog-nav][href="${CSS.escape(trigger.getAttribute("href") ?? "")}"]`,
+				)
+			: null;
+		if (same) same.focus({ preventScroll: true });
+		else if (trigger) {
+			const results = section.querySelector<HTMLElement>("[data-blog-results]");
+			results?.focus({ preventScroll: true });
+			section.querySelector(".blog-filters")?.scrollIntoView({
+				block: "start",
+				behavior: reducedMotion.matches ? "auto" : "smooth",
+			});
+		}
+		announce(
+			[
+				section.querySelector("h1")?.textContent,
+				section.querySelector(".entry-count")?.textContent,
+			]
+				.map((text) => text?.replace(/\s+/g, " ").trim())
+				.filter(Boolean)
+				.join(" – "),
+		);
+	}
+
+	history.replaceState({ ...history.state, blogOverview: true }, "");
+	document.addEventListener("click", (event) => {
+		const link = navLink(event.target);
+		if (
+			!link ||
+			event.defaultPrevented ||
+			event.button !== 0 ||
+			event.metaKey ||
+			event.ctrlKey ||
+			event.shiftKey ||
+			event.altKey ||
+			!document.querySelector(SECTION)
+		)
+			return;
+		event.preventDefault();
+		if (link.href === location.href) return;
+		void navigate(link.href, true, link);
+	});
+	for (const type of ["pointerover", "focusin", "touchstart"])
+		document.addEventListener(
+			type,
+			(event) => {
+				const link = navLink(event.target);
+				if (link && link.href !== location.href) void load(link.href);
+			},
+			{ passive: true },
+		);
+	window.addEventListener("popstate", (event) => {
+		if (event.state?.blogOverview) void navigate(location.href, false);
+	});
+</script>
 <style>
 	.blog-overview {
 		padding: 40px 0 120px;
@@ -169,6 +398,16 @@ const copy = siteUi(locale);
 		overflow-wrap: anywhere;
 		max-width: 100%;
 	}
+	h1:focus {
+		outline: none;
+	}
+	.filter-heading {
+		display: block;
+		margin-top: 0.3em;
+		font-size: clamp(48px, 7vw, 104px);
+		line-height: 0.9;
+		letter-spacing: -0.02em;
+	}
 	.blog-introduction > div {
 		max-width: 24em;
 	}
@@ -181,6 +420,7 @@ const copy = siteUi(locale);
 		border-top: 2px solid var(--ink);
 		padding-top: 20px;
 		margin-bottom: 32px;
+		scroll-margin-top: 24px;
 	}
 	.blog-filters nav {
 		display: flex;
@@ -197,6 +437,12 @@ const copy = siteUi(locale);
 		border: 2px solid var(--ink);
 		background: var(--paper);
 		text-decoration: none;
+		transition:
+			background-color 0.2s,
+			color 0.2s;
+	}
+	.blog-filters a:hover {
+		background: var(--lavender);
 	}
 	.blog-filters a[aria-current="page"] {
 		background: var(--ink);
@@ -215,6 +461,15 @@ const copy = siteUi(locale);
 		gap: 12px;
 		margin-bottom: 24px;
 		font-size: 14px;
+	}
+	.blog-results {
+		transition: opacity 0.2s;
+	}
+	.blog-results:focus {
+		outline: none;
+	}
+	[aria-busy="true"] .blog-results {
+		opacity: 0.55;
 	}
 	.post-grid {
 		display: grid;
@@ -242,6 +497,12 @@ const copy = siteUi(locale);
 		}
 		.blog-introduction {
 			padding-bottom: 32px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.blog-results,
+		.blog-filters a {
+			transition: none;
 		}
 	}
 </style>
