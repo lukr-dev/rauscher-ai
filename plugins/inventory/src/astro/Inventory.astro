@@ -1,17 +1,22 @@
 ---
 import { siteUi } from "../../../../src/utils/i18n";
-import type { ImageValue, PortableTextBlock } from "emdash";
-import { Image, PortableText } from "emdash/ui";
+import type { PortableTextBlock } from "emdash";
+import { PortableText } from "emdash/ui";
 import { categoryKey, inventoryCategories } from "../content";
 interface Props {
 	node: {
 		heading?: string;
 		intro?: PortableTextBlock[];
-		tools?: { title: string; category?: string; logo?: ImageValue }[];
+		tools?: { title: string; category?: string; icon?: string }[];
 	};
 }
 const { node } = Astro.props;
-const tools = node.tools ?? [];
+// Loaded on demand so pages without an inventory skip parsing the icon set.
+const { brandIcon } = await import("../icons");
+const tools = (node.tools ?? []).map((tool) => ({
+	...tool,
+	brandIcon: brandIcon(tool.icon),
+}));
 const categories = inventoryCategories(tools);
 const locale = Astro.currentLocale;
 const copy = siteUi(locale);
@@ -43,7 +48,14 @@ const copy = siteUi(locale);
 				<article class="tool" data-tool-category={categoryKey(tool.category)}>
 					<h3>{tool.title}</h3>
 					<span class="tool-category">{tool.category}</span>
-					{tool.logo && <Image image={tool.logo} class="tool-logo" />}
+					{tool.brandIcon && (
+						<svg
+							class="tool-logo"
+							viewBox={`0 0 ${tool.brandIcon.width} ${tool.brandIcon.height}`}
+							aria-hidden="true"
+							set:html={tool.brandIcon.body}
+						/>
+					)}
 				</article>
 			))}
 		</div>
@@ -150,18 +162,22 @@ const copy = siteUi(locale);
 		position: relative;
 		z-index: 1;
 	}
-	.tool :global(.tool-logo) {
+	.tool-logo {
 		position: absolute;
 		width: 60px;
 		height: 60px;
-		object-fit: contain;
 		right: 14px;
 		top: 36px;
-		opacity: 0.22;
+		/* Translucent colour instead of opacity avoids a visible compositing box. */
+		color: color-mix(in srgb, var(--paper) 22%, transparent);
 		transform: rotate(-10deg);
+		transition: color 0.2s;
 	}
 	.tool:hover {
 		transform: translateY(-6px) rotate(-2deg);
 		border-color: var(--yellow);
+	}
+	.tool:hover .tool-logo {
+		color: color-mix(in srgb, var(--yellow) 40%, transparent);
 	}
 </style>

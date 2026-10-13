@@ -1,7 +1,8 @@
 import { definePlugin } from "emdash";
 import type { PluginDescriptor, PortableTextBlockField } from "emdash";
+import { brandIconSet } from "./icons.ts";
 
-// The versioned admin patch supports styled rich text inside block forms.
+// The versioned admin patch supports styled rich text and icon pickers inside block forms.
 const fields = [
 	{
 		type: "text_input",
@@ -34,10 +35,11 @@ const fields = [
 				label: "Category (creates a filter automatically)",
 			},
 			{
-				type: "media_picker",
-				action_id: "logo",
-				label: "Logo (optional)",
-				mime_type_filter: "image/",
+				type: "icon_picker",
+				action_id: "icon",
+				label: "Brand icon (optional)",
+				icons_route: "icons",
+				placeholder: "Search CoreUI brands…",
 			},
 		],
 	},
@@ -56,6 +58,14 @@ export function createPlugin() {
 	return definePlugin({
 		id: "rauscher-inventory",
 		version: "1.0.0",
+		routes: {
+			icons: {
+				public: true,
+				methods: ["GET"],
+				cacheControl: "public, max-age=86400",
+				handler: async () => brandIconSet(),
+			},
+		},
 		admin: {
 			portableTextBlocks: [
 				{ type: "rauscher-inventory", label: "Inventar — Tools", category: "Rauscher.ai", fields },

@@ -14,7 +14,7 @@ The homepage renders the published `pages/home` entry. Its rich-text editor offe
 
 `seed/seed.json` contains the design's homepage content and three short example posts. Load sample content during initial CMS setup; changing this file does not overwrite an existing site's content. Photos from the design are in `public/media/hero/`.
 
-EmDash 1.2.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.2.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
+EmDash 1.2.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, icon pickers, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.2.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
 
 ## About blocks
 
@@ -23,7 +23,7 @@ The published `pages/about` entry uses four separate plugins: About Hero, Skill 
 - About Hero has role/location badges, contact links, photo and card name. Its back is rich text with optional special ability copy. There is no rarity or front counter.
 - Skill Deck has reorderable groups and skills, optional proficiency text and optional six-segment levels.
 - Career has reorderable roles/qualifications, organisation, date range, job/education type, current marker, and repeatable bullet points.
-- Inventory has tool names, categories and optional uploaded logos. Filters come from the tools' category text, merging differences in case and whitespace.
+- Inventory has tool names, categories and optional brand icons picked from the [CoreUI Brands](https://icones.js.org/collection/cib) set (CC0, via `@iconify-json/cib`). The editor searches the set by name and previews each icon; the block stores only the icon name. Filters come from the tools' category text, merging differences in case and whitespace.
 
 The seed includes the About design content and `public/media/about/p01.jpg`. Existing CMS content must be updated through the editor/API separately.
 

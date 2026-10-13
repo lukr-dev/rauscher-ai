@@ -9,7 +9,12 @@ const { version } = JSON.parse(
 	readFileSync(new URL("node_modules/@emdash-cms/admin/package.json", root), "utf8"),
 );
 assert.equal(version, "1.2.0", "Review the nested-rich-text patch before upgrading EmDash admin.");
-if (!readFileSync(entry, "utf8").includes("// Rauscher: optional status fields")) {
+const installed = readFileSync(entry, "utf8");
+if (!installed.includes("// Rauscher: searchable icon picker")) {
+	assert.ok(
+		!installed.includes("// Rauscher: optional status fields"),
+		"An older admin patch is applied. Reinstall @emdash-cms/admin (rm -rf node_modules/@emdash-cms/admin && npm install).",
+	);
 	execFileSync("git", ["apply", "--check", "patches/emdash-admin-1.2.0.patch"], { cwd: root });
 	execFileSync("git", ["apply", "patches/emdash-admin-1.2.0.patch"], { cwd: root });
 }
@@ -71,4 +76,13 @@ for (const [required, value, expected] of [
 	})(value);
 	assert.equal(saved, expected);
 }
-console.log("EmDash nested rich-text patch applied and verified.");
+assert.ok(source.includes('case "icon_picker": return jsx(BlockKitIconPicker'));
+const searchStart = source.indexOf("function searchBlockKitIcons(");
+const searchIcons = runInNewContext(
+	`${source.slice(searchStart, source.indexOf("function BlockKitIconSvg(", searchStart))}; searchBlockKitIcons`,
+);
+const names = ["github-actions", "git", "github", "gitlab", "docker"];
+assert.deepEqual([...searchIcons(names, "git")], ["git", "github", "github-actions", "gitlab"]);
+assert.deepEqual([...searchIcons(names, "hub act")], ["github-actions"]);
+assert.deepEqual([...searchIcons(names, "")], [...names].sort());
+console.log("EmDash rich-text and icon-picker patch applied and verified.");
