@@ -51,6 +51,21 @@
 					"validation": {
 						"options": ["In Arbeit", "Abgeschlossen"]
 					}
+				},
+				{
+					"slug": "highlight",
+					"label": "Highlight (blue card)",
+					"type": "boolean",
+					"defaultValue": false,
+					"translatable": false
+				},
+				{
+					"slug": "top_post",
+					"label": "Top Post",
+					"type": "boolean",
+					"defaultValue": false,
+					"indexed": true,
+					"translatable": false
 				}
 			]
 		},
@@ -1447,8 +1462,7 @@
 										}
 									]
 								}
-							],
-							"highlightPost": ""
+							]
 						}
 					]
 				}
@@ -2189,7 +2203,6 @@
 									]
 								}
 							],
-							"highlightPost": "",
 							"_type": "rauscher-blog-overview",
 							"_key": "blog-overview"
 						}
@@ -2934,7 +2947,6 @@
 									]
 								}
 							],
-							"highlightPost": "",
 							"_type": "rauscher-blog-overview",
 							"_key": "blog-overview"
 						}

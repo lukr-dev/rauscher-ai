@@ -1,10 +1,6 @@
 ---
 import { localizedHref, siteUi } from "../../../../src/utils/i18n";
-import {
-	getEmDashCollection,
-	getEmDashEntry,
-	getTaxonomyTermsWithCacheHint,
-} from "emdash";
+import { getEmDashCollection, getTaxonomyTermsWithCacheHint } from "emdash";
 import { safeJsonLdSerialize } from "emdash/page";
 import { PortableText } from "emdash/ui";
 import PostCard from "./PostCard.astro";
@@ -26,39 +22,41 @@ const contentLocale = Astro.locals.contentLocale ?? Astro.currentLocale;
 const cursor = Astro.url.searchParams.get("cursor") || undefined;
 const category = filter?.taxonomy === "category" ? filter.term.slug : undefined;
 const tag = filter?.taxonomy === "tag" ? filter.term.slug : undefined;
-const [result, termsResult, highlightResult] = await Promise.all([
+const filters = filter ? { [filter.taxonomy]: filter.term.slug } : {};
+const [result, termsResult, topPostResult] = await Promise.all([
 	getEmDashCollection("posts", {
 		status: "published",
 		locale: contentLocale,
 		orderBy: { published_at: "desc" },
 		limit: 20,
 		cursor,
-		where: filter ? { [filter.taxonomy]: filter.term.slug } : {},
+		where: filters,
 	}),
 	getTaxonomyTermsWithCacheHint("category", { locale: contentLocale }),
-	node.highlightPost
-		? getEmDashEntry("posts", node.highlightPost, { locale: contentLocale })
-		: Promise.resolve(null),
+	getEmDashCollection("posts", {
+		status: "published",
+		locale: contentLocale,
+		orderBy: { published_at: "desc" },
+		limit: 1,
+		where: { ...filters, top_post: "1" },
+	}),
 ]);
 if (Astro.cache?.enabled) {
 	Astro.cache.set(result.cacheHint);
 	Astro.cache.set(termsResult.cacheHint);
-	if (highlightResult) Astro.cache.set(highlightResult.cacheHint);
+	Astro.cache.set(topPostResult.cacheHint);
 }
-if (result.error) {
-	console.error("Unable to load blog posts", result.error);
+const loadError = result.error ?? topPostResult.error;
+if (loadError) {
+	console.error("Unable to load blog posts", loadError);
 	Astro.response.status = 503;
 }
 const categories = flattenTerms(termsResult.data).filter(
 	(term) => (term.count ?? 0) > 0,
 );
-const { featured, rest, highlighted } = featuredPosts(
+const { featured, rest, topPost } = featuredPosts(
 	result.entries,
-	highlightResult?.entry &&
-		"locale" in highlightResult.entry.data &&
-		highlightResult.entry.data.locale === (contentLocale ?? "de")
-		? highlightResult.entry
-		: null,
+	topPostResult.entries[0] ?? null,
 	cursor,
 	category,
 	tag,
@@ -148,13 +146,11 @@ const jsonLd = blogListJsonLd({
 			</div>
 		)}
 		<div class="blog-results" data-blog-results tabindex="-1">
-			{result.error ? (
+			{loadError ? (
 				<p role="alert">{copy.loadError}</p>
 			) : (
 				<>
-					{featured && (
-						<PostCard entry={featured} featured highlighted={highlighted} />
-					)}
+					{featured && <PostCard entry={featured} featured topPost={topPost} />}
 					<div class="post-grid">
 						{rest.map((entry, index) => (
 							<PostCard

@@ -6,6 +6,8 @@ export interface BlogPost {
 	content?: PortableTextBlock[];
 	excerpt?: string;
 	project_status?: string;
+	highlight?: boolean;
+	top_post?: boolean;
 	publishedAt: Date | null;
 	terms?: Record<string, TaxonomyTerm[]>;
 }
@@ -13,26 +15,32 @@ export function flattenTerms(terms: TaxonomyTerm[]): TaxonomyTerm[] {
 	return terms.flatMap((term) => [term, ...flattenTerms(term.children ?? [])]);
 }
 export function featuredPosts<
-	T extends { id: string; status: string; terms?: Record<string, { slug: string }[]> },
+	T extends {
+		id: string;
+		status: string;
+		top_post?: boolean;
+		terms?: Record<string, { slug: string }[]>;
+	},
 >(
 	posts: ContentEntry<T>[],
-	highlight: ContentEntry<T> | null,
+	topPost: ContentEntry<T> | null,
 	cursor?: string,
 	category?: string,
 	tag?: string,
 ) {
 	const eligible =
-		highlight?.data.status === "published" &&
-		(!category || highlight.data.terms?.category?.some((term) => term.slug === category)) &&
-		(!tag || highlight.data.terms?.tag?.some((term) => term.slug === tag))
-			? highlight
+		topPost?.data.status === "published" &&
+		topPost.data.top_post === true &&
+		(!category || topPost.data.terms?.category?.some((term) => term.slug === category)) &&
+		(!tag || topPost.data.terms?.tag?.some((term) => term.slug === tag))
+			? topPost
 			: null;
-	// Filtered lists only feature the highlighted post; otherwise every match is a regular card.
+	// Filtered lists only feature a matching Top Post; otherwise every match is a regular card.
 	const featured = cursor ? undefined : (eligible ?? (category || tag ? undefined : posts[0]));
 	const rest = posts.filter(
 		(post) => post.data.id !== featured?.data.id && post.data.id !== eligible?.data.id,
 	);
-	return { featured, rest, highlighted: !!eligible && featured === eligible };
+	return { featured, rest, topPost: !!eligible && featured === eligible };
 }
 
 export type BlogTaxonomy = "category" | "tag";
@@ -43,7 +51,6 @@ export interface BlogFilter {
 export interface BlogOverviewNode {
 	heading?: string;
 	intro?: PortableTextBlock[];
-	highlightPost?: string;
 }
 /** Unlocalized path of the post list, optionally narrowed to one taxonomy term. */
 export function blogFilterPath(

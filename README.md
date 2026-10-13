@@ -31,9 +31,18 @@ The seed includes the About design content and `public/media/about/p01.jpg`. Exi
 
 ## Blog views
 
-The published `pages/posts` entry contains the separate **Blog Overview** plugin, with an editable heading, rich-text introduction and optional highlighted-post picker. Without a selection, the newest published post is featured. Category filters come from published posts; filtered pages only feature the highlighted post when it matches the filter and otherwise show every match as a regular card. Lists use CMS publication dates and calculated reading time, with pagination after 20 posts.
+The published `pages/posts` entry contains the separate **Blog Overview** plugin, with an editable heading and rich-text introduction. Each post has two independent checkboxes: **Highlight (blue card)** changes its regular card from cream to light blue; **Top Post** makes it eligible for the large dark featured card. The newest published Top Post wins; without one, the newest published post is featured. The selection respects the current language, category and tag filters and can feature a post outside the first page; a filtered page without a matching Top Post shows every match as a regular card. Lists use CMS publication dates and calculated reading time, with pagination after 20 posts. Highlight and Top Post flags are shared across translations.
 
-Each filter is its own server-rendered page: `/category/{slug}` and `/tag/{slug}` (plus `/en/…` and `/fr/…`), with a localized title, description, canonical URL, hreflang links and `CollectionPage` structured data. One filter applies at a time; old `/posts?category=…` and `?tag=…` links redirect permanently. Category and tag badges on cards and articles link to these pages. With JavaScript, filter and pagination links swap the list in place (view transition, history entry, screen-reader announcement); without it they are plain links. A category description entered in the CMS replaces the generic page description. Paginated (`?cursor=`) and empty filter pages are `noindex, follow`. `/sitemap.xml` adds `/sitemap-taxonomies.xml` to EmDash's collection sitemaps, and `/llms.txt` lists categories and posts per language for agents.
+Each filter is its own server-rendered page: `/category/{slug}` and `/tag/{slug}` (plus `/en/…` and `/fr/…`), with a localized title, description, canonical URL, hreflang links and `CollectionPage` structured data. One filter applies at a time; old `/posts?category=…` and `?tag=…` links redirect permanently. Category and tag badges on cards and articles link to these pages. With JavaScript, filter and pagination links swap the list in place (view transition, history entry, screen-reader announcement); without it they are plain links. A category or tag description entered in the CMS (per language) replaces the generic page intro and meta description. Paginated (`?cursor=`) and empty filter pages are `noindex, follow`. `/sitemap.xml` adds `/sitemap-taxonomies.xml` to EmDash's collection sitemaps, and `/llms.txt` lists categories and posts per language for agents.
+
+For an existing CMS, add these fields before deploying the updated overview:
+
+```bash
+# Local development uses dev bypass. Remote sites require EMDASH_TOKEN with schema:write.
+node scripts/migrations/002-post-highlights.mjs <site-url>
+```
+
+The migration adds missing fields from the seed and can be rerun. It keeps existing posts and leaves both options unchecked. The old page-level highlighted-post picker is replaced by the post-level Top Post checkbox; choose any preferred Top Post in its post editor.
 
 Posts use **Preview intro** (`excerpt`) for card introductions, falling back to the first two sentences of their content. The optional **Project status** field offers _In Arbeit_ and _Abgeschlossen_. Categories group posts, and tags appear as technology badges.
 
