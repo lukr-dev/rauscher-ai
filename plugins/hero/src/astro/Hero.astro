@@ -123,18 +123,21 @@ const copy = siteUi(locale);
 
 <style>
 	.hero {
+		--name-size: clamp(100px, 26vw, 360px);
 		padding: 24px 0 64px;
 		overflow: clip;
 	}
 	.greeting {
 		font: 700 40px/1 var(--font-display);
-		margin: 0 0 -8px 8px;
+		/* Offset by the side-bearing difference (L 0.06em, H 0.058em) so the H lines up with the L at every size. */
+		margin: 0 0 0 calc(0.06 * var(--name-size) - 0.058em);
 	}
 	h1 {
-		font: 900 clamp(100px, 26vw, 360px)/0.75 var(--font-display);
+		font: 900 var(--name-size)/0.75 var(--font-display);
 		letter-spacing: -0.04em;
-		margin: 0;
-		padding: 30px 0 34px;
+		/* The caps start ~0.19em below the line box; pull them up to sit just under the greeting. */
+		margin: -0.13em 0 0;
+		padding: 0 0 34px;
 	}
 	.cards {
 		position: relative;
