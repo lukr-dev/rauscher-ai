@@ -3,8 +3,12 @@
 	"name": "rauscher-ai",
 	"account_id": "7979b4f7816680c8ba9be80700d1abe4",
 	"workers_dev": true,
+	"routes": [
+		{ "pattern": "rauscher.ai", "custom_domain": true },
+		{ "pattern": "www.rauscher.ai", "custom_domain": true },
+	],
 	"vars": {
-		"EMDASH_SITE_URL": "https://rauscher-ai.lueku-rauscher.workers.dev",
+		"EMDASH_SITE_URL": "https://rauscher.ai",
 	},
 	"main": "./src/worker.ts",
 	"compatibility_date": "2026-02-24",
