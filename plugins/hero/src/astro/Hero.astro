@@ -21,16 +21,14 @@ const copy = siteUi(locale);
 			{cards.map((card, index) => (
 				<article
 					class="card"
+					role="button"
+					tabindex="0"
+					aria-pressed="false"
+					aria-label={`${card.title}: ${copy.flip}`}
 					data-card
 					style={`--angle:${cards.length > 1 ? (index / (cards.length - 1) - 0.5) * 24 : 0}deg;--color:${["var(--paper)", "var(--blue)", "var(--yellow)"][index % 3]}`}
 				>
-					<button
-						type="button"
-						class="front"
-						data-flip
-						aria-expanded="false"
-						aria-label={`${card.title}: ${copy.flip}`}
-					>
+					<div class="front">
 						<span class="card-labels">
 							<span>
 								{String(index + 1).padStart(2, "0")}/
@@ -45,8 +43,8 @@ const copy = siteUi(locale);
 							priority={index < 5}
 						/>
 						<span class="card-title">{card.title}</span>
-					</button>
-					<div class="back" data-back inert aria-hidden="true">
+					</div>
+					<div class="back" data-back aria-hidden="true">
 						<h2>{card.title}</h2>
 						<div class="card-copy rauscher-rich-text on-dark copy-card">
 							<PortableText value={card.back ?? []} />
@@ -59,14 +57,6 @@ const copy = siteUi(locale);
 								{card.abilityText?.trim() && <p>{card.abilityText}</p>}
 							</div>
 						)}
-						<button
-							type="button"
-							class="close-card"
-							data-close
-							aria-label={`${card.title}: ${copy.front}`}
-						>
-							↶ {copy.back}
-						</button>
 					</div>
 				</article>
 			))}
@@ -106,33 +96,33 @@ const copy = siteUi(locale);
 		const discovered = new Set<HTMLElement>();
 		const completion = hero.querySelector<HTMLElement>("[data-completion]")!;
 		const setFlipped = (card: HTMLElement, flipped: boolean) => {
-			const front = card.querySelector<HTMLButtonElement>("[data-flip]")!;
-			const back = card.querySelector<HTMLElement>("[data-back]")!;
 			card.classList.toggle("is-flipped", flipped);
-			front.setAttribute("aria-expanded", String(flipped));
-			front.inert = flipped;
-			back.inert = !flipped;
-			back.setAttribute("aria-hidden", String(!flipped));
-			if (flipped) {
-				discovered.add(card);
-				hero.querySelector<HTMLElement>("[data-found]")!.textContent = String(
-					discovered.size,
-				);
-				completion.hidden = discovered.size !== cards.length;
-				card
-					.querySelector<HTMLButtonElement>("[data-close]")!
-					.focus({ preventScroll: true });
-			} else {
-				front.focus({ preventScroll: true });
-			}
+			card.setAttribute("aria-pressed", String(flipped));
+			card
+				.querySelector("[data-back]")!
+				.setAttribute("aria-hidden", String(!flipped));
+			if (!flipped) return;
+			discovered.add(card);
+			hero.querySelector<HTMLElement>("[data-found]")!.textContent = String(
+				discovered.size,
+			);
+			completion.hidden = discovered.size !== cards.length;
 		};
 		for (const card of cards) {
-			card
-				.querySelector("[data-flip]")!
-				.addEventListener("click", () => setFlipped(card, true));
-			card
-				.querySelector("[data-close]")!
-				.addEventListener("click", () => setFlipped(card, false));
+			const toggle = () =>
+				setFlipped(card, !card.classList.contains("is-flipped"));
+			card.addEventListener("click", (event) => {
+				// Let links in the card copy navigate instead of turning the card.
+				if ((event.target as Element).closest("a")) return;
+				toggle();
+			});
+			card.addEventListener("keydown", (event) => {
+				if (event.target !== card) return;
+				if (event.key === "Enter" || event.key === " ") {
+					event.preventDefault();
+					toggle();
+				} else if (event.key === "Escape") setFlipped(card, false);
+			});
 		}
 		hero.querySelector("[data-shuffle]")?.addEventListener("click", () => {
 			const shuffled = [...cards];
@@ -183,6 +173,7 @@ const copy = siteUi(locale);
 		perspective: 1000px;
 		transform: rotate(var(--angle));
 		transition: transform 0.3s;
+		cursor: pointer;
 	}
 	.card:hover,
 	.card:focus-within {
@@ -204,16 +195,14 @@ const copy = siteUi(locale);
 		transition: transform 0.55s;
 		box-sizing: border-box;
 	}
-	.front {
-		font: inherit;
-		text-align: left;
-		color: var(--ink);
-		background: var(--color);
-		cursor: pointer;
-	}
-	.front:focus-visible {
+	.card:focus-visible {
 		outline: 4px solid var(--blue);
 		outline-offset: 5px;
+		border-radius: 20px;
+	}
+	.front {
+		color: var(--ink);
+		background: var(--color);
 	}
 	.card-labels {
 		display: flex;
@@ -282,15 +271,6 @@ const copy = siteUi(locale);
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 		font-weight: 700;
-	}
-	.close-card {
-		align-self: flex-start;
-		background: none;
-		border: 0;
-		color: var(--yellow);
-		font: 700 13px var(--font-body);
-		cursor: pointer;
-		padding: 6px 0;
 	}
 	.is-flipped .front {
 		transform: rotateY(-180deg);
