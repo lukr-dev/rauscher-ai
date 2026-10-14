@@ -17,7 +17,7 @@ const copy = siteUi(locale);
 	<div class="wrap">
 		<p class="greeting">{copy.greeting}</p>
 		<h1>LUKAS</h1>
-		<div class="cards" data-cards>
+		<div class="cards">
 			{cards.map((card, index) => (
 				<article
 					class="card"
@@ -66,14 +66,9 @@ const copy = siteUi(locale);
 				<PortableText value={node.intro ?? []} />
 			</div>
 			{cards.length > 0 && (
-				<div class="card-controls">
-					<span class="counter" role="status" aria-live="polite">
-						<span data-found>0</span>/{cards.length} {copy.discovered}
-					</span>
-					<button type="button" class="button dark" data-shuffle>
-						↻ {copy.shuffle}
-					</button>
-				</div>
+				<span class="counter" role="status" aria-live="polite">
+					<span data-found>0</span>/{cards.length} {copy.discovered}
+				</span>
 			)}
 		</div>
 		<div class="completion" data-completion hidden role="status">
@@ -91,8 +86,7 @@ const copy = siteUi(locale);
 
 <script>
 	for (const hero of document.querySelectorAll<HTMLElement>("[data-hero]")) {
-		const board = hero.querySelector<HTMLElement>("[data-cards]")!;
-		const cards = [...board.querySelectorAll<HTMLElement>("[data-card]")];
+		const cards = [...hero.querySelectorAll<HTMLElement>("[data-card]")];
 		const discovered = new Set<HTMLElement>();
 		const completion = hero.querySelector<HTMLElement>("[data-completion]")!;
 		const setFlipped = (card: HTMLElement, flipped: boolean) => {
@@ -124,20 +118,6 @@ const copy = siteUi(locale);
 				} else if (event.key === "Escape") setFlipped(card, false);
 			});
 		}
-		hero.querySelector("[data-shuffle]")?.addEventListener("click", () => {
-			const shuffled = [...cards];
-			for (let i = shuffled.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-			}
-			for (const card of shuffled) board.appendChild(card);
-			for (const [index, card] of shuffled.entries()) {
-				card.style.setProperty(
-					"--angle",
-					`${cards.length > 1 ? (index / (cards.length - 1) - 0.5) * 24 : 0}deg`,
-				);
-			}
-		});
 	}
 </script>
 
@@ -290,12 +270,6 @@ const copy = siteUi(locale);
 	.intro {
 		font-size: 21px;
 		max-width: 30em;
-	}
-	.card-controls {
-		display: flex;
-		gap: 12px;
-		flex-wrap: wrap;
-		align-items: center;
 	}
 	.counter {
 		font-weight: 700;
