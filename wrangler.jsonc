@@ -4,8 +4,8 @@
 	"account_id": "7979b4f7816680c8ba9be80700d1abe4",
 	"workers_dev": true,
 	"routes": [
-		{ "pattern": "rauscher.ai", "custom_domain": true },
-		{ "pattern": "www.rauscher.ai", "custom_domain": true },
+		{ "pattern": "rauscher.ai/*", "zone_name": "rauscher.ai" },
+		{ "pattern": "www.rauscher.ai/*", "zone_name": "rauscher.ai" },
 	],
 	"vars": {
 		"EMDASH_SITE_URL": "https://rauscher.ai",
