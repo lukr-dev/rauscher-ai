@@ -67,6 +67,11 @@ const copy = siteUi(locale);
 	description={seo.description}
 	canonical={seo.canonical}
 	image={seo.ogImage}
+	articleMeta={{
+		publishedTime: post.data.publishedAt?.toISOString(),
+		modifiedTime: post.data.updatedAt?.toISOString(),
+		author: author?.displayName ?? siteTitle,
+	}}
 	content={{
 		collection: "posts",
 		id: post.data.id,

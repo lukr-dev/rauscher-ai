@@ -37,6 +37,11 @@ interface Props {
 	/** Unlocalized switcher target for locales missing from `alternates`. */
 	languageFallback?: string;
 	robots?: string;
+	articleMeta?: {
+		publishedTime?: string;
+		modifiedTime?: string;
+		author?: string;
+	};
 	/** Path that decides the active menu item, if not the current URL. */
 	navPath?: string;
 }
@@ -51,6 +56,7 @@ const {
 	alternates,
 	languageFallback = "/",
 	robots,
+	articleMeta,
 	navPath = Astro.url.pathname,
 } = Astro.props;
 const locale = siteLocale(Astro.currentLocale);
@@ -105,7 +111,7 @@ const menuLabel = (label: string, href: string) => {
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
-	pageType: "website",
+	pageType: content?.collection === "posts" ? "article" : "website",
 	title: fullTitle,
 	pageTitle: pageTitle ?? title,
 	description: pageDescription,
@@ -114,6 +120,8 @@ const pageCtx = createPublicPageContext({
 	content,
 	siteName: siteTitle,
 	seo: robots ? { robots } : undefined,
+	articleMeta,
+	siteUrl: settingsResult.data.url,
 });
 ---
 
@@ -123,6 +131,18 @@ const pageCtx = createPublicPageContext({
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{fullTitle}</title>
+		{!settingsResult.data.favicon?.url && (
+			<>
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+				<link
+					rel="icon"
+					sizes="32x32"
+					type="image/png"
+					href="/favicon-32.png"
+				/>
+			</>
+		)}
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 		<link rel="stylesheet" href="/styles/rich-text.css" />
 		<EmDashHead page={pageCtx} />
 		{alternateLinks.map((link) => (
