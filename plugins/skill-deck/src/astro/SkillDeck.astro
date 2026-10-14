@@ -26,7 +26,7 @@ const { node } = Astro.props;
 		<div class="packs">
 			{(node.groups ?? []).map((group, index) => (
 				<article
-					class:list={["pack", { blue: index % 3 === 2 }]}
+					class="pack"
 					style={`--pack-colour:${["var(--yellow)", "var(--paper)", "var(--blue)"][index % 3]}`}
 				>
 					<h3>{group.title}</h3>
@@ -89,9 +89,6 @@ const { node } = Astro.props;
 	.pack:focus-within {
 		transform: rotate(0) translateY(-8px);
 	}
-	.pack.blue {
-		color: var(--paper);
-	}
 	h3 {
 		font: 900 44px/0.9 var(--font-display);
 		margin: 4px 0 20px;
@@ -131,6 +128,6 @@ const { node } = Astro.props;
 		border-radius: 3px;
 	}
 	.level .filled {
-		background: var(--blue);
+		background: var(--blue-deep);
 	}
 </style>

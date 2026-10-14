@@ -4,7 +4,8 @@
 	--yellow: oklch(0.9 0.17 95);
 	--ink: #16130f;
 	--paper: #fffdf6;
-	--blue: oklch(0.48 0.2 264);
+	--blue: #b7d1ff;
+	--blue-deep: oklch(0.48 0.2 264);
 	--lavender: oklch(0.86 0.08 264);
 	--green: oklch(0.72 0.18 150);
 	--font-display: "Darker Grotesque", sans-serif;
@@ -32,7 +33,7 @@ a {
 	-webkit-tap-highlight-color: transparent;
 }
 :focus-visible {
-	outline: 3px solid var(--blue);
+	outline: 3px solid var(--blue-deep);
 	outline-offset: 4px;
 }
 .wrap {
