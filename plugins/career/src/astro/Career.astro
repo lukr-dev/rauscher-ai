@@ -37,27 +37,33 @@ const copy = siteUi(locale);
 						{String(entries.length - index).padStart(2, "0")}
 					</span>
 					<article class:list={{ education: entry.kind === "education" }}>
-						<div class="entry-heading">
-							<div class="meta">
-								<span class="level-label">
-									LVL {String(entries.length - index).padStart(2, "0")}
-								</span>
-								<span>
-									{entry.kind === "education" ? copy.education : copy.job}
-								</span>
-								<span>{entry.dateRange}</span>
-								{entry.current && <span class="current">{copy.current}</span>}
+						<div class="entry-body">
+							<div class="entry-heading">
+								<h3>{entry.title}</h3>
+								<p class="organisation">
+									{entry.organisation && <span>{entry.organisation}</span>}
+									{entry.dateRange && (
+										<span class="date-range">{entry.dateRange}</span>
+									)}
+								</p>
 							</div>
-							<h3>{entry.title}</h3>
-							<p class="organisation">{entry.organisation}</p>
+							{entry.points?.length && (
+								<ul>
+									{entry.points.map((point) => (
+										<li>{point.text}</li>
+									))}
+								</ul>
+							)}
 						</div>
-						{entry.points?.length && (
-							<ul>
-								{entry.points.map((point) => (
-									<li>{point.text}</li>
-								))}
-							</ul>
-						)}
+						<div class="meta">
+							<span class="level-label">
+								LVL {String(entries.length - index).padStart(2, "0")}
+							</span>
+							<span>
+								{entry.kind === "education" ? copy.education : copy.job}
+							</span>
+							{entry.current && <span class="current">{copy.current}</span>}
+						</div>
 					</article>
 				</li>
 			))}
@@ -112,6 +118,8 @@ const copy = siteUi(locale);
 		background: var(--paper);
 		padding: 24px 26px;
 		box-shadow: 6px 6px 0 var(--ink);
+	}
+	.entry-body {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
 		gap: 14px 32px;
@@ -125,6 +133,7 @@ const copy = siteUi(locale);
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 12px 20px;
+		margin-top: 20px;
 		font-size: 12px;
 		font-weight: 700;
 	}
@@ -155,11 +164,18 @@ const copy = siteUi(locale);
 		hyphens: auto;
 		overflow-wrap: anywhere;
 		font: 900 clamp(28px, 4vw, 44px)/0.95 var(--font-display);
-		margin: 18px 0 8px;
+		margin: 0 0 8px;
 	}
 	.organisation {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 10px;
 		font-size: 16px;
 		margin: 0;
+	}
+	.organisation > span + .date-range::before {
+		content: "·";
+		margin-right: 10px;
 	}
 	article ul {
 		padding-left: 0;
@@ -187,7 +203,7 @@ const copy = siteUi(locale);
 		margin-top: 6px;
 	}
 	@media (max-width: 600px) {
-		article {
+		.entry-body {
 			grid-template-columns: minmax(0, 1fr);
 		}
 		.timeline > li {
