@@ -13,6 +13,7 @@ import { aboutHeroPlugin } from "@rauscher-ai/emdash-about-hero";
 import { skillDeckPlugin } from "@rauscher-ai/emdash-skill-deck";
 import { careerPlugin } from "@rauscher-ai/emdash-career";
 import { inventoryPlugin } from "@rauscher-ai/emdash-inventory";
+import { plunkEmailPlugin } from "@rauscher-ai/emdash-plunk-email";
 
 export default defineConfig({
 	output: "server",
@@ -63,6 +64,10 @@ export default defineConfig({
 				skillDeckPlugin(),
 				careerPlugin(),
 				inventoryPlugin(),
+				plunkEmailPlugin({
+					from: { email: "cms@rauscher.ai", name: "rauscher.ai" },
+					replyTo: "lukas@rauscher.ai",
+				}),
 			],
 		}),
 	],
