@@ -62,7 +62,7 @@ New installations use `seed/seed.json`'s `defaultLocale: "de"`. The original Ger
 
 `feature/<name>` → `dev` → `main`
 
-Create feature branches from `dev` and merge them back into `dev`. Use `dev` for integration and review previews. Merge approved releases into `main`, the production deployment branch. The initial setup stays on `dev` until the first release.
+Create feature branches from `dev` and merge them back into `dev`. Use `dev` for integration and review previews. Merge approved releases into `main`, the production deployment branch; the merge deploys automatically. The initial setup stays on `dev` until the first release.
 
 ```bash
 git switch dev
@@ -108,11 +108,13 @@ tailscale serve --bg --https=<unused-https-port> http://127.0.0.1:<local-port>
 
 Use the HTTPS URL for both the site and CMS setup; passkeys require a secure origin. Preserve existing Serve routes, verify the page and assets via the Tailscale URL, and keep the server running for review. Access stays within the tailnet. Rebuild and restart the preview after source changes.
 
-## Cloudflare deployment (later)
+## Cloudflare deployment
 
-The Worker entry point, D1 `DB` binding, R2 `MEDIA` binding, and scheduled maintenance handler are configured in `wrangler.jsonc` and `src/worker.ts`. The deployment targets the **Lukas Rauscher** Cloudflare account and `https://rauscher-ai.lueku-rauscher.workers.dev`. No custom domain is configured. GitHub Actions checks and builds changes; deployment remains manual.
+The Worker entry point, D1 `DB` binding, R2 `MEDIA` binding, and scheduled maintenance handler are configured in `wrangler.jsonc` and `src/worker.ts`. The deployment targets the **Lukas Rauscher** Cloudflare account and serves `https://rauscher.ai` (`www` redirects to the apex) through Worker routes.
 
-When ready to release, merge `dev` into `main`, use a clean `main` checkout, authenticate Wrangler, configure the production `EMDASH_SITE_URL` variable and `EMDASH_ENCRYPTION_KEY` secret, and run `npm run deploy`. Keep the encryption key stable: changing it prevents existing encrypted values from being read. Wrangler can provision the named D1/R2 resources on first deployment. Complete CMS setup on the production origin.
+Merging a `dev` → `main` pull request runs `.github/workflows/deploy.yml`, which tests, builds and deploys the merge commit. To redeploy `main` without a release, run **Deploy production** under GitHub Actions (`gh workflow run deploy.yml`). The workflow needs the repository secret `CLOUDFLARE_API_TOKEN`, created from Cloudflare's **Edit Cloudflare Workers** token template for the Lukas Rauscher account and the `rauscher.ai` zone.
+
+Runtime configuration lives on the Worker, not in GitHub: the `EMDASH_SITE_URL` variable (in `wrangler.jsonc`) and the `EMDASH_ENCRYPTION_KEY` and `PLUNK_SECRET_KEY` secrets (`npx wrangler secret put <NAME>`). Keep the encryption key stable: changing it prevents existing encrypted values from being read. For an emergency deployment from a clean `main` checkout, authenticate Wrangler and run `npm run deploy`.
 
 Future Cloudflare previews must use separate D1/R2 resources and their own site URL and secrets. See the [official Cloudflare deployment guide](https://docs.emdashcms.com/deployment/cloudflare/) for provisioning and preview configuration. Sandboxed plugins can be enabled later if needed on a Workers paid plan.
 
