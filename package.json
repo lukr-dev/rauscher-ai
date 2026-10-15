@@ -31,6 +31,7 @@
 		"@rauscher-ai/emdash-hero": "file:plugins/hero",
 		"@rauscher-ai/emdash-inventory": "file:plugins/inventory",
 		"@rauscher-ai/emdash-level-up": "file:plugins/level-up",
+		"@rauscher-ai/emdash-plunk-email": "file:plugins/plunk-email",
 		"@rauscher-ai/emdash-skill-deck": "file:plugins/skill-deck",
 		"astro": "^7.3.2",
 		"emdash": "^1.2.0",
