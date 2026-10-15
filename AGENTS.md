@@ -2,7 +2,7 @@ This is an EmDash site -- a CMS built on Astro with a full admin UI.
 
 ## Repository workflow
 
-- `main` is reserved for production releases and Cloudflare deployment.
+- `main` is reserved for production releases. Merging a `dev` → `main` PR deploys to Cloudflare via `.github/workflows/deploy.yml`; run that workflow manually to redeploy `main`.
 - `dev` is the integration branch for development and previews.
 - Create `feature/<name>` branches from `dev` for new features and merge them into `dev`.
 - Promote reviewed changes from `dev` to `main` when releasing.
