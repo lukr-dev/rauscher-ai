@@ -19,9 +19,9 @@
 		"cf:types": "wrangler types --include-runtime false"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^14.3.1",
-		"@astrojs/react": "^6.0.5",
-		"@emdash-cms/cloudflare": "^1.2.0",
+		"@astrojs/cloudflare": "^14.4.4",
+		"@astrojs/react": "^7.1.2",
+		"@emdash-cms/cloudflare": "^1.4.0",
 		"@rauscher-ai/emdash-about-hero": "file:plugins/about-hero",
 		"@rauscher-ai/emdash-active-quests": "file:plugins/active-quests",
 		"@rauscher-ai/emdash-blog-overview": "file:plugins/blog-overview",
@@ -33,21 +33,21 @@
 		"@rauscher-ai/emdash-level-up": "file:plugins/level-up",
 		"@rauscher-ai/emdash-plunk-email": "file:plugins/plunk-email",
 		"@rauscher-ai/emdash-skill-deck": "file:plugins/skill-deck",
-		"astro": "^7.3.2",
-		"emdash": "^1.2.0",
-		"react": "19.2.4",
-		"react-dom": "19.2.4"
+		"astro": "^7.4.5",
+		"emdash": "^1.4.0",
+		"react": "19.3.1",
+		"react-dom": "19.3.1"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.10",
-		"@cloudflare/workers-types": "^5.20260820.1",
+		"@astrojs/check": "^0.9.12",
+		"@cloudflare/workers-types": "^5.20261103.1",
 		"@types/node": "^24.19.2",
-		"oxfmt": "^0.72.0",
-		"oxlint": "^1.87.0",
+		"oxfmt": "^0.76.0",
+		"oxlint": "^1.90.0",
 		"prettier": "^3.9.10",
-		"prettier-plugin-astro": "^1.1.1",
+		"prettier-plugin-astro": "^1.1.2",
 		"typescript": "^6.0.3",
-		"wrangler": "^4.125.0"
+		"wrangler": "^4.156.2"
 	},
 	"allowScripts": {
 		"workerd": true,
