@@ -8,7 +8,7 @@ const entry = new URL("node_modules/@emdash-cms/admin/dist/index.js", root);
 const { version } = JSON.parse(
 	readFileSync(new URL("node_modules/@emdash-cms/admin/package.json", root), "utf8"),
 );
-assert.equal(version, "1.2.0", "Review the nested-rich-text patch before upgrading EmDash admin.");
+assert.equal(version, "1.4.0", "Review the nested-rich-text patch before upgrading EmDash admin.");
 const installed = readFileSync(entry, "utf8");
 // Bump this marker whenever the patch changes so stale installs are detected.
 if (!installed.includes("field.empty_hint")) {
@@ -16,8 +16,8 @@ if (!installed.includes("field.empty_hint")) {
 		!installed.includes("// Rauscher: optional status fields"),
 		"An older admin patch is applied. Reinstall @emdash-cms/admin (rm -rf node_modules/@emdash-cms/admin && npm install).",
 	);
-	execFileSync("git", ["apply", "--check", "patches/emdash-admin-1.2.0.patch"], { cwd: root });
-	execFileSync("git", ["apply", "patches/emdash-admin-1.2.0.patch"], { cwd: root });
+	execFileSync("git", ["apply", "--check", "patches/emdash-admin-1.4.0.patch"], { cwd: root });
+	execFileSync("git", ["apply", "patches/emdash-admin-1.4.0.patch"], { cwd: root });
 }
 
 const source = readFileSync(entry, "utf8");

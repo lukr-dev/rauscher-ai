@@ -1,7 +1,7 @@
 --- a/node_modules/@emdash-cms/admin/dist/index.js
 +++ b/node_modules/@emdash-cms/admin/dist/index.js
-@@ -10403,7 +10403,7 @@
- 	const { _: _t } = useLingui();
+@@ -10485,7 +10485,7 @@
+ 	const labelId = React$1.useId();
  	const [pickerOpen, setPickerOpen] = React$1.useState(false);
  	const [imageBroken, setImageBroken] = React$1.useState(false);
 -	const url = typeof value === "string" && value.length > 0 ? value : "";
@@ -9,7 +9,7 @@
  	React$1.useEffect(() => {
  		setImageBroken(false);
  	}, [url]);
-@@ -10414,7 +10414,17 @@
+@@ -10496,7 +10496,17 @@
  		const localKey = item.storageKey || item.id;
  		const nextUrl = isLocalMedia && localKey ? `/_emdash/api/media/file/${localKey}` : item.url;
  		if (!nextUrl) return;
@@ -26,18 +26,18 @@
 +			meta: { ...item.meta, ...(item.storageKey ? { storageKey: item.storageKey } : {}) }
 +		});
  	};
- 	return /* @__PURE__ */ jsxs("div", { children: [
- 		/* @__PURE__ */ jsx("label", {
-@@ -25969,7 +25979,7 @@
- 	const registry = getRegistry(editor);
+ 	return /* @__PURE__ */ jsxs("div", {
+ 		role: "group",
+@@ -31623,7 +31633,7 @@
+ 	const registry = React$1.useSyncExternalStore(subscribe, getSnapshot);
  	const { Icon, label, color, placeholder, placeholderFallback } = getEmbedMeta(blockType, registry);
  	const blockDef = registry.get(blockType);
 -	const hasFields = blockDef?.fields && blockDef.fields.length > 0;
 +	const hasFields = Array.isArray(blockDef?.fields);
- 	const [isEditing, setIsEditing] = React$1.useState(false);
- 	const [editValue, setEditValue] = React$1.useState(id || "");
- 	const inputRef = React$1.useRef(null);
-@@ -30057,20 +30067,32 @@
+ 	const original = node.attrs[PORTABLE_TEXT_BLOCK_ATTR];
+ 	const hasIdentity = !!id || typeof original?.id === "string" || typeof original?.url === "string";
+ 	const canEditUrl = !hasFields && (!!blockDef || hasIdentity);
+@@ -36185,20 +36195,32 @@
  * When the block has `fields`, renders Block Kit elements.
  * Otherwise falls back to a simple URL input.
  */
@@ -71,7 +71,7 @@
  		else {
  			const url = typeof formValues.id === "string" ? formValues.id.trim() : "";
  			if (url) onInsert({ id: url });
-@@ -30083,8 +30105,8 @@
+@@ -36211,8 +36233,8 @@
  		}));
  	};
  	const isEditing = !!initialValues;
@@ -82,16 +82,16 @@
  	const dialogSize = hasFields ? "xl" : "sm";
  	return /* @__PURE__ */ jsx(Dialog.Root, {
  		open: !!block,
-@@ -30137,7 +30159,7 @@
+@@ -36265,7 +36287,7 @@
  						pluginId: block.pluginId,
  						value: formValues[field.action_id],
  						onChange: handleFieldChange
 -					}, field.action_id)) : /* @__PURE__ */ jsx(Input, {
 +					}, `${field.action_id}-${formVersion}`)) : /* @__PURE__ */ jsx(Input, {
+ 						dir: "ltr",
  						ref: inputRef,
  						type: "url",
- 						className: "w-full",
-@@ -30162,12 +30184,169 @@
+@@ -36291,6 +36313,154 @@
  		})
  	});
  }
@@ -242,11 +242,13 @@
 +		]
 +	});
 +}
++
  /**
  * Renders a single Block Kit field element.
  * Supports text_input, number_input, select (with optional async options), and toggle.
- */
+@@ -36298,6 +36468,16 @@
  function BlockKitField({ field, pluginId, value, onChange }) {
+ 	const id = React$1.useId();
  	switch (field.type) {
 +		// Rauscher: styled nested rich text in plugin block forms.
 +		case "portable_text": return jsxs("div", {
@@ -261,7 +263,7 @@
  		case "text_input": {
  			const multiline = !!field.multiline;
  			const placeholder = typeof field.placeholder === "string" ? field.placeholder : void 0;
-@@ -30229,6 +30408,12 @@
+@@ -36370,6 +36550,12 @@
  				value,
  				onChange
  			});
@@ -274,7 +276,7 @@
  		case "media_picker": return /* @__PURE__ */ jsx(BlockKitMediaPickerField, {
  			actionId: field.action_id,
  			label: field.label,
-@@ -30298,6 +30483,10 @@
+@@ -36440,6 +36626,10 @@
  			case "toggle":
  				newItem[sf.action_id] = false;
  				break;
@@ -285,7 +287,7 @@
  			case "number_input":
  				newItem[sf.action_id] = void 0;
  				break;
-@@ -35119,11 +35308,13 @@
+@@ -41581,11 +41771,13 @@
  			onCheckedChange: handleChange
  		});
  		case "portableText": {
@@ -301,7 +303,7 @@
  					id: labelId,
  					children: label
  				}) }), /* @__PURE__ */ jsx(PortableTextEditor, {
-@@ -35172,14 +35363,18 @@
+@@ -41634,14 +41826,18 @@
  			});
  		}
  		case "select": {
