@@ -29,6 +29,10 @@ The seed includes the About design content and `public/media/about/p01.jpg`. Exi
 
 `public/styles/rich-text.css` is shared by the site and nested block editors. It applies the section's colours and typography inside the editor; H2 is 60px and yellow on dark sections. The versioned admin patch also initializes nested lists correctly. Review this patch before upgrading EmDash admin from 1.4.0.
 
+## Audio
+
+The **Audio** plugin adds a block under **Rauscher.ai** to every rich-text field. Pick or upload an MP3, WAV or Ogg file from the Media Library, then add an optional title, caption and plain-text transcript (separate paragraphs with a blank line). The site renders a themed player with play/pause, seeking, elapsed and total time, and playback speed; one player pauses the others. Without JavaScript, the browser's own controls appear instead. The admin patch previews the selected file as an audio player instead of a broken image. Files are served through EmDash's media route, which supports range requests, so seeking works on long recordings.
+
 ## Blog views
 
 The published `pages/posts` entry contains the separate **Blog Overview** plugin, with an editable heading and rich-text introduction. Each post has two independent checkboxes: **Highlight (blue card)** changes its regular card from cream to light blue; **Top Post** makes it eligible for the large dark featured card. The newest published Top Post wins; without one, the newest published post is featured. The selection respects the current language, category and tag filters and can feature a post outside the first page; a filtered page without a matching Top Post shows every match as a regular card. Lists use CMS publication dates and calculated reading time, with pagination after 20 posts. Highlight and Top Post flags are shared across translations.

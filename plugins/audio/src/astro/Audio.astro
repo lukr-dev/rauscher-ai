@@ -1,0 +1,352 @@
+---
+import { siteUi } from "../../../../src/utils/i18n";
+import { audioSource, transcriptParagraphs, type AudioValue } from "../content";
+interface Props {
+	node: {
+		audio?: AudioValue;
+		title?: string;
+		caption?: string;
+		transcript?: string;
+	};
+}
+const { node } = Astro.props;
+const src = audioSource(node.audio, Astro.locals.emdash?.getPublicMediaUrl);
+const transcript = transcriptParagraphs(node.transcript);
+const copy = siteUi(Astro.currentLocale);
+---
+
+{src && (
+	<figure
+		class="audio-block"
+		data-audio-player
+		data-play-label={copy.playAudio}
+		data-pause-label={copy.pauseAudio}
+	>
+		<div class="player">
+			<button
+				type="button"
+				class="toggle"
+				aria-label={copy.playAudio}
+				data-audio-toggle
+				hidden
+			>
+				<svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M8 5.5v13l10.5-6.5z" />
+				</svg>
+				<svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+				</svg>
+			</button>
+			<div class="body">
+				{node.title && <p class="title">{node.title}</p>}
+				<audio src={src} controls preload="metadata" data-audio />
+				<div class="timeline" data-audio-timeline hidden>
+					<input
+						type="range"
+						min="0"
+						max="0"
+						step="any"
+						value="0"
+						aria-label={copy.audioPosition}
+						data-audio-seek
+					/>
+					<span class="time">
+						<span data-audio-current>0:00</span> /{" "}
+						<span data-audio-duration>0:00</span>
+					</span>
+					<button type="button" class="rate" data-audio-rate>
+						<span class="visually-hidden">{copy.playbackSpeed}:</span>
+						<span data-audio-rate-value>1×</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		{node.caption && <figcaption>{node.caption}</figcaption>}
+		{transcript.length > 0 && (
+			<details class="transcript">
+				<summary>{copy.transcript}</summary>
+				{transcript.map((paragraph) => (
+					<p>{paragraph}</p>
+				))}
+			</details>
+		)}
+	</figure>
+)}
+
+<style>
+	.audio-block {
+		margin: 1.5em 0;
+		padding: 18px 20px;
+		background: var(--paper);
+		color: var(--ink);
+		border: 2px solid var(--ink);
+		border-radius: 20px;
+		box-shadow: 4px 4px 0 var(--ink);
+		font-family: var(--font-body);
+	}
+	.player {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+	.body {
+		flex: 1;
+		min-width: 0;
+		display: grid;
+		gap: 6px;
+	}
+	.title {
+		margin: 0;
+		font: 900 28px/1 var(--font-display);
+		letter-spacing: -0.01em;
+	}
+	audio {
+		width: 100%;
+	}
+	.toggle {
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 56px;
+		height: 56px;
+		padding: 0;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		background: var(--yellow);
+		color: var(--ink);
+		box-shadow: 3px 3px 0 var(--ink);
+		cursor: pointer;
+		transition:
+			transform 0.15s,
+			box-shadow 0.15s;
+	}
+	.toggle:active {
+		transform: translate(2px, 2px);
+		box-shadow: 1px 1px 0 var(--ink);
+	}
+	.toggle svg {
+		width: 26px;
+		height: 26px;
+		fill: currentColor;
+	}
+	.icon-pause,
+	[data-playing] .icon-play {
+		display: none;
+	}
+	[data-playing] .icon-pause {
+		display: block;
+	}
+	.toggle[hidden],
+	.timeline[hidden] {
+		display: none;
+	}
+	.timeline {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	input[type="range"] {
+		--progress: 0%;
+		flex: 1;
+		min-width: 0;
+		height: 24px;
+		margin: 0;
+		background: transparent;
+		appearance: none;
+		cursor: pointer;
+	}
+	input[type="range"]::-webkit-slider-runnable-track {
+		height: 8px;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		background: linear-gradient(
+			to right,
+			var(--blue-deep) var(--progress),
+			var(--paper) var(--progress)
+		);
+	}
+	input[type="range"]::-moz-range-track {
+		height: 4px;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		background: var(--paper);
+	}
+	input[type="range"]::-moz-range-progress {
+		height: 4px;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		background: var(--blue-deep);
+	}
+	input[type="range"]::-webkit-slider-thumb {
+		width: 18px;
+		height: 18px;
+		margin-top: -7px;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		background: var(--yellow);
+		appearance: none;
+	}
+	input[type="range"]::-moz-range-thumb {
+		width: 14px;
+		height: 14px;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		background: var(--yellow);
+	}
+	.time {
+		flex: none;
+		font-size: 14px;
+		font-variant-numeric: tabular-nums;
+	}
+	.rate {
+		position: relative;
+		flex: none;
+		min-width: 48px;
+		padding: 3px 8px;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		background: var(--ink);
+		color: var(--paper);
+		font: 700 13px/1.2 var(--font-body);
+		cursor: pointer;
+	}
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+	figcaption {
+		margin-top: 12px;
+		font-size: 15px;
+		line-height: 1.45;
+	}
+	.transcript {
+		margin-top: 12px;
+		border-top: 2px solid var(--ink);
+		padding-top: 10px;
+	}
+	.transcript summary {
+		font-weight: 700;
+		cursor: pointer;
+	}
+	.transcript p {
+		margin: 0.75em 0 0;
+		font-size: 16px;
+		line-height: 1.6;
+		white-space: pre-line;
+	}
+	@media (max-width: 600px) {
+		.audio-block {
+			padding: 14px;
+		}
+		.player {
+			gap: 12px;
+		}
+		.toggle {
+			width: 48px;
+			height: 48px;
+		}
+		.title {
+			font-size: 24px;
+		}
+		.time {
+			font-size: 13px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.toggle {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	import { formatTime, nextPlaybackRate } from "../content";
+
+	const players = [
+		...document.querySelectorAll<HTMLElement>("[data-audio-player]"),
+	];
+	for (const player of players) {
+		const audio = player.querySelector<HTMLAudioElement>("[data-audio]")!;
+		const toggle = player.querySelector<HTMLButtonElement>(
+			"[data-audio-toggle]",
+		)!;
+		const timeline = player.querySelector<HTMLElement>(
+			"[data-audio-timeline]",
+		)!;
+		const seek = player.querySelector<HTMLInputElement>("[data-audio-seek]")!;
+		const current = player.querySelector<HTMLElement>("[data-audio-current]")!;
+		const duration = player.querySelector<HTMLElement>(
+			"[data-audio-duration]",
+		)!;
+		const rate = player.querySelector<HTMLButtonElement>("[data-audio-rate]")!;
+		const rateValue = rate.querySelector<HTMLElement>(
+			"[data-audio-rate-value]",
+		)!;
+		// The native controls stay as the no-JavaScript fallback.
+		audio.controls = false;
+		audio.hidden = true;
+		toggle.hidden = false;
+		timeline.hidden = false;
+		let dragging = false;
+		const sync = () => {
+			const total = Number.isFinite(audio.duration) ? audio.duration : 0;
+			const position = dragging ? Number(seek.value) : audio.currentTime;
+			seek.max = String(total);
+			if (!dragging) seek.value = String(position);
+			seek.style.setProperty(
+				"--progress",
+				`${total ? (position / total) * 100 : 0}%`,
+			);
+			seek.setAttribute(
+				"aria-valuetext",
+				`${formatTime(position)} / ${formatTime(total)}`,
+			);
+			current.textContent = formatTime(position);
+			duration.textContent = formatTime(total);
+		};
+		const syncPlaying = () => {
+			player.toggleAttribute("data-playing", !audio.paused);
+			toggle.setAttribute(
+				"aria-label",
+				(audio.paused ? player.dataset.playLabel : player.dataset.pauseLabel) ??
+					"",
+			);
+		};
+		for (const event of [
+			"loadedmetadata",
+			"durationchange",
+			"timeupdate",
+			"seeked",
+		])
+			audio.addEventListener(event, sync);
+		for (const event of ["play", "pause", "ended"])
+			audio.addEventListener(event, syncPlaying);
+		audio.addEventListener("play", () => {
+			for (const other of players)
+				if (other !== player)
+					other.querySelector<HTMLAudioElement>("[data-audio]")?.pause();
+		});
+		toggle.addEventListener("click", () => {
+			if (audio.paused) void audio.play().catch(syncPlaying);
+			else audio.pause();
+		});
+		seek.addEventListener("input", () => {
+			dragging = true;
+			sync();
+		});
+		seek.addEventListener("change", () => {
+			audio.currentTime = Number(seek.value);
+			dragging = false;
+			sync();
+		});
+		rate.addEventListener("click", () => {
+			audio.playbackRate = nextPlaybackRate(audio.playbackRate);
+			rateValue.textContent = `${audio.playbackRate.toLocaleString(document.documentElement.lang || undefined)}×`;
+		});
+		sync();
+	}
+</script>

@@ -1,6 +1,6 @@
 --- a/node_modules/@emdash-cms/admin/dist/index.js
 +++ b/node_modules/@emdash-cms/admin/dist/index.js
-@@ -10485,7 +10485,7 @@
+@@ -10485,18 +10485,30 @@
  	const labelId = React$1.useId();
  	const [pickerOpen, setPickerOpen] = React$1.useState(false);
  	const [imageBroken, setImageBroken] = React$1.useState(false);
@@ -9,7 +9,12 @@
  	React$1.useEffect(() => {
  		setImageBroken(false);
  	}, [url]);
-@@ -10496,7 +10496,17 @@
+ 	const filter = mimeTypeFilter ?? "image/";
++	// Rauscher: audio previews in media pickers.
++	const isAudio = filter.startsWith("audio/");
+ 	const canPreview = isSafePreviewUrl(url);
+ 	const handleSelect = (item) => {
+ 		const isLocalMedia = item.provider === "local" || !!item.storageKey;
  		const localKey = item.storageKey || item.id;
  		const nextUrl = isLocalMedia && localKey ? `/_emdash/api/media/file/${localKey}` : item.url;
  		if (!nextUrl) return;
@@ -28,7 +33,49 @@
  	};
  	return /* @__PURE__ */ jsxs("div", {
  		role: "group",
-@@ -31623,7 +31633,7 @@
+@@ -10543,8 +10555,13 @@
+ 					})]
+ 				})]
+ 			}) : /* @__PURE__ */ jsxs("div", {
+-				className: "relative group",
+-				children: [/* @__PURE__ */ jsx("img", {
++				className: isAudio ? "flex items-center gap-2" : "relative group",
++				children: [isAudio ? jsx("audio", {
++					src: url,
++					controls: true,
++					preload: "metadata",
++					className: "min-w-0 flex-1"
++				}) : /* @__PURE__ */ jsx("img", {
+ 					src: url,
+ 					alt: "",
+ 					className: "emdash-media-transparency-grid max-h-40 min-h-20 w-full rounded-md border border-kumo-line object-contain",
+@@ -10552,7 +10569,7 @@
+ 					loading: "lazy",
+ 					onError: () => setImageBroken(true)
+ 				}), /* @__PURE__ */ jsxs("div", {
+-					className: "absolute top-2 end-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-opacity flex gap-1",
++					className: isAudio ? "flex shrink-0 gap-1" : "absolute top-2 end-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-opacity flex gap-1",
+ 					children: [/* @__PURE__ */ jsx(Button, {
+ 						type: "button",
+ 						size: "sm",
+@@ -10582,7 +10599,7 @@
+ 				onClick: () => setPickerOpen(true),
+ 				children: /* @__PURE__ */ jsxs("div", {
+ 					className: "flex flex-col items-center gap-1.5 text-kumo-subtle",
+-					children: [/* @__PURE__ */ jsx(Image$1, { className: "h-6 w-6" }), /* @__PURE__ */ jsx("span", {
++					children: [/* @__PURE__ */ jsx(isAudio ? Paperclip : Image$1, { className: "h-6 w-6" }), /* @__PURE__ */ jsx("span", {
+ 						className: "text-base",
+ 						children: placeholder ?? _t({
+ 							id: "1Tq98c",
+@@ -10596,6 +10613,7 @@
+ 				onOpenChange: setPickerOpen,
+ 				onSelect: handleSelect,
+ 				mimeTypeFilter: filter,
++				mediaKind: isAudio ? "file" : "image",
+ 				title: _t({
+ 					id: "pov/PW",
+ 					message: "Select {label}",
+@@ -31623,7 +31641,7 @@
  	const registry = React$1.useSyncExternalStore(subscribe, getSnapshot);
  	const { Icon, label, color, placeholder, placeholderFallback } = getEmbedMeta(blockType, registry);
  	const blockDef = registry.get(blockType);
@@ -37,7 +84,7 @@
  	const original = node.attrs[PORTABLE_TEXT_BLOCK_ATTR];
  	const hasIdentity = !!id || typeof original?.id === "string" || typeof original?.url === "string";
  	const canEditUrl = !hasFields && (!!blockDef || hasIdentity);
-@@ -36185,20 +36195,32 @@
+@@ -36185,20 +36203,32 @@
  * When the block has `fields`, renders Block Kit elements.
  * Otherwise falls back to a simple URL input.
  */
@@ -71,7 +118,7 @@
  		else {
  			const url = typeof formValues.id === "string" ? formValues.id.trim() : "";
  			if (url) onInsert({ id: url });
-@@ -36211,8 +36233,8 @@
+@@ -36211,8 +36241,8 @@
  		}));
  	};
  	const isEditing = !!initialValues;
@@ -82,7 +129,7 @@
  	const dialogSize = hasFields ? "xl" : "sm";
  	return /* @__PURE__ */ jsx(Dialog.Root, {
  		open: !!block,
-@@ -36265,7 +36287,7 @@
+@@ -36265,7 +36295,7 @@
  						pluginId: block.pluginId,
  						value: formValues[field.action_id],
  						onChange: handleFieldChange
@@ -91,7 +138,7 @@
  						dir: "ltr",
  						ref: inputRef,
  						type: "url",
-@@ -36291,6 +36313,154 @@
+@@ -36291,6 +36321,154 @@
  		})
  	});
  }
@@ -246,7 +293,7 @@
  /**
  * Renders a single Block Kit field element.
  * Supports text_input, number_input, select (with optional async options), and toggle.
-@@ -36298,6 +36468,16 @@
+@@ -36298,6 +36476,16 @@
  function BlockKitField({ field, pluginId, value, onChange }) {
  	const id = React$1.useId();
  	switch (field.type) {
@@ -263,7 +310,7 @@
  		case "text_input": {
  			const multiline = !!field.multiline;
  			const placeholder = typeof field.placeholder === "string" ? field.placeholder : void 0;
-@@ -36370,6 +36550,12 @@
+@@ -36370,6 +36558,12 @@
  				value,
  				onChange
  			});
@@ -276,7 +323,7 @@
  		case "media_picker": return /* @__PURE__ */ jsx(BlockKitMediaPickerField, {
  			actionId: field.action_id,
  			label: field.label,
-@@ -36440,6 +36626,10 @@
+@@ -36440,6 +36634,10 @@
  			case "toggle":
  				newItem[sf.action_id] = false;
  				break;
@@ -287,7 +334,7 @@
  			case "number_input":
  				newItem[sf.action_id] = void 0;
  				break;
-@@ -41581,11 +41771,13 @@
+@@ -41581,11 +41779,13 @@
  			onCheckedChange: handleChange
  		});
  		case "portableText": {
@@ -303,7 +350,7 @@
  					id: labelId,
  					children: label
  				}) }), /* @__PURE__ */ jsx(PortableTextEditor, {
-@@ -41634,14 +41826,18 @@
+@@ -41634,14 +41834,18 @@
  			});
  		}
  		case "select": {

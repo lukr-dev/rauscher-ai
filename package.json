@@ -24,6 +24,7 @@
 		"@emdash-cms/cloudflare": "^1.4.0",
 		"@rauscher-ai/emdash-about-hero": "file:plugins/about-hero",
 		"@rauscher-ai/emdash-active-quests": "file:plugins/active-quests",
+		"@rauscher-ai/emdash-audio": "file:plugins/audio",
 		"@rauscher-ai/emdash-blog-overview": "file:plugins/blog-overview",
 		"@rauscher-ai/emdash-blog-preview": "file:plugins/blog-preview",
 		"@rauscher-ai/emdash-career": "file:plugins/career",
