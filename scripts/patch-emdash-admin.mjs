@@ -11,7 +11,7 @@ const { version } = JSON.parse(
 assert.equal(version, "1.4.0", "Review the nested-rich-text patch before upgrading EmDash admin.");
 const installed = readFileSync(entry, "utf8");
 // Bump this marker whenever the patch changes so stale installs are detected.
-if (!installed.includes("field.empty_hint")) {
+if (!installed.includes("// Rauscher: audio previews in media pickers.")) {
 	assert.ok(
 		!installed.includes("// Rauscher: optional status fields"),
 		"An older admin patch is applied. Reinstall @emdash-cms/admin (rm -rf node_modules/@emdash-cms/admin && npm install).",
@@ -86,4 +86,6 @@ const names = ["github-actions", "git", "github", "gitlab", "docker"];
 assert.deepEqual([...searchIcons(names, "git")], ["git", "github", "github-actions", "gitlab"]);
 assert.deepEqual([...searchIcons(names, "hub act")], ["github-actions"]);
 assert.deepEqual([...searchIcons(names, "")], [...names].sort());
-console.log("EmDash rich-text and icon-picker patch applied and verified.");
+assert.ok(source.includes('mediaKind: isAudio ? "file" : "image"'));
+assert.ok(source.includes('isAudio ? jsx("audio", {'));
+console.log("EmDash rich-text, icon-picker and audio-picker patch applied and verified.");
