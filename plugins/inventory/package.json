@@ -11,6 +11,6 @@
 		"@iconify-json/cib": "^1.2.3"
 	},
 	"peerDependencies": {
-		"emdash": "^1.2.0"
+		"emdash": "^1.4.0"
 	}
 }

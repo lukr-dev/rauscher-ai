@@ -54,9 +54,6 @@ const related = relatedResult.entries
 	.slice(0, 2);
 const projectStatus = (post.data as { project_status?: string }).project_status;
 const author = post.data.byline;
-const avatar = author?.avatarMediaId
-	? { id: author.avatarMediaId, alt: author.displayName }
-	: { id: "", src: "/media/blog/p15.jpg", alt: siteTitle };
 const locale = Astro.currentLocale;
 const copy = siteUi(locale);
 ---
@@ -122,16 +119,9 @@ const copy = siteUi(locale);
 			</span>
 		</div>
 		<h1 {...post.edit.title}>{post.data.title}</h1>
-		<div class="article-intro">
-			<p {...post.edit.excerpt}>{intro}</p>
-			<div class="author">
-				<Image image={avatar} class="author-photo" />
-				<div>
-					<strong>{author?.displayName ?? siteTitle}</strong>
-					{author?.bio && <span>{author.bio}</span>}
-				</div>
-			</div>
-		</div>
+		<p class="article-intro" {...post.edit.excerpt}>
+			{intro}
+		</p>
 		{tags.length > 0 && (
 			<div class="technologies">
 				{tags.map((tag) => (
@@ -310,42 +300,10 @@ const copy = siteUi(locale);
 		overflow-wrap: anywhere;
 	}
 	.article-intro {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-end;
-		flex-wrap: wrap;
-		gap: 24px 48px;
-	}
-	.article-intro > p {
 		font-size: 24px;
 		line-height: 1.4;
-		max-width: 26em;
 		margin: 0;
 		text-wrap: pretty;
-	}
-	.author {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		max-width: 28em;
-		font-size: 15px;
-	}
-	.author > div {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-	.author span {
-		font-size: 14px;
-	}
-	.author :global(.author-photo) {
-		width: 48px;
-		height: 48px;
-		flex: none;
-		border-radius: 50%;
-		border: 2px solid var(--ink);
-		object-fit: cover;
-		object-position: 50% 15%;
 	}
 	.technologies {
 		display: flex;
@@ -508,7 +466,7 @@ const copy = siteUi(locale);
 		.reading-layout {
 			padding-block: 48px 64px;
 		}
-		.article-intro > p {
+		.article-intro {
 			font-size: 21px;
 		}
 	}

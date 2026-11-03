@@ -14,7 +14,7 @@ The homepage renders the published `pages/home` entry. Its rich-text editor offe
 
 `seed/seed.json` contains the design's homepage content and three short example posts. Load sample content during initial CMS setup; changing this file does not overwrite an existing site's content. Photos from the design are in `public/media/hero/`.
 
-EmDash 1.2.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, icon pickers, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.2.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
+EmDash 1.4.0 needs a small admin patch for styled rich-text fields, image objects, required fields, optional select clearing, icon pickers, and blocks without fields. `npm ci` applies `patches/emdash-admin-1.4.0.patch` through the version-checked postinstall script. Review/update the patch before upgrading EmDash. Run `npm test` for the block logic tests.
 
 ## About blocks
 
@@ -27,7 +27,7 @@ The published `pages/about` entry uses four separate plugins: About Hero, Skill 
 
 The seed includes the About design content and `public/media/about/p01.jpg`. Existing CMS content must be updated through the editor/API separately.
 
-`public/styles/rich-text.css` is shared by the site and nested block editors. It applies the section's colours and typography inside the editor; H2 is 60px and yellow on dark sections. The versioned admin patch also initializes nested lists correctly. Review this patch before upgrading EmDash admin from 1.2.0.
+`public/styles/rich-text.css` is shared by the site and nested block editors. It applies the section's colours and typography inside the editor; H2 is 60px and yellow on dark sections. The versioned admin patch also initializes nested lists correctly. Review this patch before upgrading EmDash admin from 1.4.0.
 
 ## Blog views
 
