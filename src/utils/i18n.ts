@@ -109,7 +109,11 @@ const ui = {
 		writeLukas: "Schreib Lukas",
 		related: "Weiterlesen",
 		notFound: "Seite nicht gefunden",
-		missingPage: "Die gesuchte Seite existiert nicht.",
+		notFoundKicker: "Fehler 404",
+		missingPage:
+			"Diese Karte liegt nicht im Deck. Vielleicht wurde die Seite verschoben, umbenannt oder hat nie existiert.",
+		missingCard: "Fehlt",
+		backHome: "Zur Startseite",
 	},
 	en: {
 		legal: "Legal information",
@@ -175,7 +179,11 @@ const ui = {
 		writeLukas: "Write to Lukas",
 		related: "Read more",
 		notFound: "Page not found",
-		missingPage: "The page you're looking for doesn't exist.",
+		notFoundKicker: "Error 404",
+		missingPage:
+			"This card isn’t in the deck. The page may have moved, been renamed, or never existed.",
+		missingCard: "Missing",
+		backHome: "Back to home",
 	},
 	fr: {
 		legal: "Informations légales",
@@ -241,7 +249,11 @@ const ui = {
 		writeLukas: "Écrivez à Lukas",
 		related: "À lire aussi",
 		notFound: "Page introuvable",
-		missingPage: "La page que vous recherchez n’existe pas.",
+		notFoundKicker: "Erreur 404",
+		missingPage:
+			"Cette carte n’est pas dans le jeu. La page a peut-être été déplacée, renommée ou n’a jamais existé.",
+		missingCard: "Introuvable",
+		backHome: "Retour à l’accueil",
 	},
 };
 export function siteUi(locale?: string) {

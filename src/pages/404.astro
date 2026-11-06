@@ -1,12 +1,200 @@
 ---
-import { siteUi, localizedHref } from "../utils/i18n";
-const copy = siteUi(Astro.currentLocale);
-Astro.response.status = 404;
 import Base from "../layouts/Base.astro";
+import { siteUi, localizedHref } from "../utils/i18n";
+
+Astro.response.status = 404;
+const locale = Astro.currentLocale;
+const copy = siteUi(locale);
 ---
 
-<Base title={copy.notFound}>
-	<h1>{copy.notFound}</h1>
-	<p>{copy.missingPage}</p>
-	<a href={localizedHref("/", Astro.currentLocale)}>{copy.home}</a>
+<Base title={copy.notFound} robots="noindex, follow">
+	<section class="not-found wrap">
+		<div class="hand" aria-hidden="true">
+			<span class="card" style="--angle:-11deg;--color:var(--paper)">
+				<span class="index">4</span>
+				<span class="value">4</span>
+				<span class="index flipped">4</span>
+			</span>
+			<span class="card slot">
+				<span class="missing">{copy.missingCard}</span>
+				<span class="value">0</span>
+			</span>
+			<span class="card" style="--angle:11deg;--color:var(--blue)">
+				<span class="index">4</span>
+				<span class="value">4</span>
+				<span class="index flipped">4</span>
+			</span>
+		</div>
+		<div class="copy">
+			<p class="kicker">{copy.notFoundKicker}</p>
+			<h1>{copy.notFound}</h1>
+			<p class="lead">{copy.missingPage}</p>
+			<div class="actions">
+				<a class="button dark" href={localizedHref("/", locale)}>
+					{copy.backHome} →
+				</a>
+				<a class="button" href={localizedHref("/posts", locale)}>
+					{copy.allPosts}
+				</a>
+			</div>
+		</div>
+	</section>
 </Base>
+
+<style>
+	.not-found {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+		grid-template-areas: "copy hand";
+		align-items: center;
+		gap: 48px 64px;
+		padding-block: 48px 112px;
+	}
+	.copy {
+		grid-area: copy;
+	}
+	.kicker {
+		display: inline-block;
+		margin: 0 0 24px;
+		padding: 8px 14px;
+		border: 2px solid var(--ink);
+		border-radius: 99px;
+		background: var(--paper);
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	h1 {
+		margin: 0 0 32px;
+		font: 900 clamp(60px, 8.5vw, 128px)/0.85 var(--font-display);
+		letter-spacing: -0.03em;
+		overflow-wrap: anywhere;
+		hyphens: auto;
+	}
+	.lead {
+		margin: 0 0 32px;
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+	.actions .button {
+		box-shadow: 3px 3px 0 var(--ink);
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+	.actions .button:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 5px 5px 0 var(--ink);
+	}
+	.actions .button:active {
+		transform: translate(3px, 3px);
+		box-shadow: 0 0 0 var(--ink);
+	}
+	.hand {
+		grid-area: hand;
+		--w: clamp(96px, 12.5vw, 180px);
+		display: flex;
+		justify-content: center;
+		padding: 24px 0;
+	}
+	.card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		flex: none;
+		width: var(--w);
+		height: calc(var(--w) * 1.4);
+		margin-inline: calc(var(--w) * -0.06);
+		padding: calc(var(--w) * 0.08) calc(var(--w) * 0.1);
+		border: 2px solid var(--ink);
+		border-radius: 20px;
+		background: var(--color);
+		box-shadow: 6px 6px 0 var(--ink);
+		z-index: 1;
+		transform: rotate(var(--angle)) translateY(14px);
+		transition: transform 0.3s ease;
+	}
+	.card:hover {
+		transform: rotate(0deg) translateY(-8px);
+		z-index: 2;
+	}
+	.index {
+		font: 900 calc(var(--w) * 0.2) / 0.8 var(--font-display);
+	}
+	.index.flipped {
+		align-self: flex-end;
+		transform: rotate(180deg);
+	}
+	.value {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		place-items: center;
+		padding-top: calc(var(--w) * 0.06);
+		font: 900 calc(var(--w) * 0.85) / 1 var(--font-display);
+		letter-spacing: -0.04em;
+	}
+	.slot {
+		z-index: 0;
+		justify-content: flex-start;
+		align-items: center;
+		background: color-mix(in oklch, var(--paper) 35%, transparent);
+		border-style: dashed;
+		box-shadow: none;
+		transform: translateY(-10px);
+		margin-inline: calc(var(--w) * 0.02);
+	}
+	.slot:hover {
+		transform: translateY(-10px);
+	}
+	.slot .value {
+		color: transparent;
+		-webkit-text-stroke: 2px var(--ink);
+	}
+	.missing {
+		position: relative;
+		z-index: 1;
+		max-width: 100%;
+		padding: 4px 8px;
+		border-radius: 99px;
+		background: var(--ink);
+		color: var(--paper);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+	@media (max-width: 860px) {
+		.not-found {
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-areas:
+				"hand"
+				"copy";
+			gap: 32px;
+			padding-block: 16px 80px;
+		}
+		.hand {
+			--w: clamp(96px, 27vw, 170px);
+			padding-block: 16px 8px;
+		}
+		.card {
+			border-radius: 16px;
+			box-shadow: 4px 4px 0 var(--ink);
+		}
+		.slot {
+			box-shadow: none;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.card,
+		.actions .button {
+			transition: none;
+		}
+	}
+</style>
