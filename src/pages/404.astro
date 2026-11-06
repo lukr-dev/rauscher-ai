@@ -11,18 +11,14 @@ const copy = siteUi(locale);
 	<section class="not-found wrap">
 		<div class="hand" aria-hidden="true">
 			<span class="card" style="--angle:-11deg;--color:var(--paper)">
-				<span class="index">4</span>
 				<span class="value">4</span>
-				<span class="index flipped">4</span>
 			</span>
 			<span class="card slot">
 				<span class="missing">{copy.missingCard}</span>
 				<span class="value">0</span>
 			</span>
 			<span class="card" style="--angle:11deg;--color:var(--blue)">
-				<span class="index">4</span>
 				<span class="value">4</span>
-				<span class="index flipped">4</span>
 			</span>
 		</div>
 		<div class="copy">
@@ -122,13 +118,6 @@ const copy = siteUi(locale);
 	.card:hover {
 		transform: rotate(0deg) translateY(-8px);
 		z-index: 2;
-	}
-	.index {
-		font: 900 calc(var(--w) * 0.2) / 0.8 var(--font-display);
-	}
-	.index.flipped {
-		align-self: flex-end;
-		transform: rotate(180deg);
 	}
 	.value {
 		position: absolute;
