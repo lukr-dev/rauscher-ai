@@ -15,7 +15,11 @@ import {
 	localizedHref,
 	translationHref,
 } from "../utils/i18n";
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
 import "../styles/theme.css";
+
+const analyticsEnabled =
+	import.meta.env.PROD && import.meta.env.PUBLIC_ANALYTICS_ENABLED === "true";
 
 interface Props {
 	title: string;
@@ -285,6 +289,7 @@ const pageCtx = createPublicPageContext({
 				<nav class="footer-legal" aria-label={copy.legal}>
 					<a href={localizedHref("/impressum", locale)}>{copy.imprint}</a>
 					<a href={localizedHref("/datenschutz", locale)}>{copy.privacy}</a>
+					{analyticsEnabled && <AnalyticsConsent locale={locale} />}
 				</nav>
 			</div>
 		</footer>

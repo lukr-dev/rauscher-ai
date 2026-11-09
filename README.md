@@ -118,8 +118,14 @@ The Worker entry point, D1 `DB` binding, R2 `MEDIA` binding, and scheduled maint
 
 Merging a `dev` → `main` pull request runs `.github/workflows/deploy.yml`, which tests, builds and deploys the merge commit. To redeploy `main` without a release, run **Deploy production** under GitHub Actions (`gh workflow run deploy.yml`). The workflow needs the repository secret `CLOUDFLARE_API_TOKEN`, created from Cloudflare's **Edit Cloudflare Workers** token template for the Lukas Rauscher account and the `rauscher.ai` zone.
 
-Runtime configuration lives on the Worker, not in GitHub: the `EMDASH_SITE_URL` variable (in `wrangler.jsonc`) and the `EMDASH_ENCRYPTION_KEY` and `PLUNK_SECRET_KEY` secrets (`npx wrangler secret put <NAME>`). Keep the encryption key stable: changing it prevents existing encrypted values from being read. For an emergency deployment from a clean `main` checkout, authenticate Wrangler and run `npm run deploy`.
+Runtime configuration lives on the Worker, not in GitHub: the `EMDASH_SITE_URL` variable (in `wrangler.jsonc`) and the `EMDASH_ENCRYPTION_KEY` and `PLUNK_SECRET_KEY` secrets (`npx wrangler secret put <NAME>`). Keep the encryption key stable: changing it prevents existing encrypted values from being read. For an emergency deployment from a clean `main` checkout, authenticate Wrangler and run `PUBLIC_ANALYTICS_ENABLED=true npm run deploy`.
 
 Future Cloudflare previews must use separate D1/R2 resources and their own site URL and secrets. See the [official Cloudflare deployment guide](https://docs.emdashcms.com/deployment/cloudflare/) for provisioning and preview configuration. Sandboxed plugins can be enabled later if needed on a Workers paid plan.
 
 The footer includes muted links to the `impressum` and `datenschutz` CMS pages. Their German content was copied from the existing public website without rewriting; other locales use the normal German fallback until translated.
+
+## Analytics consent
+
+The production workflow sets the build-time `PUBLIC_ANALYTICS_ENABLED=true` flag for GA4 `G-Q3H6FGBQCN`. Normal builds, development and previews leave it disabled; the browser also requires HTTPS on `rauscher.ai` or `www.rauscher.ai`. Do not enable the flag for preview builds.
+
+The German, English and French cookie banner blocks the Google script and all Analytics requests until acceptance (basic consent mode). Advertising consent stays denied. Accept and Reject are equally available; the choice is stored locally for 180 days. The footer's cookie settings button allows changing the choice. Rejecting after acceptance disables collection, removes this property's first-party Analytics cookies and reloads the page to unload the tag. If local storage is unavailable, the choice applies only to the current page.
