@@ -22,6 +22,7 @@
 		"@astrojs/cloudflare": "^14.4.4",
 		"@astrojs/react": "^7.1.2",
 		"@emdash-cms/cloudflare": "^1.4.0",
+		"@policystack/core": "^1.5.0",
 		"@rauscher-ai/emdash-about-hero": "file:plugins/about-hero",
 		"@rauscher-ai/emdash-active-quests": "file:plugins/active-quests",
 		"@rauscher-ai/emdash-audio": "file:plugins/audio",
