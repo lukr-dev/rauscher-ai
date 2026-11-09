@@ -1,0 +1,101 @@
+---
+import { localizedHref, siteUi, type Locale } from "../utils/i18n";
+
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = {
+	de: {
+		settings: "Cookie-Einstellungen",
+		title: "Ich bin Data Engineer. Was hast du erwartet?",
+		text: "Cookies natürlich. Die für die Analyse sind aber freiwillig. Mit deiner Zustimmung laden wir Google Analytics, um die Nutzung dieser Website zu verstehen. Dabei werden Nutzungsdaten an Google übermittelt, auch in die USA. Ohne Zustimmung bleibt Google Analytics blockiert. Du kannst deine Wahl jederzeit in den Cookie-Einstellungen ändern. Wir merken uns deine Wahl für sechs Monate.",
+		accept: "Akzeptieren",
+		reject: "Ablehnen",
+	},
+	en: {
+		settings: "Cookie settings",
+		title: "I’m a data engineer. What did you expect?",
+		text: "Cookies, of course. The analytics kind are optional, though. With your consent, we load Google Analytics to understand how this website is used. Usage data is sent to Google, including in the USA. Without consent, Google Analytics stays blocked. You can change your choice anytime in Cookie settings. We remember your choice for six months.",
+		accept: "Accept",
+		reject: "Reject",
+	},
+	fr: {
+		settings: "Paramètres des cookies",
+		title: "Je suis data engineer. Vous vous attendiez à quoi ?",
+		text: "Des cookies, évidemment. Ceux d’analyse restent facultatifs. Avec votre accord, nous chargeons Google Analytics pour comprendre l’utilisation de ce site. Des données d’utilisation sont transmises à Google, y compris aux États-Unis. Sans accord, Google Analytics reste bloqué. Vous pouvez modifier votre choix à tout moment dans les paramètres des cookies. Nous mémorisons votre choix pendant six mois.",
+		accept: "Accepter",
+		reject: "Refuser",
+	},
+}[locale];
+---
+
+<button type="button" id="cookie-settings" hidden>
+	{copy.settings}
+</button>
+<section
+	id="cookie-banner"
+	aria-labelledby="cookie-title"
+	aria-describedby="cookie-description"
+	hidden
+>
+	<h2 id="cookie-title">{copy.title}</h2>
+	<p id="cookie-description">
+		{copy.text}
+		<a href={localizedHref("/datenschutz", locale)}>{siteUi(locale).privacy}</a>
+	</p>
+	<div class="cookie-actions">
+		<button type="button" class="button" id="cookie-reject">
+			{copy.reject}
+		</button>
+		<button type="button" class="button" id="cookie-accept">
+			{copy.accept}
+		</button>
+	</div>
+</section>
+
+<script>
+	import { initAnalyticsConsent } from "../utils/analytics-consent";
+	initAnalyticsConsent();
+</script>
+
+<style>
+	#cookie-settings {
+		border: 0;
+		padding: 0;
+		background: transparent;
+		color: inherit;
+		font: inherit;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	#cookie-banner {
+		position: fixed;
+		z-index: 100;
+		inset: auto 16px 16px;
+		max-width: 660px;
+		max-height: calc(100dvh - 32px);
+		overflow: auto;
+		margin-inline: auto;
+		padding: 24px;
+		border: 2px solid var(--ink);
+		border-radius: 16px;
+		background: var(--paper);
+		color: var(--ink);
+		box-shadow: 5px 5px 0 var(--ink);
+		font-size: 15px;
+		line-height: 1.5;
+	}
+	#cookie-banner h2 {
+		margin: 0;
+		font: 900 32px/1 var(--font-display);
+	}
+	.cookie-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+	.cookie-actions button {
+		flex: 1;
+	}
+</style>
